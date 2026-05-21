@@ -1,0 +1,641 @@
+/* =========================================================
+   THEME VARIABLES & TOKENS (Sleek & Tight)
+========================================================= */
+:root {
+  /* Colors */
+  --bg-dark-100: #020617;
+  --bg-dark-200: #070e27;
+  --text-primary: #ffffff;
+  --text-muted: rgba(230, 237, 255, 0.7);
+  
+  --accent-primary: #2563eb;
+  --accent-purple: #7c3aed;
+  --accent-pink: #d946ef;
+  --accent-cyan: #25eaff;
+  
+  /* Gradients */
+  --gradient-text: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #ec4899 100%);
+  --gradient-btn: linear-gradient(135deg, #7c3aed 0%, #2563eb 100%);
+  --gradient-bg: linear-gradient(135deg, var(--bg-dark-100) 0%, var(--bg-dark-200) 100%);
+
+  /* Layout & Spacing Optimized */
+  --hero-padding: clamp(40px, 5vw, 60px) clamp(20px, 4vw, 40px);
+  --transition-premium: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* =========================================================
+   HERO CONTAINER (Contained & Non-Bulky)
+========================================================= */
+.heroSection {
+  width: 100%;
+  min-height: 100vh;
+  padding: var(--hero-padding);
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  align-items: center;
+  gap: clamp(32px, 4vw, 48px);
+  overflow: hidden; /* Restricts any leaking particles/rings */
+  position: relative;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.01) 1px, transparent 1px) 0 0 / 30px 30px,
+    linear-gradient(90deg, rgba(255, 255, 255, 0.01) 1px, transparent 1px) 0 0 / 30px 30px,
+    radial-gradient(circle at 75% 35%, rgba(37, 99, 235, 0.15), transparent 45%),
+    radial-gradient(circle at 25% 65%, rgba(124, 58, 237, 0.1), transparent 40%),
+    var(--gradient-bg);
+  isolation: isolate;
+}
+
+/* =========================================================
+   LEFT CONTENT (Polished Typography)
+========================================================= */
+.heroLeft {
+  position: relative;
+  z-index: 10;
+  max-width: 620px;
+}
+
+.pill, .heroGlowTag {
+  width: fit-content;
+  max-width: 100%;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  transition: var(--transition-premium);
+}
+
+.pill {
+  color: #ddd6fe;
+  background: rgba(124, 58, 237, 0.1);
+  border: 1px solid rgba(168, 85, 247, 0.25);
+}
+
+.pill:hover {
+  border-color: rgba(168, 85, 247, 0.5);
+  background: rgba(124, 58, 237, 0.15);
+  transform: translateY(-1px);
+}
+
+.heroLeft h1 {
+  margin: 20px 0 0;
+  font-size: clamp(36px, 4.5vw, 64px); /* Slightly scaled down to prevent bulkiness */
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  font-weight: 900;
+  color: var(--text-primary);
+}
+
+.heroLeft h1 span {
+  display: block;
+  margin-top: 4px;
+  background: var(--gradient-text);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.heroLeft p {
+  margin: 20px 0 0;
+  max-width: 520px;
+  color: var(--text-muted);
+  font-size: clamp(15px, 1.2vw, 17px);
+  line-height: 1.6;
+}
+
+/* Actions & Buttons */
+.heroActions {
+  margin-top: 32px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.heroBtn {
+  min-height: 52px;
+  padding: 0 28px;
+  border-radius: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  position: relative;
+  transition: var(--transition-premium);
+}
+
+.heroBtn.primary {
+  color: var(--text-primary);
+  background: var(--gradient-btn);
+  box-shadow: 0 8px 24px rgba(139, 44, 255, 0.2);
+}
+
+.heroBtn.outline {
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px);
+}
+
+.heroBtn:hover {
+  transform: translateY(-3px);
+}
+
+.heroBtn.primary:hover {
+  box-shadow: 0 12px 32px rgba(124, 58, 237, 0.35);
+  filter: brightness(1.08);
+}
+
+.heroBtn.outline:hover {
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Compact Stats */
+.heroMiniStats {
+  margin-top: 36px;
+  max-width: 540px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-radius: 16px;
+  background: rgba(8, 13, 31, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(16px);
+}
+
+.heroMiniStats div {
+  padding: 16px 20px;
+  border-right: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.heroMiniStats div:last-child {
+  border-right: 0;
+}
+
+.heroMiniStats strong {
+  display: block;
+  color: var(--text-primary);
+  font-size: clamp(22px, 2vw, 28px);
+  font-weight: 800;
+}
+
+.heroMiniStats span {
+  display: block;
+  margin-top: 4px;
+  color: rgba(226, 232, 240, 0.5);
+  font-size: 12px;
+}
+
+/* =========================================================
+   RIGHT STAGE (Fluid, Scaled-down & Safe)
+========================================================= */
+.heroImageStackRight {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 450px; /* Reduced from 650px to fit screen safely */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 1500px; 
+}
+
+/* Ambient Glows - Tamed to prevent bleeding */
+.stackGlow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  pointer-events: none;
+  opacity: 0.25;
+}
+.stackGlowOne { width: 250px; height: 250px; background: rgba(151, 58, 255, 0.3); }
+.stackGlowTwo { width: 220px; height: 220px; background: rgba(0, 190, 255, 0.2); }
+
+/* Responsive Rings using % instead of fixed pixels */
+.stackOrbitRing {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  width: min(85%, 460px);
+  height: min(85%, 460px);
+  transform: rotateX(65deg) rotateY(-10deg) rotateZ(0deg);
+}
+
+.ringA {
+  border: 1px solid rgba(37, 234, 255, 0.1);
+  animation: lightweightSpin 50s linear infinite;
+}
+
+.ringB {
+  width: min(65%, 340px);
+  height: min(65%, 340px);
+  border: 1px dashed rgba(168, 85, 247, 0.15);
+  animation: lightweightSpinBackward 35s linear infinite;
+}
+
+@keyframes lightweightSpin {
+  0% { transform: rotateX(65deg) rotateY(-10deg) rotateZ(0deg); }
+  100% { transform: rotateX(65deg) rotateY(-10deg) rotateZ(360deg); }
+}
+
+@keyframes lightweightSpinBackward {
+  0% { transform: rotateX(65deg) rotateY(-10deg) rotateZ(360deg); }
+  100% { transform: rotateX(65deg) rotateY(-10deg) rotateZ(0deg); }
+}
+
+/* Particles */
+.stackParticle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--accent-cyan);
+  opacity: 0.6;
+}
+.p1 { top: 20%; left: 25%; }
+.p2 { top: 35%; right: 20%; }
+.p3 { bottom: 30%; left: 20%; }
+
+/* Stage & Cards Container */
+.imageStackStage {
+  position: relative;
+  z-index: 5;
+  width: 100%;
+  max-width: 440px;
+  height: 400px;
+  transform-style: preserve-3d;
+}
+
+.stackImageCard {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stackImageCard img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* Glass Badge */
+.stackCardMeta {
+  position: absolute;
+  left: 50%;
+  bottom: 5%;
+  transform: translateX(-50%);
+  min-width: 180px;
+  padding: 10px 16px;
+  border-radius: 12px;
+  text-align: center;
+  background: rgba(5, 10, 28, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+}
+
+.stackCardMeta span {
+  display: block;
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.stackCardMeta b {
+  display: block;
+  color: var(--text-primary);
+  font-size: 13px;
+}
+
+/* =========================================================
+   CLEAN RESPONSIVE ENGINE (No Layout Breaks)
+========================================================= */
+@media (max-width: 1024px) {
+  .heroSection {
+    grid-template-columns: 1fr;
+    text-align: center;
+    padding: 100px 24px 60px;
+    gap: 40px;
+  }
+  .heroLeft {
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .heroActions { justify-content: center; }
+  .heroMiniStats { width: 100%; }
+  .heroImageStackRight { min-height: 400px; }
+  .imageStackStage { height: 360px; }
+}
+
+@media (max-width: 600px) {
+  .heroSection { padding: 80px 16px 40px; }
+  .heroMiniStats { grid-template-columns: 1fr; gap: 4px; background: transparent; border: none; }
+  .heroMiniStats div { 
+    background: rgba(8, 13, 31, 0.4); 
+    border: 1px solid rgba(255, 255, 255, 0.05); 
+    border-radius: 12px;
+    margin-bottom: 8px;
+  }
+  .heroImageStackRight { min-height: 320px; }
+  .imageStackStage { height: 280px; }
+}
+/* =========================================================================
+                  Stats Bar
+============================================================================*/
+.trustedCompanies {
+  width: 100%;
+  margin-top: 28px;
+  overflow: visible;
+  padding: 18px 0;
+}
+
+.trustedTrack {
+  display: flex;
+  align-items: center;
+  gap: 56px;
+  width: max-content;
+  white-space: nowrap;
+  will-change: transform;
+}
+
+.trustedCard {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  color: #ffffff;
+  opacity: 0.9;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  outline: 0;
+  transition:
+    transform 0.35s ease,
+    opacity 0.35s ease,
+    color 0.35s ease,
+    filter 0.35s ease;
+}
+
+.trustedCard:hover {
+  transform: translateY(-2px) scale(1.06);
+  color: #7dd3fc;
+  opacity: 1;
+  filter: drop-shadow(0 0 14px rgba(125, 211, 252, 0.35));
+}
+
+.trustedIcon {
+  width: 32px;
+  height: 32px;
+  flex: 0 0 32px;
+  display: grid;
+  place-items: center;
+  color: #7dd3fc;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+}
+
+.trustedName {
+  font-size: 15px;
+  font-weight: 850;
+  letter-spacing: -0.01em;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.trustedCheck {
+  flex: 0 0 auto;
+  color: #86efac;
+}
+
+@media (max-width: 768px) {
+  .trustedCompanies {
+    margin-top: 20px;
+    padding: 14px 0;
+  }
+
+  .trustedTrack {
+    gap: 36px;
+  }
+
+  .trustedName {
+    font-size: 13px;
+  }
+
+  .trustedIcon {
+    width: 28px;
+    height: 28px;
+    flex-basis: 28px;
+  }
+}
+/* ==============================================================================
+                                    workflow
+=================================================================================*/
+.workflowRow {
+  width: min(1180px, calc(100% - 32px));
+  margin: 34px auto 0;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.workflowItem {
+  position: relative;
+  isolation: isolate;
+  min-height: 92px;
+  padding: 18px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  border-radius: 24px;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 18% 20%, rgba(125, 211, 252, 0.16), transparent 34%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.095), rgba(255, 255, 255, 0.035));
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    0 18px 48px rgba(0, 0, 0, 0.18);
+  backdrop-filter: blur(16px);
+  transform: translateY(0);
+  transition:
+    transform 0.35s ease,
+    background 0.35s ease,
+    box-shadow 0.35s ease;
+}
+
+.workflowItem::before {
+  content: "";
+  position: absolute;
+  inset: -40%;
+  z-index: -1;
+  background: conic-gradient(
+    from 180deg,
+    transparent,
+    rgba(56, 189, 248, 0.22),
+    transparent,
+    rgba(134, 239, 172, 0.14),
+    transparent
+  );
+  opacity: 0;
+  transform: rotate(0deg);
+  transition: opacity 0.35s ease;
+}
+
+.workflowItem::after {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  z-index: -1;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(8, 13, 32, 0.88), rgba(3, 7, 18, 0.78));
+}
+
+.workflowItem:hover {
+  transform: translateY(-6px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.16),
+    0 26px 70px rgba(56, 189, 248, 0.16);
+}
+
+.workflowItem:hover::before {
+  opacity: 1;
+  animation: workflowSpin 4s linear infinite;
+}
+
+.workflowIcon {
+  width: 48px;
+  height: 48px;
+  flex: 0 0 48px;
+  display: grid;
+  place-items: center;
+  border-radius: 18px;
+  color: #7dd3fc;
+  background:
+    radial-gradient(circle at 35% 25%, rgba(255, 255, 255, 0.2), transparent 32%),
+    linear-gradient(135deg, rgba(56, 189, 248, 0.18), rgba(59, 130, 246, 0.08));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.13),
+    0 12px 28px rgba(56, 189, 248, 0.12);
+}
+
+.workflowText {
+  min-width: 0;
+  display: grid;
+  gap: 5px;
+}
+
+.workflowText b {
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 850;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.workflowText span {
+  color: rgba(226, 232, 240, 0.68);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+@keyframes workflowSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 980px) {
+  .workflowRow {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 560px) {
+  .workflowRow {
+    width: min(100% - 24px, 1180px);
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin-top: 24px;
+  }
+
+  .workflowItem {
+    min-height: 82px;
+    padding: 15px;
+    border-radius: 20px;
+  }
+
+  .workflowIcon {
+    width: 42px;
+    height: 42px;
+    flex-basis: 42px;
+    border-radius: 15px;
+  }
+
+  .workflowText b {
+    font-size: 14px;
+  }
+
+  .workflowText span {
+    font-size: 12.5px;
+  }
+}
+/* ==============================================================================
+                                    benifits
+=================================================================================*/
+
+
+/* =========================================================
+   Targeted fix: Workflow cards should only hover subtly
+   No over animation / no floating / no infinite pulse
+========================================================= */
+.workflowItem,
+.workflowItem:hover,
+.workflowItem:focus-within {
+  transform: none !important;
+  animation: none !important;
+}
+
+.workflowItem::before,
+.workflowItem:hover::before {
+  opacity: 0 !important;
+  animation: none !important;
+}
+
+.workflowItem:hover {
+  background:
+    radial-gradient(circle at 18% 20%, rgba(125, 211, 252, 0.12), transparent 34%),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.105), rgba(255, 255, 255, 0.045)) !important;
+  border-color: rgba(125, 211, 252, 0.2) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.12),
+    0 18px 48px rgba(0, 0, 0, 0.18) !important;
+}
+
+.workflowIcon,
+.workflowItem:hover .workflowIcon,
+.workflowItem:nth-child(2):hover .workflowIcon {
+  transform: none !important;
+  animation: none !important;
+  filter: none !important;
+}
+
+.workflowText b,
+.workflowText span,
+.workflowItem:hover .workflowText b,
+.workflowItem:hover .workflowText span {
+  transform: none !important;
+  animation: none !important;
+}
