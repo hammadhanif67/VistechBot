@@ -1,100 +1,48 @@
-import { Sparkles } from "lucide-react";
-import BrandButton from "../ui/BrandButton";
-import HeroAtmosphere from "../ui/HeroAtmosphere";
-import { heroStats } from "../../data/heroData";
+import Eyebrow from "../common/Eyebrow";
 
-export default function PricingHero({ billing, setBilling }) {
-  // Prevent unnecessary tree re-renders if clicking the already active mode
-  const toggleBilling = (mode) => {
-    if (billing !== mode) setBilling(mode);
-  };
-
+/**
+ * Pricing hero.
+ *
+ * No controls here. The monthly/yearly switch used to sit in the hero, a long
+ * way from the prices it changed: you flipped it, the numbers moved somewhere
+ * below the fold, and nothing appeared to happen. It now sits directly above
+ * the plans.
+ *
+ * The scene behind it is the tier variant: four columns of stacked volume that
+ * charge in order, left to right. It is saying the same thing the headline
+ * says — you are buying volume, not features — and it is the calmest of the
+ * service scenes, because on a pricing page the numbers are the content.
+ *
+ * The copy that used to open this page ("Pricing Engine v2.0", "SOC 2 Type II
+ * compliance") has gone. One of those was noise; the other was an audited claim
+ * the project cannot substantiate.
+ */
+export default function PricingHero() {
   return (
-    <section className="pricingHero advancedHeroLayout" aria-label="Pricing Hero Section">
-      {/* Retained safely for architectural visual integrity */}
-      <HeroAtmosphere variant="pricing" />
+    <section className="pageHero pageHero--pricing" aria-labelledby="pricing-heading">
 
-      <div className="heroMainFrame gridTwoColumns">
-        
-        {/* Left Side: Content & Action Triggers */}
-        <div className="heroIntelBlock">
-          <div className="premiumBadge animateFade">
-            <Sparkles size={14} className="sparkleIconEffect" />
-            <span>Pricing Engine v2.0</span>
-          </div>
+      <div className="shell pageHero__inner">
+        <Eyebrow now>Pricing</Eyebrow>
 
-          <h1 className="heroDisplayHeading">
-            Predictable Pricing.
-            <span className="gradientAccent textSplit">Engineered for Scale.</span>
-          </h1>
+        <h1 className="display pageHero__title" id="pricing-heading">
+          <span className="lineMask">
+            <span data-anim="mask" data-anim-now data-anim-delay="1">
+              Priced by
+            </span>
+          </span>
+          <span className="lineMask">
+            <span data-anim="mask" data-anim-now data-anim-delay="2">
+              <em>volume,</em> not seats
+            </span>
+          </span>
+        </h1>
 
-          <p className="heroSubText">
-            Transparent, infrastructure-driven pricing designed for hyper-growth teams. 
-            Deploy models instantly, scale workloads seamlessly, and optimize operational spend without hidden overheads.
-          </p>
-
-          <div className="billingControlWrapper">
-            <div className="segmentedControl" role="radiogroup" aria-label="Billing Cycle Selection">
-              <button 
-                type="button" 
-                role="radio"
-                aria-checked={billing === "monthly"}
-                className={`controlSwitch ${billing === "monthly" ? "isCurrent" : ""}`} 
-                onClick={() => toggleBilling("monthly")}
-              >
-                Monthly Plan
-              </button>
-              <button 
-                type="button" 
-                role="radio"
-                aria-checked={billing === "yearly"}
-                className={`controlSwitch ${billing === "yearly" ? "isCurrent" : ""}`} 
-                onClick={() => toggleBilling("yearly")}
-              >
-                Yearly Cycle
-              </button>
-            </div>
-            <span className="discountIndicatorLabel">Save 20% Alpha</span>
-          </div>
-        </div>
-
-        {/* Right Side: Data Analytics Showcase Panel */}
-        <div className="heroShowcasePanel" aria-label="System Performance Operational Metrics">
-          <div className="panelContextBar">
-            <span className="contextLabel">Deployment Metrics</span>
-            <span className="contextStatusPulse">Active Infrastructure</span>
-          </div>
-
-          {/* Secure Loop Execution Layer */}
-          <div className="metricAnalyticsGrid">
-            {Array.isArray(heroStats?.pricing) && heroStats.pricing.map((item, index) => (
-              <div className="metricTelemetryBlock" key={item.label || index}>
-                <span className="telemetryValueDisplay">{item.value}</span>
-                <label className="telemetryLabelText">{item.label}</label>
-              </div>
-            ))}
-          </div>
-
-          <ul className="guaranteeFeatureMatrix">
-            <li className="matrixItem">
-              <span className="checkGraphic">✦</span>
-              <p>Dynamic compute auto-scaling architecture</p>
-            </li>
-            <li className="matrixItem">
-              <span className="checkGraphic">✦</span>
-              <p>Granular enterprise governance controls</p>
-            </li>
-            <li className="matrixItem">
-              <span className="checkGraphic">✦</span>
-              <p>Soc2 Type II compliance & advanced analytics layer</p>
-            </li>
-          </ul>
-
-          <BrandButton as="a" href="#pricing-cards" variant="secondary" className="ctaAnchorAction">
-            Launch Comparison Matrix
-          </BrandButton>
-        </div>
-
+        <p className="pageHero__lead" data-anim="rise" data-anim-now data-anim-delay="4">
+          Four plans on the same platform. Higher tiers add conversation
+          allowance, channels and storage. They do not unlock core features,
+          because nothing important is locked. Ten-day trial on every tier, and
+          it never asks for a card.
+        </p>
       </div>
     </section>
   );

@@ -1,108 +1,151 @@
-import { MessageSquareText, Rocket, Crown, Building2 } from "lucide-react";
+import { Building2, CreditCard, Crown, Headphones, MessageSquareText, Rocket, ShieldCheck, Zap } from "lucide-react";
 
-export const monthlyPlans = [
+/**
+ * Pricing.
+ *
+ * Structured as a comparison matrix rather than four independent card
+ * definitions: every plan answers the same set of rows, which is the only way a
+ * reader can actually compare them. `PLAN_ROWS` defines the questions, and each
+ * plan answers them in the same order.
+ */
+export const plans = [
   {
-    name:  "Starter",
-    price: "$49",
-    period: "/month",
-    trial: "10 Day Trial",
-    color: "blue",
-    icon:  MessageSquareText,
-    desc:  "For small teams starting with AI chat automation.",
-    features: [
-      ["Website Chatbot",      "AI-powered chat widget"],
-      ["WhatsApp Integration", "Business WhatsApp support"],
-      ["1,000 Conversations",  "Per month"],
-      ["5GB Storage",          "Knowledge base files"],
-    ],
-    button: "Start Trial",
+    id: "starter",
+    name: "Starter",
+    icon: MessageSquareText,
+    monthly: 49,
+    yearly: 470,
+    desc: "For a small team putting AI on one channel.",
+    cta: "Start trial",
+    values: {
+      conversations: "1,000 / month",
+      channels: "Website chat, WhatsApp",
+      voice: false,
+      storage: "5 GB",
+      crm: false,
+      analytics: "Core reporting",
+      seats: "3",
+      support: "Email",
+    },
   },
   {
-    name:    "Business",
-    price:   "$99",
-    period:  "/month",
-    trial:   "10 Day Trial",
-    color:   "green",
-    icon:    Rocket,
-    popular: true,
-    desc:    "For growing businesses needing CRM and AI automation.",
-    features: [
-      ["Everything in Starter",   ""],
-      ["Facebook Messenger",      "Messenger chatbot support"],
-      ["AI Chatbot",              "Files, voice and advanced replies"],
-      ["CRM Integration",         "Manage customer data"],
-      ["10,000 Conversations",    "Per month"],
-      ["20GB Storage",            "Knowledge base files"],
-    ],
-    button: "Start Trial",
+    id: "business",
+    name: "Business",
+    icon: Rocket,
+    monthly: 99,
+    yearly: 950,
+    featured: true,
+    desc: "For a growing desk that needs CRM and voice.",
+    cta: "Start trial",
+    values: {
+      conversations: "10,000 / month",
+      channels: "Adds Messenger and email",
+      voice: "Included",
+      storage: "20 GB",
+      crm: "Two-way sync",
+      analytics: "Full dashboards",
+      seats: "10",
+      support: "Email and chat",
+    },
   },
   {
-    name:  "Premium",
-    price: "$199",
-    period: "/month",
-    trial: "300 Trial",
-    color: "purple",
-    icon:  Crown,
-    desc:  "For advanced teams with higher automation needs.",
-    features: [
-      ["Everything in Business", ""],
-      ["AI Access",              "Full AI integration access"],
-      ["Advanced Chatbot",       "Voice, files and smart automation"],
-      ["CRM Integration",        "Customer workflow control"],
-      ["20,000 Conversations",   "Per month"],
-      ["100GB Storage",          "Knowledge base files"],
-    ],
-    button: "Start Trial",
+    id: "premium",
+    name: "Premium",
+    icon: Crown,
+    monthly: 199,
+    yearly: 1910,
+    desc: "For teams automating across the whole queue.",
+    cta: "Start trial",
+    values: {
+      conversations: "20,000 / month",
+      channels: "All channels",
+      voice: "Included",
+      storage: "100 GB",
+      crm: "Two-way sync and automation",
+      analytics: "Full dashboards and exports",
+      seats: "25",
+      support: "Priority",
+    },
   },
   {
-    name:  "Enterprise",
-    price: "$499",
-    period: "/month",
-    trial: "1000 Trial",
-    color: "cyan",
-    icon:  Building2,
-    desc:  "For large businesses needing scale and support.",
-    features: [
-      ["Everything in Premium",  ""],
-      ["Enterprise AI Access",   "Custom integrations"],
-      ["Multi-Channel Support",  "WhatsApp, website, Messenger"],
-      ["CRM Automation",         "Advanced customer workflows"],
-      ["200,000 Conversations",  "Per month"],
-      ["100GB Storage",          "Knowledge base files"],
-    ],
-    button: "Contact Sales",
+    id: "enterprise",
+    name: "Enterprise",
+    icon: Building2,
+    monthly: 499,
+    yearly: 4790,
+    desc: "For high volume, custom integrations and governance.",
+    cta: "Contact sales",
+    values: {
+      conversations: "200,000 / month",
+      channels: "All channels and custom",
+      voice: "Included",
+      storage: "100 GB+",
+      crm: "Custom integrations",
+      analytics: "Full suite and API access",
+      seats: "Unlimited",
+      support: "Dedicated",
+    },
   },
 ];
 
-export const yearlyMeta = [
-  ["Starter Yearly",    "$470",  "/year", "Save $120"],
-  ["Business Yearly",   "$950",  "/year", "Save $250"],
-  ["Premium Yearly",    "$1910", "/year", "Save $300"],
-  ["Enterprise Yearly", "$4790", "/year", "Save $1200"],
+/** The rows of the comparison, in the order a buyer actually asks them. */
+export const PLAN_ROWS = [
+  { key: "conversations", label: "Conversations" },
+  { key: "channels", label: "Channels" },
+  { key: "voice", label: "Voice agents" },
+  { key: "crm", label: "CRM integration" },
+  { key: "analytics", label: "Analytics" },
+  { key: "storage", label: "Knowledge base storage" },
+  { key: "seats", label: "Team seats" },
+  { key: "support", label: "Support" },
 ];
 
-export const pricingBenefits = [
-  ["♙", "Instant Access",  "Get started immediately with core platform features"],
-  ["⚙", "No Risk",         "Cancel anytime during your trial period"],
-  ["⚡", "Core Features",  "Experience essential features during trial"],
-  ["☊", "24/7 Support",   "We're here to help you anytime, anywhere"],
+/**
+ * Yearly is the monthly rate less 20%, rounded down to a whole dollar.
+ * Computed rather than stored: the previous build kept both numbers by hand and
+ * one of the four savings labels was out by $178.
+ */
+export function yearlySaving(plan) {
+  return plan.monthly * 12 - plan.yearly;
+}
+
+/** The four objections between reading a price and clicking the button. */
+export const trialPoints = [
+  [Zap, "Start today", "Core features are live the moment you sign up."],
+  [ShieldCheck, "No risk", "Cancel during the trial and nothing gets charged."],
+  [CreditCard, "No card required", "The trial never asks for payment details."],
+  [Headphones, "Help while you evaluate", "Support answers before you buy, not just after."],
 ];
 
 export const pricingFaqs = [
   {
-    question: "Can I try the platform for free?",
-    answer:   "Yes! All plans come with a free trial. Start with our 7-day trial and explore all premium features before upgrading.",
+    question: "Can I try it before paying?",
+    answer:
+      "Yes. Every plan has a 10-day trial and it does not ask for a card. Run real conversations through it before you decide anything.",
   },
   {
     question: "Can I cancel anytime?",
-    answer:   "Absolutely. You can cancel your subscription at any time directly from your dashboard without any hidden conditions.",
+    answer:
+      "Yes, from your dashboard, whenever you like. No notice period and no cancellation fee.",
   },
   {
-    question: "What happens after my trial ends?",
-    answer:   "Once your trial expires, you'll be prompted to add a payment method to continue using premium services.",
+    question: "What happens when the trial ends?",
+    answer:
+      "We ask you to add a payment method to carry on. Nothing charges automatically. Your workspace and your data sit there untouched while you think about it.",
   },
   {
-    question: "Is my data secure?",
-    answer:   "Yes, we use enterprise-grade encryption, secure cloud infrastructure, and advanced security practices to keep your data protected.",
+    question: "Can I switch plans later?",
+    answer:
+      "Yes, up or down, at any point in the cycle. Switching to yearly takes 20% off straight away.",
+  },
+  {
+    question: "What counts as a conversation?",
+    answer:
+      "One continuous exchange with one customer. Two messages or forty, it counts once. Follow-ups on the same thread are not counted again.",
+  },
+  {
+    question: "How is my data handled?",
+    answer:
+      "Encrypted in transit and at rest. Access is role-based per workspace. You decide which sources the assistant is allowed to read.",
   },
 ];

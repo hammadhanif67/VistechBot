@@ -18,4 +18,10 @@ export default defineConfig([
       parserOptions: { ecmaFeatures: { jsx: true } },
     },
   },
+  {
+    // Build tooling and the Node-run scripts get Node globals rather than the
+    // browser set — `process`, `console` and friends are legitimate there.
+    files: ['vite.config.js', 'eslint.config.js', 'scripts/**/*.mjs'],
+    languageOptions: { globals: globals.node },
+  },
 ])

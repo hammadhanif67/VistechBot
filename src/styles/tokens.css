@@ -1,0 +1,263 @@
+/* =========================================================================
+   VISTECHBOT — DESIGN TOKENS
+
+   One scale for the whole site. Two rules are absolute and enforced in
+   base.css rather than left to discipline:
+
+     1. Nothing has a border radius. The geometry is rectangular throughout.
+     2. No background anywhere draws a grid. Depth comes from radial light,
+        layered gradients and film grain — never from ruled lines.
+   ========================================================================= */
+
+:root {
+  /* ---- Typography -------------------------------------------------- */
+  /* "Urbanist Fallback" is the same system font with Urbanist's metrics
+     forced onto it (see styles/fonts.css), so the swap does not reflow. */
+  --font-primary: "Urbanist", "Urbanist Fallback", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+
+  /* A display-first scale, but one where the page title is always the largest
+     thing on its page.
+
+     It was not. --fs-display topped out at 168px against --fs-h1's 92px, and
+     `.display` set the size from the class rather than the heading level, so
+     the three statement blocks on the home page rendered at 151px above a 92px
+     h1 -- four headlines, the smallest of which was the actual title. On the
+     inner pages the closing call to action matched its own h1 exactly.
+
+     Now the level decides the size: --fs-h1 for every h1 whatever class it
+     wears, --fs-statement one clear step below it. */
+  --fs-nano: 10px;      /* badges, keyboard hints, index numerals */
+  --fs-micro: 11px;
+  --fs-label: 12px;
+  --fs-code: 12.5px;
+  --fs-brand: 19px;     /* the wordmark, which sets its own size */
+  --fs-small: 13.5px;
+  --fs-body: 16px;
+  --fs-lead: clamp(17px, 1.3vw, 20px);
+  --fs-h3: clamp(19px, 1.7vw, 23px);
+  --fs-h2: clamp(30px, 4vw, 52px);
+  /* Floors are set by the longest single word each level has to carry on a
+     320px viewport without breaking: "intelligence" for the h1s,
+     "conversation." for the statement blocks. They also have to stay far
+     enough apart to read as a hierarchy -- at a 33px floor the h1 sat 3px
+     above the h2 below it, which is not a step anyone can see. */
+  --fs-statement: clamp(27px, 4.8vw, 68px);
+  --fs-h1: clamp(36px, 6.6vw, 94px);
+
+  --lh-tight: 0.94;
+  --lh-heading: 1.06;
+  --lh-body: 1.68;
+
+  /* Large type needs negative tracking to stop it reading as loose. */
+  --ls-display: -0.055em;
+  --ls-h1: -0.045em;
+  --ls-h2: -0.035em;
+  --ls-body: -0.005em;
+  --ls-label: 0.16em;
+
+  --fw-light: 300;
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  --fw-bold: 700;
+  --fw-black: 800;
+
+  /* ---- Colour: the dark palette, and the default ---------------------
+
+     Everything below this point is theme-dependent. The light counterpart
+     overrides the same names in one block further down, so no component ever
+     asks which theme is running — it asks for `--surface` and gets whichever
+     surface belongs to the theme in force.
+
+     `--surface-invert` and the three `--glow-*` values were declared here and
+     used by nothing. They are gone rather than carried into a second palette.
+     -------------------------------------------------------------------- */
+  color-scheme: dark;
+
+  /* Surfaces, page background outward. */
+  --void: #05070f;
+  --surface: #080b16;
+  --surface-raised: #0b0f1d;
+  --surface-panel: #0d1120;
+  --surface-subtle: rgba(154, 164, 196, 0.05);
+
+  /* Ink. `--ink-invert` is the text colour for anything sitting on
+     `--ink-strong` or on `--accent`, which is why both of those have to stay
+     far enough from it in every theme. */
+  --ink: #f2f5ff;
+  --ink-strong: #ffffff;
+  /* One step, for a filled button under the pointer. The dark theme dims its
+     white; the light theme lifts its near-black. Neither flips. */
+  --ink-strong-hover: #dfe5f7;
+  --ink-muted: #9aa4c4;
+  --ink-faint: #6f7897;   /* labels and metadata only, never body copy */
+  --ink-invert: #0a0d18;
+
+  /* Accent. Carries text 59 times across the stylesheets and a background 14
+     times, so in any theme it has to clear 4.5:1 both against the page and
+     against `--ink-invert`. */
+  --accent: #19e0ff;
+  --accent-hover: #5ee7ff;
+  --accent-deep: #2f6bff;
+  --accent-violet: #8b4dff;
+  --accent-warm: #ff6a3d;
+  --accent-wash: rgba(25, 224, 255, 0.04);
+  --accent-wash-soft: rgba(25, 224, 255, 0.03);
+  --accent-fade: rgba(25, 224, 255, 0.15);
+
+  /* Lines. */
+  --line: rgba(154, 164, 196, 0.16);
+  --line-strong: rgba(154, 164, 196, 0.3);
+  --line-accent: rgba(25, 224, 255, 0.42);
+  --hairline: 1px;
+
+  /* Scrims behind the sticky bars, which sit over scrolling content. */
+  --scrim-nav: rgba(5, 7, 15, 0.82);
+  --scrim-strip: rgba(5, 7, 15, 0.92);
+
+  /* Code stays dark in both themes. A terminal is dark; inverting it on the
+     light theme would make the one element on the page that is quoting a
+     machine look like prose. */
+  --surface-code: #04060d;
+  --ink-code: #c8d6ff;
+
+  /* Atmosphere: three fixed radial light sources and the grain over them. */
+  --atmo-blue: rgba(47, 107, 255, 0.16);
+  --atmo-violet: rgba(139, 77, 255, 0.11);
+  --atmo-cyan: rgba(25, 224, 255, 0.08);
+  --grain-opacity: 0.035;
+
+  /* Elevation. A dark theme separates layers with light, not shadow, so these
+     are effectively off here and do the work in the light theme. */
+  --shadow-sm: none;
+  --shadow: none;
+  --shadow-lg: none;
+
+  /* ---- Spacing ----------------------------------------------------- */
+  --s-1: 4px;
+  --s-2: 8px;
+  --s-3: 12px;
+  --s-4: 16px;
+  --s-5: 24px;
+  --s-6: 32px;
+  --s-7: 48px;
+  --s-8: 64px;
+  --s-9: 96px;
+  --s-10: 128px;
+  --section-y: clamp(72px, 11vh, 160px);
+
+  /* ---- Layout ------------------------------------------------------ */
+  --shell: 1440px;
+  --measure: 68ch;
+  --gutter: clamp(20px, 4.5vw, 72px);
+  --nav-h: 72px;
+
+  /* ---- Layering ---------------------------------------------------- */
+  --z-scene: 0;
+  --z-base: 1;
+  --z-content: 2;
+  --z-nav: 900;
+  --z-overlay: 950;
+
+  /* ---- Motion ------------------------------------------------------ */
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --t-fast: 0.18s var(--ease);
+  --t-base: 0.32s var(--ease);
+  --t-slow: 0.6s var(--ease);
+
+  /* ---- Focus ------------------------------------------------------- */
+  --focus-ring: 0 0 0 2px var(--void), 0 0 0 4px var(--accent);
+}
+
+/* =========================================================================
+   THE LIGHT PALETTE
+
+   Same names, same roles, different values. Nothing here changes a size, a
+   space, a weight or a duration — the two themes are the same site.
+
+   It is not an inversion. A few decisions worth stating:
+
+     * The page is #eef1f7, not white. White gives raised surfaces nothing to
+       be raised against, so every card needs a heavy border to exist. Starting
+       one step down means a card can simply be closer to white and read as
+       lifted, which is why the borders here are lighter than the dark theme's,
+       not heavier.
+
+     * The accent darkens from #19e0ff to #0b7086. It has to, and not for taste:
+       #19e0ff carries text in 59 places and against an off-white page it comes
+       out at 1.4:1, which is not text, it is a suggestion of text. #0b7086 is
+       the same hue (191deg against 187deg) at a luminance that clears 4.5:1
+       both on the page and under `--ink-invert` when it is a button fill.
+
+     * Shadows do the layering that light does in the dark theme, and they are
+       tinted with the page's own blue rather than black, so an elevated card
+       looks lit rather than smudged.
+
+     * `--surface-code` and `--ink-code` do not appear here. Code blocks stay
+       dark in both themes on purpose.
+
+   `data-theme` is always a resolved value: the boot script in index.html turns
+   a stored "system" preference into "light" or "dark" before the first paint,
+   so this file never needs a `prefers-color-scheme` branch and the palette is
+   written once.
+   ========================================================================= */
+:root[data-theme="light"] {
+  color-scheme: light;
+
+  --void: #eef1f7;
+  --surface: #f5f7fb;
+  --surface-raised: #fafbfe;
+  --surface-panel: #ffffff;
+  --surface-subtle: rgba(24, 34, 49, 0.035);
+
+  /* Every ink here used to sit at hue 227, which is the violet-blue band -- the
+     whole light theme carried a faint purple cast, most visible in the muted
+     greys where there is least colour to hide it. These are the same lightness
+     steps moved to 212-214, a neutral slate that reads as grey-blue rather than
+     as tinted. */
+  --ink: #182231;
+  --ink-strong: #070d16;
+  --ink-strong-hover: #212c3d;
+  --ink-muted: #4e5c70;
+  --ink-faint: #55637a;
+  --ink-invert: #f7f9fc;
+
+  /* A deep sky blue. Two earlier attempts bracket it: #19e0ff, the dark theme's
+     cyan, measures 1.4:1 on this page and is not text; #0b7086 kept that hue
+     and cleared contrast but a saturated cyan against pale paper is tiring to
+     read, and `--accent` appears 59 times.
+
+     What was tiring there was cyan's luminance, not its saturation. Dropping
+     the lightness and moving off cyan into blue fixes it: this is the deepest
+     and highest-contrast of the sky blues (6.7:1 on the page against 5.1), and
+     depth is what keeps a saturated colour comfortable. */
+  --accent: #075985;
+  --accent-hover: #064861;
+  --accent-deep: #1d4ed8;
+  --accent-violet: #453f7a;
+  --accent-warm: #b4441a;
+  --accent-wash: rgba(7, 89, 133, 0.05);
+  --accent-wash-soft: rgba(7, 89, 133, 0.035);
+  --accent-fade: rgba(7, 89, 133, 0.16);
+
+  --line: rgba(24, 34, 49, 0.12);
+  --line-strong: rgba(24, 34, 49, 0.22);
+  --line-accent: rgba(7, 89, 133, 0.38);
+
+  --scrim-nav: rgba(245, 247, 251, 0.82);
+  --scrim-strip: rgba(245, 247, 251, 0.94);
+
+  /* Far weaker than the dark theme's, and desaturated with it. The same wash
+     that reads as depth against near-black reads as a stain against off-white,
+     and a saturated one reads as a colour cast over the whole page. */
+  --atmo-blue: rgba(47, 107, 255, 0.05);
+  --atmo-violet: rgba(69, 63, 122, 0.03);
+  --atmo-cyan: rgba(7, 89, 133, 0.04);
+  --grain-opacity: 0.016;
+
+  --shadow-sm: 0 1px 2px rgba(16, 24, 48, 0.05);
+  --shadow: 0 2px 6px rgba(16, 24, 48, 0.06), 0 1px 2px rgba(16, 24, 48, 0.04);
+  --shadow-lg: 0 14px 38px rgba(16, 24, 48, 0.09);
+}

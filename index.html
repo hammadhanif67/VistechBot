@@ -2,12 +2,80 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>vtb</title>
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <meta name="theme-color" content="#05070f" />
+    <meta name="author" content="VistechBot" />
+
+    <!--
+      Theme, resolved before anything paints.
+
+      This has to be an inline, blocking script in <head>. Doing it in React
+      would mean the browser paints the default palette first and then repaints
+      once the app mounts, which is the dark-to-light flash the theme system
+      exists to avoid.
+
+      A stored "system" preference is turned into a concrete "light" or "dark"
+      here, so the stylesheet only ever needs one `[data-theme="light"]` block
+      and never a `prefers-color-scheme` branch. With JavaScript off no
+      attribute is set and the page renders the dark palette on :root, which is
+      the site's default anyway.
+    -->
+    <script>
+      (function () {
+        var KEY = "vistechbot-theme";
+        var stored = null;
+        try { stored = localStorage.getItem(KEY); } catch (e) { /* private mode */ }
+
+        var resolved =
+          stored === "light" || stored === "dark"
+            ? stored
+            : stored === "system"
+              ? (window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark")
+              : "dark";
+
+        document.documentElement.setAttribute("data-theme", resolved);
+
+        var meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.setAttribute("content", resolved === "light" ? "#eef1f7" : "#05070f");
+      })();
+    </script>
+
+    <!--
+      The build replaces the marker below with this route's own title element,
+      description, canonical, Open Graph, X and JSON-LD — see `seoFilesPlugin`
+      in vite.config.js. Every route gets its own HTML file carrying its own
+      metadata, because the readers that matter most never run the app:
+      social scrapers read the shipped HTML, and a crawler's first pass indexes
+      it before queuing the page for JavaScript rendering.
+
+      `components/seo/Seo.jsx` renders the same values again at runtime, which
+      is what keeps them correct across client-side navigation. It also marks
+      the baked-in copies as stale on mount, so a page never carries two.
+
+      In `npm run dev` there is no build step, so the marker is simply an
+      empty comment and the runtime tags are the only ones present.
+    -->
+    <!--seo-head-->
+
+    <!--
+      Urbanist is self-hosted, so there is no third-party font origin to warm up.
+      The two weights the first screen actually paints — body copy and the
+      display headline — are preloaded so text is not held back behind the CSS
+      that would otherwise have to be parsed before the fetch could start.
+    -->
+    <link rel="preload" href="/fonts/urbanist-400.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/urbanist-800.woff2" as="font" type="font/woff2" crossorigin />
   </head>
   <body>
     <div id="root"></div>
+    <noscript>
+      VistechBot is an AI customer support platform with chat and voice agents.
+      This site needs JavaScript enabled. Reach the team at support@vistechbot.com.
+    </noscript>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

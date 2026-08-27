@@ -1,0 +1,116 @@
+/* =========================================================================
+   URBANIST
+
+   Self-hosted, latin subset, woff2 only.
+
+   Declared by hand rather than by importing @fontsource's stylesheets: those
+   reference a `.woff` fallback alongside every `.woff2`, and Vite emits both
+   into `dist` — roughly 90 kB of files no modern browser will ever request.
+   Writing the faces here also puts `font-display` and the unicode range under
+   this project's control instead of the package's.
+
+   Six weights, and every one is used:
+     300  the light counterpoint inside display type
+     400  body copy
+     500  secondary UI text
+     600  labels, nav, table headers
+     700  headings
+     800  display
+   ========================================================================= */
+
+@font-face {
+  font-family: "Urbanist";
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url("/fonts/urbanist-300.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "Urbanist";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/urbanist-400.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "Urbanist";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("/fonts/urbanist-500.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "Urbanist";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("/fonts/urbanist-600.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "Urbanist";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/fonts/urbanist-700.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "Urbanist";
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url("/fonts/urbanist-800.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* -------------------------------------------------------------------------
+   METRIC-MATCHED FALLBACK
+
+   `font-display: swap` paints text immediately in a fallback face and swaps
+   Urbanist in when it arrives. That is the right trade for LCP, but the swap
+   moves the page: measured at 100px, the system stack sets this site's sample
+   string 1.6% wider than Urbanist and gives it a 133px line box against
+   Urbanist's 120px. Every paragraph was ~11% taller until the font landed,
+   then collapsed — layout shift on every first visit.
+
+   This face is the same local font with Urbanist's metrics forced onto it, so
+   the first paint already occupies the space the real font will take. The
+   numbers are measured, not guessed:
+
+     size-adjust      Urbanist / system-ui advance width  = 98.45%
+     ascent-override  Urbanist ascent 0.950em, over the adjusted em
+     descent-override Urbanist descent 0.250em, over the adjusted em
+
+   It only ever renders for the few hundred milliseconds before Urbanist is
+   ready, and it is not a visual change: the same fallback was already being
+   used, just at the wrong size.
+   ------------------------------------------------------------------------- */
+@font-face {
+  font-family: "Urbanist Fallback";
+  src: local("Segoe UI"), local("Helvetica Neue"), local("Arial"), local("Roboto");
+  size-adjust: 98.45%;
+  ascent-override: 96.5%;
+  descent-override: 25.39%;
+  line-gap-override: 0%;
+}

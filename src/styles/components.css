@@ -1,0 +1,769 @@
+/* =========================================================================
+   COMPONENTS
+
+   Buttons, panels, tables, forms, modules. Rectangular throughout — the
+   universal radius reset in index.css guarantees it, and nothing here fights
+   that by trying to soften an edge with a shadow instead.
+   ========================================================================= */
+
+/* -------------------------------------------------------------------------
+   BUTTONS
+
+   Two variants only. The primary is a solid block that inverts; the ghost is
+   an outline that fills from the left on hover. Both move their arrow rather
+   than lifting the whole button — a translate on a rectangle reads as
+   direction, a lift reads as a card.
+   ------------------------------------------------------------------------- */
+.btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--s-3);
+  min-height: 52px;
+  padding: 0 var(--s-6);
+  border: var(--hairline) solid transparent;
+  font-size: var(--fs-label);
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition: color var(--t-base), background var(--t-base),
+    border-color var(--t-base), transform var(--t-fast), box-shadow var(--t-fast);
+}
+
+.btn svg {
+  flex-shrink: 0;
+  transition: transform var(--t-base);
+}
+
+/* The glyph is an up-right arrow, so it lifts up and right on hover. Sliding
+   it flat to the right fought the icon's own direction. */
+.btn:hover svg {
+  transform: translate(3px, -3px);
+}
+
+/* -------------------------------------------------------------------------
+   HOVER: the surface shifts, nothing moves
+
+   Four versions were tried and each failed for its own reason. Swapping the
+   whole background repaints the largest thing on screen for a pointer passing
+   over it. An outline with no colour left the filled variants with no feedback
+   worth the name. A left-to-right fill puts half the label on the old
+   background and half on the new, and no single label colour is legible on
+   both. A bar sweeping the bottom edge was decoration answering a question
+   nobody asked.
+
+   What is left is the conventional one, which is conventional because it works:
+   the button lifts a pixel, its fill moves one step within its own family, and
+   in the light theme it picks up the elevation shadow it would cast. Nothing is
+   drawn, nothing sweeps, and the label never changes colour underneath itself.
+
+   `translateY` is a composited property and does not affect layout, so nothing
+   around the button moves with it. `--ink-strong-hover` and `--accent-hover`
+   are real tokens, so each theme decides which direction "one step" goes: dark
+   dims its white, light lifts its near-black. `--shadow` is `none` in the dark
+   theme, where a lift is read from the tone change instead.
+   ------------------------------------------------------------------------- */
+.btn:hover:not([disabled]) {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow);
+}
+.btn--primary {
+  background: var(--ink-strong);
+  color: var(--ink-invert);
+  border-color: var(--ink-strong);
+}
+
+.btn--primary:hover {
+  background: var(--ink-strong-hover);
+  border-color: var(--ink-strong-hover);
+}
+
+.btn--ghost {
+  color: var(--ink);
+  background: transparent;
+  border-color: var(--line-strong);
+}
+
+/* The ghost has no fill to shift, so it takes the accent through its outline
+   and label instead. */
+.btn--ghost:hover {
+  color: var(--accent);
+  border-color: var(--line-accent);
+  background: var(--accent-wash);
+}
+
+.btn--accent {
+  background: var(--accent);
+  color: var(--ink-invert);
+  border-color: var(--accent);
+}
+
+.btn--accent:hover {
+  background: var(--accent-hover);
+  border-color: var(--accent-hover);
+}
+
+.btn--sm {
+  min-height: 42px;
+  padding: 0 var(--s-5);
+}
+
+.btn--block {
+  width: 100%;
+}
+
+.btn[disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn[disabled]:hover svg {
+  transform: none;
+}
+
+/* Links inside the arrow-link pattern use the same up-right lift. */
+.linkArrow:hover svg {
+  transform: translate(3px, -3px);
+}
+
+/* A text link that behaves like a button: underline grows from the left. */
+.linkArrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  padding-bottom: 4px;
+  font-size: var(--fs-label);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  color: var(--accent);
+  border-bottom: var(--hairline) solid transparent;
+  transition: border-color var(--t-base), color var(--t-base);
+}
+
+.linkArrow svg {
+  transition: transform var(--t-base);
+}
+
+.linkArrow:hover {
+  border-bottom-color: var(--accent);
+}
+
+/* -------------------------------------------------------------------------
+   PANEL — the bordered technical container that replaces the old cards
+   ------------------------------------------------------------------------- */
+.panel {
+  position: relative;
+  padding: var(--s-6);
+  background: var(--surface-panel);
+  border: var(--hairline) solid var(--line);
+  /* `--shadow-sm` is `none` in the dark theme, where a panel separates itself
+     from the page by being lighter than it. On the light theme a panel is
+     nearly white on an off-white page, and a very low shadow is what makes it
+     read as sitting above rather than cut out of the background. */
+  box-shadow: var(--shadow-sm);
+  transition: border-color var(--t-base), background var(--t-base),
+    box-shadow var(--t-base);
+}
+
+.panel--flat {
+  background: transparent;
+}
+
+.panel--hover:hover {
+  border-color: var(--line-accent);
+  background: var(--surface-raised);
+  box-shadow: var(--shadow);
+}
+
+/* A corner tick in the accent colour: a small piece of hard geometry that
+   marks a panel as active without rounding or glowing it. */
+.panel--marked::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 10px;
+  height: 10px;
+  background: var(--accent);
+}
+
+/* -------------------------------------------------------------------------
+   MODULE — numbered editorial row
+
+   Used for capability lists and use cases. The index sits in its own column
+   so the titles align on a hard left edge down the whole list.
+   ------------------------------------------------------------------------- */
+.moduleList {
+  border-top: var(--hairline) solid var(--line);
+}
+
+/* Horizontal padding with a matching negative margin: the text stays exactly
+   where it was, but the hover tint gets 12px of bleed either side so it reads
+   as the row lighting up rather than as a box drawn around the copy. */
+.module {
+  position: relative;
+  display: grid;
+  grid-template-columns: 88px minmax(0, 1fr);
+  gap: var(--s-6);
+  padding: var(--s-6) var(--s-3);
+  margin-inline: calc(var(--s-3) * -1);
+  border-bottom: var(--hairline) solid var(--line);
+  transition: background var(--t-base), border-color var(--t-base);
+}
+
+.module__index {
+  font-size: var(--fs-label);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-label);
+  color: var(--ink-faint);
+  font-variant-numeric: tabular-nums;
+  padding-top: 6px;
+}
+
+.module__body {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: var(--s-6);
+  align-items: start;
+}
+
+.module__title {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  font-size: var(--fs-h3);
+  font-weight: var(--fw-semibold);
+  color: var(--ink-strong);
+  transition: color var(--t-base);
+}
+
+.module__title svg {
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
+.module__text {
+  font-size: var(--fs-small);
+  line-height: 1.7;
+  color: var(--ink-muted);
+  max-width: 56ch;
+}
+
+.module__meta {
+  margin-top: var(--s-3);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  font-size: var(--fs-micro);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+/* The whole row takes the hover, not a hairline under it.
+
+   A line growing along the bottom edge is a small signal a long way from the
+   pointer: on a row this tall the cursor is usually nowhere near the border it
+   is lighting up. Tinting the row means the thing that responds is the thing
+   being pointed at — and it reads at a glance which of nine modules you
+   are on. Surface, rule, index and title all move together. */
+.module:hover {
+  background: var(--accent-wash);
+  border-bottom-color: var(--line-accent);
+}
+
+.module:hover .module__title,
+.module:hover .module__index {
+  color: var(--accent);
+}
+
+/* -------------------------------------------------------------------------
+   STAT — large figure over a hairline
+   ------------------------------------------------------------------------- */
+.statRow {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-top: var(--hairline) solid var(--line);
+}
+
+/* Columns are separated by a rule, so every cell needs breathing room on both
+   sides of it. Only the first and last sit flush with the page gutter —
+   without this the second and third columns started hard against the previous
+   column's border and the row read as misaligned. */
+.stat {
+  padding: var(--s-6) var(--s-5);
+  border-right: var(--hairline) solid var(--line);
+}
+
+.stat:first-child {
+  padding-left: 0;
+}
+
+.stat:last-child {
+  border-right: 0;
+  padding-right: 0;
+}
+
+.stat__value {
+  font-size: clamp(32px, 3.6vw, 56px);
+  font-weight: var(--fw-black);
+  letter-spacing: var(--ls-h2);
+  line-height: 1;
+  color: var(--ink-strong);
+  font-variant-numeric: tabular-nums;
+}
+
+.stat__label {
+  margin-top: var(--s-3);
+  font-size: var(--fs-label);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.stat__note {
+  margin-top: var(--s-2);
+  font-size: var(--fs-small);
+  color: var(--ink-muted);
+}
+
+/* -------------------------------------------------------------------------
+   META — technical key/value rows
+   ------------------------------------------------------------------------- */
+.metaList {
+  display: grid;
+  gap: 0;
+  border-top: var(--hairline) solid var(--line);
+}
+
+.metaRow {
+  display: grid;
+  grid-template-columns: minmax(120px, 0.4fr) minmax(0, 1fr);
+  gap: var(--s-5);
+  padding: var(--s-4) 0;
+  border-bottom: var(--hairline) solid var(--line);
+  font-size: var(--fs-small);
+}
+
+.metaRow dt {
+  font-size: var(--fs-micro);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  padding-top: 3px;
+}
+
+.metaRow dd {
+  color: var(--ink);
+  line-height: 1.65;
+}
+
+/* -------------------------------------------------------------------------
+   TAG
+   ------------------------------------------------------------------------- */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  padding: 5px 10px;
+  border: var(--hairline) solid var(--line-strong);
+  font-size: var(--fs-micro);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+
+.tag--accent {
+  border-color: var(--line-accent);
+  color: var(--accent);
+}
+
+/* -------------------------------------------------------------------------
+   TABLE — the comparison layout that replaces pricing cards
+   ------------------------------------------------------------------------- */
+.dataTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--fs-small);
+}
+
+.dataTable th,
+.dataTable td {
+  padding: var(--s-4) var(--s-4);
+  text-align: left;
+  border-bottom: var(--hairline) solid var(--line);
+  vertical-align: top;
+}
+
+.dataTable thead th {
+  border-bottom-color: var(--line-strong);
+}
+
+.dataTable tbody th {
+  font-weight: var(--fw-medium);
+  color: var(--ink-muted);
+}
+
+.dataTable td {
+  color: var(--ink);
+}
+
+/* The recommended column is marked by a continuous accent edge rather than a
+   floating "popular" badge. */
+.dataTable .isFeatured {
+  background: var(--accent-wash);
+  box-shadow: inset 2px 0 0 var(--accent), inset -2px 0 0 var(--accent);
+}
+
+/* -------------------------------------------------------------------------
+   FORM
+   ------------------------------------------------------------------------- */
+.field {
+  display: grid;
+  gap: var(--s-2);
+}
+
+.field > label {
+  font-size: var(--fs-micro);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.field input,
+.field textarea,
+.field select {
+  width: 100%;
+  padding: 15px var(--s-4);
+  background: transparent;
+  border: var(--hairline) solid var(--line-strong);
+  color: var(--ink);
+  font-size: var(--fs-small);
+  transition: border-color var(--t-base), background var(--t-base);
+}
+
+.field textarea {
+  resize: vertical;
+  min-height: 140px;
+  line-height: 1.65;
+}
+
+.field input::placeholder,
+.field textarea::placeholder {
+  color: var(--ink-faint);
+}
+
+.field input:hover,
+.field textarea:hover {
+  border-color: var(--line-accent);
+}
+
+/*
+   The global `:focus-visible` rule paints a 2px offset ring around the element.
+   On a field that already turns its border accent, that reads as a thick double
+   frame -- the same thing the footer newsletter had. Pulling the ring inside the
+   border makes the two read as one 2px accent edge instead of two rings.
+*/
+.field input:focus,
+.field textarea:focus,
+.field select:focus {
+  outline: none;
+  border-color: var(--accent);
+  background: var(--accent-wash-soft);
+}
+
+.field input:focus-visible,
+.field textarea:focus-visible,
+.field select:focus-visible {
+  box-shadow: inset 0 0 0 1px var(--accent);
+}
+
+.field input[aria-invalid="true"],
+.field textarea[aria-invalid="true"] {
+  border-color: var(--accent-warm);
+}
+
+.fieldError {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  font-size: var(--fs-micro);
+  font-weight: var(--fw-semibold);
+  letter-spacing: 0.04em;
+  color: var(--accent-warm);
+}
+
+.fieldError svg {
+  flex-shrink: 0;
+}
+
+.fieldCount {
+  justify-self: end;
+  font-size: var(--fs-micro);
+  color: var(--ink-faint);
+  font-variant-numeric: tabular-nums;
+}
+
+/* -------------------------------------------------------------------------
+   CODE
+   ------------------------------------------------------------------------- */
+/* `min-width: 0` so the block can sit inside a grid or flex parent and still
+   shrink; the `<pre>` inside handles its own horizontal scrolling. Without it
+   the longest code line sets a floor on the whole column. */
+.codeBlock {
+  min-width: 0;
+  border: var(--hairline) solid var(--line);
+  background: var(--surface-code);
+}
+
+.codeBlock__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-4);
+  padding: var(--s-3) var(--s-4);
+  border-bottom: var(--hairline) solid var(--line);
+}
+
+.codeBlock__lang {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  font-size: var(--fs-micro);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.codeBlock__copy {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border: var(--hairline) solid var(--line-strong);
+  font-size: var(--fs-micro);
+  font-weight: var(--fw-semibold);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  transition: color var(--t-fast), border-color var(--t-fast);
+}
+
+.codeBlock__copy:hover {
+  color: var(--accent);
+  border-color: var(--line-accent);
+}
+
+/* Long lines scroll inside the block; the page itself never scrolls sideways. */
+.codeBlock pre {
+  margin: 0;
+  padding: var(--s-5);
+  overflow-x: auto;
+  font-family: var(--font-mono);
+  font-size: var(--fs-code);
+  line-height: 1.75;
+  color: var(--ink-code);
+  tab-size: 2;
+}
+
+.codeBlock code {
+  white-space: pre;
+}
+
+/* -------------------------------------------------------------------------
+   NOTICE — inline status and disclosure blocks
+   ------------------------------------------------------------------------- */
+.notice {
+  padding: var(--s-4);
+  border-left: 2px solid var(--line-strong);
+  background: var(--surface-subtle);
+  font-size: var(--fs-small);
+  line-height: 1.65;
+  color: var(--ink-muted);
+}
+
+.notice--accent {
+  border-left-color: var(--accent);
+}
+
+.notice--warn {
+  border-left-color: var(--accent-warm);
+}
+
+.notice a {
+  color: var(--accent);
+  font-weight: var(--fw-semibold);
+  border-bottom: var(--hairline) solid var(--line-accent);
+}
+
+/* -------------------------------------------------------------------------
+   RESPONSIVE
+   ------------------------------------------------------------------------- */
+@media (max-width: 1024px) {
+  .module__body {
+    grid-template-columns: 1fr;
+    gap: var(--s-3);
+  }
+
+  .statRow {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .stat:nth-child(2) {
+    border-right: 0;
+  }
+
+  .stat:nth-child(-n + 2) {
+    border-bottom: var(--hairline) solid var(--line);
+  }
+}
+
+@media (max-width: 640px) {
+  .module {
+    grid-template-columns: 1fr;
+    gap: var(--s-3);
+  }
+
+  .module__index {
+    padding-top: 0;
+  }
+
+  .statRow {
+    grid-template-columns: 1fr;
+  }
+
+  .stat {
+    border-right: 0;
+    border-bottom: var(--hairline) solid var(--line);
+    padding-right: 0;
+  }
+
+  .stat:last-child {
+    border-bottom: 0;
+  }
+
+  .metaRow {
+    grid-template-columns: 1fr;
+    gap: var(--s-2);
+  }
+
+  .btn {
+    width: 100%;
+  }
+}
+
+/* -------------------------------------------------------------------------
+   META LIST WITH ICONS
+
+   The icon sits inside the term so the two columns keep their alignment; a
+   third column would have pushed the details out of line with every other
+   meta list on the site.
+   ------------------------------------------------------------------------- */
+.metaList--icons .metaRow dt {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+}
+
+.metaList--icons .metaRow dt svg {
+  flex-shrink: 0;
+  color: var(--accent);
+}
+
+.metaList--icons .metaRow {
+  grid-template-columns: minmax(150px, 0.4fr) minmax(0, 1fr);
+}
+
+/* =========================================================================
+   PRESSED STATES
+
+   Every control had hover and focus but nothing for the moment of the press.
+   On a touch screen that gap is the whole feedback loop: there is no hover,
+   so without an active state a tap looks like nothing happened until the
+   route changes.
+
+   The nudge is 1px and the scale is 0.99 — enough to register as a press,
+   small enough that it never reads as the layout moving.
+   ========================================================================= */
+/* Later in the file than the hover lift, so pressing overrides it: the button
+   goes from -1px to +1px, which is the whole travel of a press. */
+.btn:active:not([disabled]) {
+  transform: translateY(1px) scale(0.99);
+  box-shadow: none;
+}
+
+.btn:active:not([disabled]) svg {
+  transform: none;
+}
+
+.linkArrow:active {
+  opacity: 0.7;
+}
+
+.codeBlock__copy:active,
+.billing__option:active {
+  transform: translateY(1px);
+}
+
+/* Controls that press need something to animate.
+
+   `.btn` is deliberately not in this list. It declares its own transition at
+   the top of the file, and being named again here — later, so winning — dropped
+   `box-shadow` from it, which silently killed the hover elevation on the light
+   theme. Two rules setting `transition` on the same element is a trap; one
+   owner per property. */
+.codeBlock__copy,
+.billing__option {
+  transition: color var(--t-base), background var(--t-base), border-color var(--t-base),
+    transform var(--t-fast);
+}
+
+/* A touch device gets no hover, so the tap highlight is the only feedback
+   between press and result. The browser default is a translucent grey box
+   that ignores the element's shape. */
+:where(a, button, [role="button"], [role="tab"], [role="radio"], [role="option"]) {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Tap targets: 44px is the smallest reliably hittable size on a phone. The
+   icon-only controls were sized to their glyph. */
+@media (pointer: coarse) {
+  .btn--sm {
+    min-height: 46px;
+  }
+
+  .docsSearch__clear,
+  .footer__signupRow button,
+  .codeBlock__copy {
+    min-width: 44px;
+    min-height: 44px;
+  }
+}
+
+/* -------------------------------------------------------------------------
+   TOUCH TARGETS
+
+   Standalone links were sized to their text — the wordmark at 26px, the
+   arrow-links at 25px. Fine for a cursor, too small for a thumb.
+
+   Only standalone controls are grown. Links inside a sentence are left alone:
+   WCAG exempts them, and padding them would break the line box they sit in.
+   ------------------------------------------------------------------------- */
+@media (pointer: coarse) {
+  .wordmark {
+    padding-block: 9px;
+  }
+
+  .linkArrow {
+    padding-block: 12px 10px;
+  }
+}

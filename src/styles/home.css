@@ -1,641 +1,958 @@
-/* =========================================================
-   THEME VARIABLES & TOKENS (Sleek & Tight)
-========================================================= */
-:root {
-  /* Colors */
-  --bg-dark-100: #020617;
-  --bg-dark-200: #070e27;
-  --text-primary: #ffffff;
-  --text-muted: rgba(230, 237, 255, 0.7);
-  
-  --accent-primary: #2563eb;
-  --accent-purple: #7c3aed;
-  --accent-pink: #d946ef;
-  --accent-cyan: #25eaff;
-  
-  /* Gradients */
-  --gradient-text: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #ec4899 100%);
-  --gradient-btn: linear-gradient(135deg, #7c3aed 0%, #2563eb 100%);
-  --gradient-bg: linear-gradient(135deg, var(--bg-dark-100) 0%, var(--bg-dark-200) 100%);
+/* =========================================================================
+   HOME
 
-  /* Layout & Spacing Optimized */
-  --hero-padding: clamp(40px, 5vw, 60px) clamp(20px, 4vw, 40px);
-  --transition-premium: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-}
+   Asymmetric hero, editorial statement, signal flow, capability index, scale
+   band, use-case switcher, security spec, voices. No cards, no grid
+   background, no radius.
+   ========================================================================= */
 
-/* =========================================================
-   HERO CONTAINER (Contained & Non-Bulky)
-========================================================= */
-.heroSection {
-  width: 100%;
-  min-height: 100vh;
-  padding: var(--hero-padding);
-  display: grid;
-  grid-template-columns: 1.1fr 0.9fr;
-  align-items: center;
-  gap: clamp(32px, 4vw, 48px);
-  overflow: hidden; /* Restricts any leaking particles/rings */
+/* -------------------------------------------------------------------------
+   01 — HERO
+
+   The scene bleeds off the right edge and the copy sits hard against the left
+   gutter. On a wide screen the two overlap rather than sitting in separate
+   columns, which is what stops it reading as a boxed banner.
+   ------------------------------------------------------------------------- */
+.hero {
   position: relative;
-  background:
-    linear-gradient(rgba(255, 255, 255, 0.01) 1px, transparent 1px) 0 0 / 30px 30px,
-    linear-gradient(90deg, rgba(255, 255, 255, 0.01) 1px, transparent 1px) 0 0 / 30px 30px,
-    radial-gradient(circle at 75% 35%, rgba(37, 99, 235, 0.15), transparent 45%),
-    radial-gradient(circle at 25% 65%, rgba(124, 58, 237, 0.1), transparent 40%),
-    var(--gradient-bg);
+  min-height: min(94vh, 960px);
+  display: flex;
+  align-items: flex-end;
+  padding-block: clamp(96px, 16vh, 190px) 0;
+  overflow: hidden;
   isolation: isolate;
 }
 
-/* =========================================================
-   LEFT CONTENT (Polished Typography)
-========================================================= */
-.heroLeft {
+
+
+/* One column. The second existed only to hold the decorative visual, and with
+   that gone a two-column grid would just push the copy into a narrower well
+   for no reason. */
+.hero__inner {
   position: relative;
-  z-index: 10;
-  max-width: 620px;
+  z-index: var(--z-content);
+  width: 100%;
 }
 
-.pill, .heroGlowTag {
-  width: fit-content;
-  max-width: 100%;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 16px;
-  border-radius: 999px;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.05em;
+/* Width is set in px, not `ch`. A `ch` limit here resolves against this
+   element's inherited 16px body size rather than the 92px headline inside it,
+   which clipped the h1 to about two characters per line. */
+/* The headline is set at 92px, so the measure is the constraint, not the
+   shell. 820px keeps each of the three lines on one line. */
+.hero__content {
+  max-width: min(100%, 820px);
+}
+
+.hero__eyebrow {
+  margin-bottom: var(--s-6);
+}
+
+.hero__title {
+  font-size: var(--fs-h1);
+  font-weight: var(--fw-black);
+  line-height: 0.92;
+  letter-spacing: var(--ls-h1);
   text-transform: uppercase;
-  transition: var(--transition-premium);
+  max-width: none;
 }
 
-.pill {
-  color: #ddd6fe;
-  background: rgba(124, 58, 237, 0.1);
-  border: 1px solid rgba(168, 85, 247, 0.25);
+.hero__title em {
+  font-style: normal;
+  font-weight: var(--fw-light);
+  color: var(--accent);
 }
 
-.pill:hover {
-  border-color: rgba(168, 85, 247, 0.5);
-  background: rgba(124, 58, 237, 0.15);
-  transform: translateY(-1px);
+.hero__lead {
+  margin-top: var(--s-6);
+  max-width: 46ch;
+  font-size: var(--fs-lead);
+  line-height: 1.62;
 }
 
-.heroLeft h1 {
-  margin: 20px 0 0;
-  font-size: clamp(36px, 4.5vw, 64px); /* Slightly scaled down to prevent bulkiness */
-  line-height: 1.05;
+.hero__actions {
+  margin-top: var(--s-7);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-3);
+}
+
+/* The technical strip along the bottom edge of the hero. Sits on the section's
+   own boundary rule, so it doubles as the separator into the next section. */
+.hero__meta {
+  margin-top: clamp(56px, 9vh, 104px);
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border-top: var(--hairline) solid var(--line);
+}
+
+/* Each cell is padded on both sides of its separating rule, and only the outer
+   two sit flush with the page gutter. Padding just one side left the second and
+   third columns starting hard against the previous column's border, which is
+   what made the row look out of alignment.
+
+   The rows are also locked to a shared height so the three values sit on one
+   line even when a label wraps. */
+.hero__metaItem {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: 6px;
+  padding: var(--s-5);
+  border-right: var(--hairline) solid var(--line);
+}
+
+.hero__metaItem:first-child {
+  padding-left: 0;
+}
+
+.hero__metaItem:last-child {
+  border-right: 0;
+  padding-right: 0;
+}
+
+.hero__metaItem dt {
+  font-size: var(--fs-micro);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.hero__metaItem dd {
+  margin: 0;
+  font-size: var(--fs-lead);
+  font-weight: var(--fw-semibold);
   letter-spacing: -0.02em;
-  font-weight: 900;
-  color: var(--text-primary);
+  line-height: 1.35;
+  color: var(--ink-strong);
 }
 
-.heroLeft h1 span {
-  display: block;
-  margin-top: 4px;
-  background: var(--gradient-text);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+/* -------------------------------------------------------------------------
+   02 — STATEMENT
+   ------------------------------------------------------------------------- */
+.statement {
+  padding-block: clamp(80px, 12vh, 140px);
 }
 
-.heroLeft p {
-  margin: 20px 0 0;
-  max-width: 520px;
-  color: var(--text-muted);
-  font-size: clamp(15px, 1.2vw, 17px);
+.statement__title {
+  margin-top: var(--s-5);
+}
+
+/*
+   The body used to be a single narrow column pushed right with `margin-left:
+   auto`. Under a heading that runs the full width of the shell, that left a
+   large empty rectangle to its left — read as a hole in the page rather than
+   as whitespace.
+
+   It is two columns now, sitting directly under the heading and starting at
+   the same left edge. The paragraphs fill the width the heading occupies, and
+   the rule above them ties the two blocks together.
+*/
+.statement__body {
+  margin-top: clamp(32px, 4vh, 52px);
+  padding-top: var(--s-5);
+  border-top: var(--hairline) solid var(--line);
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: clamp(32px, 5vw, 88px);
+  row-gap: var(--s-5);
+  align-items: start;
+}
+
+.statement__body p {
+  margin: 0;
+  max-width: 46ch;
+  font-size: var(--fs-lead);
+  line-height: 1.65;
+}
+
+/* The link closes the block under the first column, where the eye lands after
+   reading left to right. */
+.statement__body .linkArrow {
+  grid-column: 1;
+  justify-self: start;
+}
+
+/* -------------------------------------------------------------------------
+   03 — SIGNAL FLOW
+
+   One continuous rule with four panels hanging off it and a pulse running
+   along. The line is the diagram; the panels are annotations on it.
+   ------------------------------------------------------------------------- */
+.flow__track {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--s-5);
+  padding-top: var(--s-7);
+}
+
+.flow__line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--hairline);
+  background: var(--line);
+  overflow: hidden;
+}
+
+.flow__pulse {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 120px;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  animation: flowPulse 5s linear infinite;
+}
+
+@keyframes flowPulse {
+  0%   { transform: translateX(-120px); }
+  100% { transform: translateX(calc(100vw + 120px)); }
+}
+
+.flow__step {
+  position: relative;
+  display: grid;
+  gap: var(--s-4);
+}
+
+/* A square tick where the panel meets the line. */
+.flow__node {
+  position: absolute;
+  top: calc(var(--s-7) * -1);
+  left: 0;
+  width: 9px;
+  height: 9px;
+  background: var(--accent);
+  transform: translateY(-4px);
+}
+
+.flow__panel {
+  display: grid;
+  gap: var(--s-3);
+  padding-right: var(--s-5);
+}
+
+.flow__index {
+  font-size: var(--fs-micro);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-label);
+  color: var(--ink-faint);
+  font-variant-numeric: tabular-nums;
+}
+
+.flow__icon {
+  color: var(--accent);
+}
+
+.flow__step h3 {
+  font-size: var(--fs-h3);
+  font-weight: var(--fw-semibold);
+  color: var(--ink-strong);
+}
+
+.flow__step p {
+  font-size: var(--fs-small);
+  line-height: 1.7;
+}
+
+.flow__meta {
+  font-size: var(--fs-micro);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+/* -------------------------------------------------------------------------
+   05 — SCALE BAND
+   ------------------------------------------------------------------------- */
+.scale {
+  position: relative;
+  padding-block: clamp(96px, 16vh, 200px);
+  overflow: hidden;
+  isolation: isolate;
+  border-block: var(--hairline) solid var(--line);
+}
+
+.scale__inner {
+  position: relative;
+  z-index: var(--z-content);
+}
+
+.scale__title {
+  margin-top: var(--s-6);
+  max-width: 12ch;
+}
+
+.scale__stats {
+  margin-top: clamp(56px, 9vh, 96px);
+}
+
+.scale__stats .stat dd {
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+  gap: 0;
+  margin: 0;
+  height: 100%;
+}
+
+/* -------------------------------------------------------------------------
+   06 — USE CASES
+   ------------------------------------------------------------------------- */
+.useCases__layout {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  gap: var(--s-7);
+  align-items: start;
+}
+
+.useCases__list {
+  border-top: var(--hairline) solid var(--line);
+}
+
+.useCases__row {
+  position: relative;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 48px 1fr;
+  align-items: center;
+  gap: var(--s-4);
+  padding: var(--s-4) 0;
+  text-align: left;
+  border-bottom: var(--hairline) solid var(--line);
+  color: var(--ink-muted);
+  transition: color var(--t-base), padding-left var(--t-base);
+}
+
+/* The active row shifts right and grows an accent edge — a marker on a list,
+   not a filled tab. */
+.useCases__row::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--accent);
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform var(--t-base);
+}
+
+.useCases__row.isActive,
+.useCases__row:hover {
+  color: var(--ink-strong);
+  padding-left: var(--s-4);
+}
+
+.useCases__row.isActive::before {
+  transform: scaleY(1);
+}
+
+.useCases__index {
+  font-size: var(--fs-micro);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-label);
+  color: var(--ink-faint);
+  font-variant-numeric: tabular-nums;
+}
+
+.useCases__name {
+  font-size: clamp(18px, 1.8vw, 24px);
+  font-weight: var(--fw-semibold);
+  letter-spacing: -0.02em;
+}
+
+.useCases__panel {
+  position: sticky;
+  top: calc(var(--nav-h) + var(--s-5));
+  min-height: 340px;
+  padding: var(--s-7);
+}
+
+.useCases__panelIcon {
+  color: var(--accent);
+}
+
+.useCases__panelInner {
+  display: grid;
+  gap: var(--s-4);
+  justify-items: start;
+  animation: panelIn 0.42s var(--ease) both;
+}
+
+@keyframes panelIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.useCases__panel h3 {
+  font-size: clamp(24px, 2.6vw, 34px);
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--ls-h2);
+  text-transform: uppercase;
+}
+
+.useCases__lead {
+  max-width: 46ch;
+  font-size: var(--fs-lead);
   line-height: 1.6;
 }
 
-/* Actions & Buttons */
-.heroActions {
-  margin-top: 32px;
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  flex-wrap: wrap;
-}
-
-.heroBtn {
-  min-height: 52px;
-  padding: 0 28px;
-  border-radius: 12px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  font-size: 14px;
-  font-weight: 700;
-  cursor: pointer;
-  position: relative;
-  transition: var(--transition-premium);
-}
-
-.heroBtn.primary {
-  color: var(--text-primary);
-  background: var(--gradient-btn);
-  box-shadow: 0 8px 24px rgba(139, 44, 255, 0.2);
-}
-
-.heroBtn.outline {
-  color: var(--text-primary);
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(8px);
-}
-
-.heroBtn:hover {
-  transform: translateY(-3px);
-}
-
-.heroBtn.primary:hover {
-  box-shadow: 0 12px 32px rgba(124, 58, 237, 0.35);
-  filter: brightness(1.08);
-}
-
-.heroBtn.outline:hover {
-  background: rgba(255, 255, 255, 0.07);
-  border-color: rgba(255, 255, 255, 0.2);
-}
-
-/* Compact Stats */
-.heroMiniStats {
-  margin-top: 36px;
-  max-width: 540px;
+.useCases__points {
+  width: 100%;
+  margin-top: var(--s-3);
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  border-radius: 16px;
-  background: rgba(8, 13, 31, 0.4);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(16px);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  border-top: var(--hairline) solid var(--line);
 }
 
-.heroMiniStats div {
-  padding: 16px 20px;
-  border-right: 1px solid rgba(255, 255, 255, 0.05);
+.useCases__points li {
+  padding: var(--s-3) 0;
+  border-bottom: var(--hairline) solid var(--line);
+  font-size: var(--fs-small);
+  color: var(--ink);
 }
 
-.heroMiniStats div:last-child {
-  border-right: 0;
+.useCases__points li:nth-child(odd) {
+  padding-right: var(--s-4);
+  border-right: var(--hairline) solid var(--line);
 }
 
-.heroMiniStats strong {
-  display: block;
-  color: var(--text-primary);
-  font-size: clamp(22px, 2vw, 28px);
-  font-weight: 800;
+.useCases__points li:nth-child(even) {
+  padding-left: var(--s-4);
 }
 
-.heroMiniStats span {
-  display: block;
-  margin-top: 4px;
-  color: rgba(226, 232, 240, 0.5);
-  font-size: 12px;
+/* -------------------------------------------------------------------------
+   08 — VOICES
+   ------------------------------------------------------------------------- */
+.voices__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--s-4);
 }
 
-/* =========================================================
-   RIGHT STAGE (Fluid, Scaled-down & Safe)
-========================================================= */
-.heroImageStackRight {
-  position: relative;
-  width: 100%;
+.voices__card {
   height: 100%;
-  min-height: 450px; /* Reduced from 650px to fit screen safely */
+  display: grid;
+  gap: var(--s-5);
+  align-content: space-between;
+  padding: var(--s-6);
+}
+
+.voices__card blockquote p {
+  font-size: var(--fs-small);
+  line-height: 1.75;
+  color: var(--ink);
+}
+
+.voices__person {
   display: flex;
   align-items: center;
-  justify-content: center;
-  perspective: 1500px; 
+  gap: var(--s-3);
+  padding-top: var(--s-4);
+  border-top: var(--hairline) solid var(--line);
 }
 
-/* Ambient Glows - Tamed to prevent bleeding */
-.stackGlow {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(80px);
-  pointer-events: none;
-  opacity: 0.25;
-}
-.stackGlowOne { width: 250px; height: 250px; background: rgba(151, 58, 255, 0.3); }
-.stackGlowTwo { width: 220px; height: 220px; background: rgba(0, 190, 255, 0.2); }
-
-/* Responsive Rings using % instead of fixed pixels */
-.stackOrbitRing {
-  position: absolute;
-  border-radius: 50%;
-  pointer-events: none;
-  width: min(85%, 460px);
-  height: min(85%, 460px);
-  transform: rotateX(65deg) rotateY(-10deg) rotateZ(0deg);
-}
-
-.ringA {
-  border: 1px solid rgba(37, 234, 255, 0.1);
-  animation: lightweightSpin 50s linear infinite;
-}
-
-.ringB {
-  width: min(65%, 340px);
-  height: min(65%, 340px);
-  border: 1px dashed rgba(168, 85, 247, 0.15);
-  animation: lightweightSpinBackward 35s linear infinite;
-}
-
-@keyframes lightweightSpin {
-  0% { transform: rotateX(65deg) rotateY(-10deg) rotateZ(0deg); }
-  100% { transform: rotateX(65deg) rotateY(-10deg) rotateZ(360deg); }
-}
-
-@keyframes lightweightSpinBackward {
-  0% { transform: rotateX(65deg) rotateY(-10deg) rotateZ(360deg); }
-  100% { transform: rotateX(65deg) rotateY(-10deg) rotateZ(0deg); }
-}
-
-/* Particles */
-.stackParticle {
-  position: absolute;
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  background: var(--accent-cyan);
-  opacity: 0.6;
-}
-.p1 { top: 20%; left: 25%; }
-.p2 { top: 35%; right: 20%; }
-.p3 { bottom: 30%; left: 20%; }
-
-/* Stage & Cards Container */
-.imageStackStage {
-  position: relative;
-  z-index: 5;
-  width: 100%;
-  max-width: 440px;
-  height: 400px;
-  transform-style: preserve-3d;
-}
-
-.stackImageCard {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.stackImageCard img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
-
-/* Glass Badge */
-.stackCardMeta {
-  position: absolute;
-  left: 50%;
-  bottom: 5%;
-  transform: translateX(-50%);
-  min-width: 180px;
-  padding: 10px 16px;
-  border-radius: 12px;
-  text-align: center;
-  background: rgba(5, 10, 28, 0.8);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(12px);
-}
-
-.stackCardMeta span {
-  display: block;
-  color: rgba(255, 255, 255, 0.4);
-  font-size: 10px;
-  font-weight: 700;
-  text-transform: uppercase;
-}
-
-.stackCardMeta b {
-  display: block;
-  color: var(--text-primary);
-  font-size: 13px;
-}
-
-/* =========================================================
-   CLEAN RESPONSIVE ENGINE (No Layout Breaks)
-========================================================= */
-@media (max-width: 1024px) {
-  .heroSection {
-    grid-template-columns: 1fr;
-    text-align: center;
-    padding: 100px 24px 60px;
-    gap: 40px;
-  }
-  .heroLeft {
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  .heroActions { justify-content: center; }
-  .heroMiniStats { width: 100%; }
-  .heroImageStackRight { min-height: 400px; }
-  .imageStackStage { height: 360px; }
-}
-
-@media (max-width: 600px) {
-  .heroSection { padding: 80px 16px 40px; }
-  .heroMiniStats { grid-template-columns: 1fr; gap: 4px; background: transparent; border: none; }
-  .heroMiniStats div { 
-    background: rgba(8, 13, 31, 0.4); 
-    border: 1px solid rgba(255, 255, 255, 0.05); 
-    border-radius: 12px;
-    margin-bottom: 8px;
-  }
-  .heroImageStackRight { min-height: 320px; }
-  .imageStackStage { height: 280px; }
-}
-/* =========================================================================
-                  Stats Bar
-============================================================================*/
-.trustedCompanies {
-  width: 100%;
-  margin-top: 28px;
-  overflow: visible;
-  padding: 18px 0;
-}
-
-.trustedTrack {
-  display: flex;
-  align-items: center;
-  gap: 56px;
-  width: max-content;
-  white-space: nowrap;
-  will-change: transform;
-}
-
-.trustedCard {
-  flex: 0 0 auto;
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  color: #ffffff;
-  opacity: 0.9;
-  background: transparent;
-  border: 0;
-  box-shadow: none;
-  outline: 0;
-  transition:
-    transform 0.35s ease,
-    opacity 0.35s ease,
-    color 0.35s ease,
-    filter 0.35s ease;
-}
-
-.trustedCard:hover {
-  transform: translateY(-2px) scale(1.06);
-  color: #7dd3fc;
-  opacity: 1;
-  filter: drop-shadow(0 0 14px rgba(125, 211, 252, 0.35));
-}
-
-.trustedIcon {
-  width: 32px;
-  height: 32px;
-  flex: 0 0 32px;
+/* Initials, not a stock portrait of an unrelated person. */
+.voices__initials {
   display: grid;
   place-items: center;
-  color: #7dd3fc;
-  background: transparent;
-  border: 0;
-  box-shadow: none;
+  width: 40px;
+  height: 40px;
+  border: var(--hairline) solid var(--line-accent);
+  font-size: var(--fs-label);
+  font-weight: var(--fw-bold);
+  letter-spacing: 0.04em;
+  color: var(--accent);
 }
 
-.trustedName {
-  font-size: 15px;
-  font-weight: 850;
-  letter-spacing: -0.01em;
-  line-height: 1;
-  white-space: nowrap;
+.voices__person b {
+  display: block;
+  font-size: var(--fs-small);
+  font-weight: var(--fw-semibold);
+  color: var(--ink-strong);
 }
 
-.trustedCheck {
-  flex: 0 0 auto;
-  color: #86efac;
+.voices__person small {
+  display: block;
+  font-size: var(--fs-micro);
+  color: var(--ink-faint);
 }
 
-@media (max-width: 768px) {
-  .trustedCompanies {
-    margin-top: 20px;
-    padding: 14px 0;
-  }
-
-  .trustedTrack {
-    gap: 36px;
-  }
-
-  .trustedName {
-    font-size: 13px;
-  }
-
-  .trustedIcon {
-    width: 28px;
-    height: 28px;
-    flex-basis: 28px;
-  }
-}
-/* ==============================================================================
-                                    workflow
-=================================================================================*/
-.workflowRow {
-  width: min(1180px, calc(100% - 32px));
-  margin: 34px auto 0;
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 14px;
-}
-
-.workflowItem {
+/* -------------------------------------------------------------------------
+   CALL TO ACTION
+   ------------------------------------------------------------------------- */
+.cta {
   position: relative;
-  isolation: isolate;
-  min-height: 92px;
-  padding: 18px;
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  border-radius: 24px;
+  padding-block: clamp(96px, 16vh, 200px);
   overflow: hidden;
-  background:
-    radial-gradient(circle at 18% 20%, rgba(125, 211, 252, 0.16), transparent 34%),
-    linear-gradient(135deg, rgba(255, 255, 255, 0.095), rgba(255, 255, 255, 0.035));
-  border: 1px solid rgba(255, 255, 255, 0.09);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.12),
-    0 18px 48px rgba(0, 0, 0, 0.18);
-  backdrop-filter: blur(16px);
-  transform: translateY(0);
-  transition:
-    transform 0.35s ease,
-    background 0.35s ease,
-    box-shadow 0.35s ease;
+  isolation: isolate;
+  border-top: var(--hairline) solid var(--line);
 }
 
-.workflowItem::before {
-  content: "";
-  position: absolute;
-  inset: -40%;
-  z-index: -1;
-  background: conic-gradient(
-    from 180deg,
-    transparent,
-    rgba(56, 189, 248, 0.22),
-    transparent,
-    rgba(134, 239, 172, 0.14),
-    transparent
-  );
-  opacity: 0;
-  transform: rotate(0deg);
-  transition: opacity 0.35s ease;
-}
-
-.workflowItem::after {
-  content: "";
-  position: absolute;
-  inset: 1px;
-  z-index: -1;
-  border-radius: inherit;
-  background: linear-gradient(135deg, rgba(8, 13, 32, 0.88), rgba(3, 7, 18, 0.78));
-}
-
-.workflowItem:hover {
-  transform: translateY(-6px);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.16),
-    0 26px 70px rgba(56, 189, 248, 0.16);
-}
-
-.workflowItem:hover::before {
-  opacity: 1;
-  animation: workflowSpin 4s linear infinite;
-}
-
-.workflowIcon {
-  width: 48px;
-  height: 48px;
-  flex: 0 0 48px;
+.cta__inner {
+  position: relative;
+  z-index: var(--z-content);
   display: grid;
-  place-items: center;
-  border-radius: 18px;
-  color: #7dd3fc;
-  background:
-    radial-gradient(circle at 35% 25%, rgba(255, 255, 255, 0.2), transparent 32%),
-    linear-gradient(135deg, rgba(56, 189, 248, 0.18), rgba(59, 130, 246, 0.08));
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.13),
-    0 12px 28px rgba(56, 189, 248, 0.12);
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--s-5);
+  justify-items: start;
 }
 
-.workflowText {
-  min-width: 0;
-  display: grid;
-  gap: 5px;
+.cta__title {
+  max-width: 16ch;
 }
 
-.workflowText b {
-  color: #ffffff;
-  font-size: 15px;
-  font-weight: 850;
-  letter-spacing: -0.02em;
-  line-height: 1.1;
+.cta__text {
+  max-width: 48ch;
+  font-size: var(--fs-lead);
+  line-height: 1.6;
 }
 
-.workflowText span {
-  color: rgba(226, 232, 240, 0.68);
-  font-size: 13px;
-  font-weight: 600;
-  line-height: 1.35;
+.cta__actions {
+  margin-top: var(--s-4);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-3);
 }
 
-@keyframes workflowSpin {
-  to {
-    transform: rotate(360deg);
+/* -------------------------------------------------------------------------
+   RESPONSIVE
+   ------------------------------------------------------------------------- */
+@media (max-width: 1180px) {
+  .hero__content {
+    max-width: min(100%, 640px);
   }
-}
 
-@media (max-width: 980px) {
-  .workflowRow {
+  .voices__grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
-@media (max-width: 560px) {
-  .workflowRow {
-    width: min(100% - 24px, 1180px);
+@media (max-width: 1024px) {
+  .flow__track {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    row-gap: var(--s-7);
+  }
+
+  .useCases__layout {
     grid-template-columns: 1fr;
-    gap: 12px;
-    margin-top: 24px;
   }
 
-  .workflowItem {
-    min-height: 82px;
-    padding: 15px;
-    border-radius: 20px;
-  }
-
-  .workflowIcon {
-    width: 42px;
-    height: 42px;
-    flex-basis: 42px;
-    border-radius: 15px;
-  }
-
-  .workflowText b {
-    font-size: 14px;
-  }
-
-  .workflowText span {
-    font-size: 12.5px;
+  .useCases__panel {
+    position: static;
+    min-height: 0;
   }
 }
-/* ==============================================================================
-                                    benifits
-=================================================================================*/
 
+@media (max-width: 860px) {
 
-/* =========================================================
-   Targeted fix: Workflow cards should only hover subtly
-   No over animation / no floating / no infinite pulse
-========================================================= */
-.workflowItem,
-.workflowItem:hover,
-.workflowItem:focus-within {
-  transform: none !important;
-  animation: none !important;
+  .hero__content {
+    max-width: none;
+  }
+
+  .hero__meta {
+    grid-template-columns: 1fr;
+  }
+
+  .hero__metaItem {
+    border-right: 0;
+    border-bottom: var(--hairline) solid var(--line);
+    padding: var(--s-4) 0;
+  }
+
+  .hero__metaItem:last-child {
+    border-bottom: 0;
+  }
+
+  .statement__body {
+    width: 100%;
+  }
+
+  .voices__grid {
+    grid-template-columns: 1fr;
+  }
 }
 
-.workflowItem::before,
-.workflowItem:hover::before {
-  opacity: 0 !important;
-  animation: none !important;
+@media (max-width: 640px) {
+  .flow__track {
+    grid-template-columns: 1fr;
+  }
+
+  .flow__node {
+    display: none;
+  }
+
+  .flow__step {
+    padding-top: var(--s-5);
+    border-top: var(--hairline) solid var(--line);
+  }
+
+  .flow__step:first-child {
+    border-top: 0;
+    padding-top: 0;
+  }
+
+  .useCases__points {
+    grid-template-columns: 1fr;
+  }
+
+  .useCases__points li:nth-child(odd) {
+    padding-right: 0;
+    border-right: 0;
+  }
+
+  .useCases__points li:nth-child(even) {
+    padding-left: 0;
+  }
+
+  .useCases__panel {
+    padding: var(--s-5);
+  }
 }
 
-.workflowItem:hover {
-  background:
-    radial-gradient(circle at 18% 20%, rgba(125, 211, 252, 0.12), transparent 34%),
-    linear-gradient(135deg, rgba(255, 255, 255, 0.105), rgba(255, 255, 255, 0.045)) !important;
-  border-color: rgba(125, 211, 252, 0.2) !important;
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.12),
-    0 18px 48px rgba(0, 0, 0, 0.18) !important;
+/* -------------------------------------------------------------------------
+   05 — PRODUCT SURFACE
+
+   Edge to edge, cropped by the viewport. Deliberately not framed in a panel:
+   a bordered box around it would turn a composition into a picture of one.
+   ------------------------------------------------------------------------- */
+.surface {
+  padding-block: clamp(80px, 13vh, 160px);
+  overflow: hidden;
 }
 
-.workflowIcon,
-.workflowItem:hover .workflowIcon,
-.workflowItem:nth-child(2):hover .workflowIcon {
-  transform: none !important;
-  animation: none !important;
-  filter: none !important;
+.surface__title {
+  margin-top: var(--s-5);
+  max-width: 18ch;
+  font-size: clamp(28px, 4vw, 52px);
+  font-weight: var(--fw-black);
+  letter-spacing: var(--ls-h2);
+  text-transform: uppercase;
 }
 
-.workflowText b,
-.workflowText span,
-.workflowItem:hover .workflowText b,
-.workflowItem:hover .workflowText span {
-  transform: none !important;
-  animation: none !important;
+.surface__title em {
+  font-style: normal;
+  font-weight: var(--fw-light);
+  color: var(--accent);
+}
+
+/* The stage starts at the shell's left gutter and runs off the right edge, so
+   the console reads as a slice of a larger surface. */
+.surface__stage {
+  position: relative;
+  margin-top: clamp(40px, 6vh, 72px);
+  margin-left: max(var(--gutter), calc((100vw - var(--shell)) / 2 + var(--gutter)));
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 260px;
+  gap: var(--s-6);
+  align-items: start;
+}
+
+.surface__console {
+  border: var(--hairline) solid var(--line-strong);
+  border-right: 0;
+  background: var(--surface-panel);
+}
+
+.surface__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-4);
+  padding: var(--s-3) var(--s-5);
+  border-bottom: var(--hairline) solid var(--line);
+}
+
+.surface__barLabel {
+  font-size: var(--fs-micro);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.surface__barState {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: var(--fs-micro);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.surface__barState i {
+  width: 6px;
+  height: 6px;
+  background: var(--accent);
+  animation: surfacePulse 2s var(--ease-in-out) infinite;
+}
+
+@keyframes surfacePulse {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.25; }
+}
+
+.surface__thread {
+  display: grid;
+  gap: var(--s-5);
+  padding: var(--s-6) var(--s-5);
+}
+
+.surface__line {
+  display: grid;
+  gap: 6px;
+  max-width: 62ch;
+}
+
+/* The assistant's replies are indented and marked with an accent edge, which is
+   the only differentiation needed — no chat bubbles, no rounded corners. */
+.surface__line--agent {
+  padding-left: var(--s-5);
+  border-left: 2px solid var(--accent);
+  margin-left: var(--s-5);
+}
+
+.surface__who {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: var(--fs-micro);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.surface__line--agent .surface__who {
+  color: var(--accent);
+}
+
+.surface__text {
+  font-size: var(--fs-small);
+  line-height: 1.7;
+  color: var(--ink);
+}
+
+.surface__text.isHandoff {
+  color: var(--ink-strong);
+}
+
+.surface__meta {
+  font-size: var(--fs-micro);
+  font-family: var(--font-mono);
+  color: var(--ink-faint);
+}
+
+/* Annotations pointing at the flow, each linked to the console by a rule. */
+.surface__callouts {
+  display: grid;
+  gap: var(--s-4);
+  padding-top: var(--s-5);
+}
+
+.surface__callouts li {
+  position: relative;
+  display: flex;
+  gap: var(--s-3);
+  padding-left: var(--s-6);
+  color: var(--ink-muted);
+}
+
+.surface__callouts li::before {
+  content: "";
+  position: absolute;
+  left: calc(var(--s-6) * -1);
+  top: 10px;
+  width: calc(var(--s-6) * 2 - 10px);
+  height: var(--hairline);
+  background: var(--line-accent);
+}
+
+.surface__callouts svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: var(--accent);
+}
+
+.surface__callouts b {
+  display: block;
+  font-size: var(--fs-micro);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.surface__callouts small {
+  display: block;
+  margin-top: 3px;
+  font-size: var(--fs-small);
+  line-height: 1.5;
+  color: var(--ink);
+}
+
+.surface__note {
+  margin-top: var(--s-5);
+  font-size: var(--fs-micro);
+  color: var(--ink-faint);
+}
+
+@media (max-width: 900px) {
+  .surface__stage {
+    margin-left: 0;
+    margin-inline: var(--gutter);
+    grid-template-columns: 1fr;
+  }
+
+  .surface__console {
+    border-right: var(--hairline) solid var(--line-strong);
+  }
+
+  .surface__callouts li {
+    padding-left: 0;
+  }
+
+  .surface__callouts li::before {
+    display: none;
+  }
+}
+
+@media (max-width: 560px) {
+  .surface__line--agent {
+    margin-left: 0;
+    padding-left: var(--s-4);
+  }
+}
+
+/* Quote mark on each testimonial card: sits above the quote as an opener
+   rather than being scaled up behind the text as a watermark. */
+.voices__quote {
+  color: var(--accent);
+  opacity: 0.65;
+}
+
+.voices__card {
+  align-content: start;
+  gap: var(--s-4);
+}
+
+.voices__card .voices__person {
+  margin-top: auto;
+}
+
+/* -------------------------------------------------------------------------
+   MOBILE — carry less
+
+   Six quotes is a scroll of near-identical blocks on a phone. Three makes the
+   same point. They are removed from the layout rather than visually hidden, so
+   assistive tech is not walking past cards nobody can see.
+   ------------------------------------------------------------------------- */
+@media (max-width: 720px) {
+  .voices__grid > li:nth-child(n + 4) {
+    display: none;
+  }
+
+  .hero {
+    min-height: auto;
+  }
+
+  .hero__lead {
+    font-size: var(--fs-body);
+  }
+
+  .statement {
+    padding-block: clamp(48px, 8vh, 80px);
+  }
+
+  .statement__body {
+    grid-template-columns: minmax(0, 1fr);
+    margin-top: var(--s-5);
+    row-gap: var(--s-4);
+  }
+
+  .statement__body p {
+    font-size: var(--fs-body);
+  }
+
+  .surface {
+    padding-block: clamp(48px, 8vh, 80px);
+  }
+
+  /* The transcript carries the point in its first exchange; the rest is
+     supporting detail that does not need to be scrolled through on a phone. */
+  .surface__thread .surface__line:nth-child(n + 4) {
+    display: none;
+  }
+
+  .cta {
+    padding-block: clamp(56px, 10vh, 96px);
+  }
+}
+
+/* -------------------------------------------------------------------------
+   USE CASES — the narrow layout
+
+   An accordion, not the desktop two-column pattern with its second column
+   pushed underneath. The detail opens where the row is, which is the whole
+   reason for the change: the tab panel used to sit below eight rows, so
+   reading about the fourth industry meant scrolling past the other seven and
+   back again.
+   ------------------------------------------------------------------------- */
+.useCases__accordion {
+  border-top: var(--hairline) solid var(--line);
+}
+
+.useCases__accordion > li {
+  border-bottom: var(--hairline) solid var(--line);
+}
+
+.useCases__accordion h3 {
+  margin: 0;
+  font: inherit;
+}
+
+.useCases__toggle {
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr) 16px;
+  align-items: center;
+  gap: var(--s-3);
+  width: 100%;
+  /* 15px clears the 44px tap floor with room for the type. */
+  padding: 15px 0;
+  text-align: left;
+  color: var(--ink-muted);
+  transition: color var(--t-fast);
+}
+
+.useCases__toggle:hover,
+.useCases__toggle.isOpen {
+  color: var(--ink-strong);
+}
+
+.useCases__toggle svg {
+  justify-self: end;
+  color: var(--ink-faint);
+  transition: transform var(--t-base), color var(--t-fast);
+}
+
+/* The plus becomes a minus by rotating, so open and closed are the same glyph
+   in two states rather than two icons swapping. */
+.useCases__toggle.isOpen svg {
+  transform: rotate(45deg);
+  color: var(--accent);
+}
+
+.useCases__detail {
+  padding: 0 0 var(--s-5) calc(34px + var(--s-3));
+}
+
+.useCases__detail .useCases__panelIcon {
+  margin-bottom: var(--s-3);
+  color: var(--accent);
 }

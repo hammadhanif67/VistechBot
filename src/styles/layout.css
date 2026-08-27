@@ -1,0 +1,391 @@
+/* =========================================================================
+   LAYOUT
+
+   Shell, sections, rules and the editorial primitives every page composes
+   from. Layout uses CSS Grid heavily — that is structure, not a background
+   pattern; nothing here paints a visible grid.
+   ========================================================================= */
+
+.shell {
+  width: 100%;
+  max-width: var(--shell);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.shell--narrow {
+  max-width: 1080px;
+}
+
+.section {
+  position: relative;
+  padding-block: var(--section-y);
+}
+
+.section--flush {
+  padding-block: 0;
+}
+
+.section--tight {
+  padding-block: clamp(48px, 7vh, 96px);
+}
+
+/* Hairline separators. Borders are the site's structural device — they do the
+   job rounded cards used to do, without the softness. */
+.rule {
+  height: var(--hairline);
+  background: var(--line);
+  border: 0;
+}
+
+.rule--accent {
+  background: linear-gradient(90deg, var(--line-accent), transparent 60%);
+}
+
+/* -------------------------------------------------------------------------
+   EYEBROW — the label that opens a section
+
+   The words, and a rule that draws itself underneath as the section arrives.
+   An earlier version put a dash before the text and a two-digit index in front
+   of that; the numbering made every page read like a generated document, and
+   the leading dash was decoration standing in for hierarchy.
+
+   The rule is an element rather than a pseudo-element because GSAP cannot
+   animate a pseudo-element, and the draw runs off the shared motion system.
+   ------------------------------------------------------------------------- */
+.eyebrow {
+  display: inline-block;
+  margin: 0;
+  font-size: var(--fs-label);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+
+/* The label is sometimes a real heading for the block it opens. It must keep
+   the eyebrow's own scale rather than inheriting h2 sizing. */
+h2.eyebrow,
+h3.eyebrow {
+  font-size: var(--fs-label);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-label);
+  line-height: 1.4;
+  color: var(--ink-muted);
+}
+
+.eyebrow__text {
+  display: block;
+}
+
+.eyebrow__rule {
+  display: block;
+  width: 100%;
+  height: var(--hairline);
+  margin-top: 10px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-fade));
+  /* GSAP animates scaleX from 0; without an origin the draw would open from
+     the centre outward instead of running left to right. */
+  transform-origin: left center;
+}
+
+/* -------------------------------------------------------------------------
+   SECTION HEADS
+   ------------------------------------------------------------------------- */
+.sectionHead {
+  display: grid;
+  gap: var(--s-5);
+  padding-bottom: var(--s-8);
+}
+
+/* Two-column head: statement left, supporting copy right. The asymmetry is the
+   point — a centred head would flatten the hierarchy. */
+.sectionHead--split {
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  align-items: end;
+  gap: var(--s-7);
+}
+
+.sectionHead h2 {
+  max-width: 20ch;
+}
+
+.sectionHead__lead {
+  max-width: 52ch;
+  font-size: var(--fs-lead);
+  line-height: 1.6;
+  color: var(--ink-muted);
+}
+
+/* -------------------------------------------------------------------------
+   DISPLAY TYPE — the editorial statement blocks
+
+   Deliberately sets no font-size. It carries the treatment — black weight,
+   tight tracking, uppercase — and the heading level carries the scale, so an
+   h2 wearing this class cannot come out larger than the page's own h1. It
+   used to, by 59px.
+   ------------------------------------------------------------------------- */
+.display {
+  margin: 0;
+  font-weight: var(--fw-black);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-display);
+  color: var(--ink-strong);
+  text-transform: uppercase;
+  text-wrap: balance;
+
+  /* Last-resort guard. The clamp floor should mean a single word always fits,
+     but a longer word added later must wrap rather than push the grid column
+     wider than the viewport and get clipped. */
+  overflow-wrap: break-word;
+  min-width: 0;
+}
+
+/* One step below the h1, which takes its size from the base `h1` rule. */
+h2.display {
+  font-size: var(--fs-statement);
+}
+
+.display em {
+  font-style: normal;
+  font-weight: var(--fw-light);
+  color: var(--ink-muted);
+}
+
+.display mark {
+  background: none;
+  color: var(--accent);
+}
+
+/* A masked line used for staggered reveals: the child slides up out of the
+   clip, so the text appears to rise from behind the line above it. */
+.lineMask {
+  display: block;
+  overflow: hidden;
+}
+
+/* -------------------------------------------------------------------------
+   ROUTE STATES
+   ------------------------------------------------------------------------- */
+.routeFallback {
+  display: grid;
+  place-items: center;
+  min-height: 70vh;
+}
+
+.routeFallback__bar {
+  width: 120px;
+  height: 2px;
+  background: var(--line);
+  position: relative;
+  overflow: hidden;
+}
+
+.routeFallback__bar::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--accent);
+  transform-origin: left;
+  animation: routeLoad 1.1s var(--ease-in-out) infinite;
+}
+
+@keyframes routeLoad {
+  0%   { transform: scaleX(0); }
+  55%  { transform: scaleX(1); transform-origin: left; }
+  56%  { transform: scaleX(1); transform-origin: right; }
+  100% { transform: scaleX(0); transform-origin: right; }
+}
+
+/* -------------------------------------------------------------------------
+   RESPONSIVE
+   ------------------------------------------------------------------------- */
+@media (max-width: 900px) {
+  .sectionHead--split {
+    grid-template-columns: 1fr;
+    align-items: start;
+    gap: var(--s-5);
+  }
+
+  .sectionHead {
+    padding-bottom: var(--s-7);
+  }
+
+  .sectionHead h2 {
+    max-width: none;
+  }
+}
+
+/* -------------------------------------------------------------------------
+   PAGE HERO
+
+   The shared opening block for every page except home, which has its own
+   asymmetric composition. Display title, lead, actions, and optionally an
+   index into the page below.
+   ------------------------------------------------------------------------- */
+.pageHero {
+  position: relative;
+  padding-block: clamp(120px, 22vh, 240px) clamp(64px, 10vh, 120px);
+  overflow: hidden;
+  isolation: isolate;
+  border-bottom: var(--hairline) solid var(--line);
+}
+
+.pageHero__inner {
+  position: relative;
+  z-index: var(--z-content);
+}
+
+.pageHero__title {
+  margin-top: var(--s-6);
+  max-width: 15ch;
+}
+
+.pageHero__title em {
+  font-style: normal;
+  font-weight: var(--fw-light);
+  color: var(--accent);
+}
+
+.pageHero__lead {
+  margin-top: var(--s-6);
+  max-width: 54ch;
+  font-size: var(--fs-lead);
+  line-height: 1.62;
+}
+
+.pageHero__actions {
+  margin-top: var(--s-7);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-3);
+}
+
+/* Jump index into the sections below — long pages need a way in that is not
+   "scroll and hope". */
+.pageHero__index {
+  margin-top: clamp(56px, 9vh, 96px);
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border-top: var(--hairline) solid var(--line);
+}
+
+.pageHero__indexLink {
+  display: flex;
+  align-items: baseline;
+  gap: var(--s-3);
+  padding: var(--s-5) var(--s-4) var(--s-5) 0;
+  border-right: var(--hairline) solid var(--line);
+  color: var(--ink-muted);
+  transition: color var(--t-base);
+}
+
+.pageHero__indexLink:last-child {
+  border-right: 0;
+}
+
+.pageHero__indexLink span {
+  font-size: var(--fs-micro);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-label);
+  color: var(--ink-faint);
+  font-variant-numeric: tabular-nums;
+}
+
+.pageHero__indexLink b {
+  font-size: var(--fs-lead);
+  font-weight: var(--fw-semibold);
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+
+.pageHero__indexLink svg {
+  margin-left: auto;
+  opacity: 0;
+  transform: translate(-6px, 4px);
+  transition: opacity var(--t-base), transform var(--t-base);
+}
+
+.pageHero__indexLink:hover {
+  color: var(--ink-strong);
+}
+
+.pageHero__indexLink:hover svg {
+  opacity: 1;
+  transform: translate(0, 0);
+  color: var(--accent);
+}
+
+/* Anchored sections clear the sticky header. */
+[id] {
+  scroll-margin-top: calc(var(--nav-h) + var(--s-5));
+}
+
+@media (max-width: 860px) {
+  .pageHero__index {
+    grid-template-columns: 1fr;
+  }
+
+  .pageHero__indexLink {
+    border-right: 0;
+    border-bottom: var(--hairline) solid var(--line);
+    padding: var(--s-4) 0;
+  }
+
+  .pageHero__indexLink:last-child {
+    border-bottom: 0;
+  }
+}
+
+/* -------------------------------------------------------------------------
+   404
+   ------------------------------------------------------------------------- */
+.notFound__links .module__title a {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-3);
+  color: inherit;
+}
+
+.notFound__links .module__title svg {
+  opacity: 0;
+  transform: translate(-6px, 4px);
+  transition: opacity var(--t-base), transform var(--t-base);
+}
+
+.notFound__links .module:hover .module__title svg {
+  opacity: 1;
+  transform: translate(0, 0);
+}
+
+.notFound__links > .shell > .eyebrow {
+  margin-bottom: var(--s-6);
+}
+
+/* =========================================================================
+   MOBILE — carry less
+
+   A phone screen is a narrower argument, not the same argument stacked. These
+   rules cut the repeat content and the vertical air rather than shrinking
+   type, so what remains stays readable at full size.
+   ========================================================================= */
+@media (max-width: 720px) {
+  :root {
+    /* Sections were running to 160px of padding at each end, which on a phone
+       is most of a screen of nothing between every block. */
+    --section-y: clamp(48px, 8vh, 72px);
+    --s-9: 64px;
+    --s-10: 80px;
+  }
+
+  .sectionHead {
+    padding-bottom: var(--s-6);
+  }
+
+  /* Supporting copy under a heading is the first thing to go long on a narrow
+     column; capping it keeps a section head to a readable block. */
+  .sectionHead__lead {
+    font-size: var(--fs-small);
+    line-height: 1.65;
+  }
+}

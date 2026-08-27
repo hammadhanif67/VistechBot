@@ -1,619 +1,898 @@
-/* ================= NAVBAR ================= */
+/* =========================================================================
+   NAVIGATION + FOOTER
 
-.navbar {
-  width: 100%;
-  height: 70px;
-  padding: 0 max(28px, calc((100vw - 1180px) / 2));
+   A hairline bar, not a floating capsule. The old nav was a rounded pill row
+   with an icon per link; this one is typographic and sits flush against the
+   top edge of the page.
+   ========================================================================= */
+
+.nav {
   position: sticky;
   top: 0;
-  z-index: 999;
-  background: rgba(3, 7, 18, 0.82);
-  border-bottom: 1px solid rgba(116, 132, 190, 0.18);
-  backdrop-filter: blur(18px);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.brand,
-.footerLogo {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  text-decoration: none;
-}
-
-.brandIcon {
-  width: 42px;
-  height: 42px;
-  border-radius: 14px;
-  display: grid;
-  place-items: center;
-  color: white;
-  background: linear-gradient(135deg, #286fff, #a225ff);
-  box-shadow: 0 12px 26px rgba(122, 62, 255, 0.26);
-}
-
-.brandText {
-  color: white;
-  font-size: 22px;
-  font-weight: 950;
-  letter-spacing: -0.7px;
-}
-
-.navLinks {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.navLink {
-  min-height: 38px;
-  padding: 0 13px;
-  border-radius: 999px;
-  color: #b9c4e2;
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  font-size: 14px;
-  font-weight: 800;
-  transition: 0.25s ease;
-}
-
-.navLink:hover {
-  color: white;
-  background: rgba(120, 92, 255, 0.13);
-}
-
-.navLink.active {
-  color: white;
-  background: rgba(120, 92, 255, 0.2);
-  border: 1px solid rgba(137, 101, 255, 0.28);
-}
-
-.navBtns {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.btn {
-  height: 42px;
-  padding: 0 18px;
-  border-radius: 12px;
-  border: 0;
-  font-size: 14px;
-  font-weight: 900;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  transition: 0.25s ease;
-}
-
-.btn.ghost {
-  color: #dce4ff;
-  background: rgba(255, 255, 255, 0.055);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.btn.ghost:hover {
-  color: white;
-  background: rgba(255, 255, 255, 0.1);
-}
-
-.btn.primary {
-  color: white;
-  background: linear-gradient(135deg, #286fff, #a225ff);
-  box-shadow: 0 12px 24px rgba(122, 62, 255, 0.26);
-}
-
-.btn.primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 16px 32px rgba(122, 62, 255, 0.36);
-}
-
-.menuBtn {
-  display: none;
-  width: 42px;
-  height: 42px;
-  border: 0;
-  border-radius: 12px;
-  color: white;
-  background: rgba(255, 255, 255, 0.07);
-}
-
-.mobileBtns {
-  display: none;
-}
-
-/* ================= FOOTER ================= */
-
-/* ================= RESPONSIVE ================= */
-
-@media (max-width: 1050px) {
-  .navbar {
-    padding: 0 22px;
-  }
-
-  .navLinks {
-    position: fixed;
-    left: 18px;
-    right: 18px;
-    top: 82px;
-    padding: 18px;
-    border-radius: 18px;
-    background: rgba(5, 10, 26, 0.96);
-    border: 1px solid rgba(116, 132, 190, 0.2);
-    backdrop-filter: blur(18px);
-    display: none;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 8px;
-  }
-
-  .navLinks.show {
-    display: flex;
-  }
-
-  .navLink {
-    width: 100%;
-    min-height: 44px;
-    justify-content: flex-start;
-    border-radius: 12px;
-  }
-
-  .navBtns {
-    display: none;
-  }
-
-  .mobileBtns {
-    display: grid;
-    gap: 10px;
-    margin-top: 8px;
-  }
-
-  .menuBtn {
-    display: grid;
-    place-items: center;
-  }
-
-  .footer {
-    padding-left: 22px;
-    padding-right: 22px;
-  }
-
-  .footerGrid {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .footerBrandCol,
-  .footerNewsletter {
-    grid-column: span 2;
-  }
-}
-
-@media (max-width: 620px) {
-  .brandText {
-    font-size: 20px;
-  }
-
-  .footerGrid {
-    grid-template-columns: 1fr;
-  }
-
-  .footerBrandCol,
-  .footerNewsletter {
-    grid-column: auto;
-  }
-
-  .footerBottom {
-    flex-direction: column;
-    text-align: center;
-  }
-
-  .footerBottom div {
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-}
-
-/* =====================  FOOTER CSS ===================== */
-
-/* --- Core Footer Layout Base --- */
-.advancedFooter {
-  position: relative;
-  background: #070709; /* Ultra Dark Tech Void */
-  padding: 90px 24px 30px 24px;
-  overflow: hidden;
-  border-top: 1px solid rgba(255, 255, 255, 0.04);
-}
-
-/* --- Performance Optimized Grid Overlay --- */
-.footerMatrixGrid {
-  position: absolute;
-  inset: 0;
-  background-image: linear-gradient(rgba(255, 255, 255, 0.008) 1px, transparent 1px),
-                    linear-gradient(90deg, rgba(255, 255, 255, 0.008) 1px, transparent 1px);
-  background-size: 50px 50px;
-  pointer-events: none;
-  z-index: 1;
-  mask-image: linear-gradient(to bottom, transparent 0%, black 30%, black 80%, transparent 100%);
-}
-
-/* --- GSAP Driven Organic Floating Glow --- */
-.footerAdvancedGlow {
-  position: absolute;
-  width: 500px;
-  height: 400px;
-  background: radial-gradient(circle, rgba(168, 85, 247, 0.12) 0%, rgba(56, 189, 248, 0.02) 60%, transparent 100%);
-  bottom: -50px;
-  right: 10%;
-  border-radius: 50%;
-  filter: blur(80px);
-  pointer-events: none;
-  z-index: 1;
-  will-change: transform;
-}
-
-/* --- Main Layout Architecture --- */
-.footerGrid {
-  max-width: 1200px;
+  z-index: var(--z-nav);
   width: 100%;
-  margin: 0 auto;
+  border-bottom: var(--hairline) solid transparent;
+  transition: background var(--t-base), border-color var(--t-base),
+    backdrop-filter var(--t-base);
+}
+
+/* The bar is transparent over the hero and only resolves into a surface once
+   content scrolls underneath it. */
+.nav.isScrolled {
+  background: var(--scrim-nav);
+  border-bottom-color: var(--line);
+  backdrop-filter: blur(18px) saturate(140%);
+}
+
+.nav.isOpen {
+  background: transparent;
+  border-bottom-color: transparent;
+  backdrop-filter: none;
+}
+
+.nav__inner {
+  width: 100%;
+  max-width: var(--shell);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+  height: var(--nav-h);
   display: grid;
-  grid-template-columns: 1.3fr 0.7fr 0.7fr 0.7fr 1.1fr;
-  gap: 40px;
-  position: relative;
-  z-index: 2;
-}
-
-/* --- Brand Column Aesthetics --- */
-.footerBrandCol {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-}
-
-/* Interactive Futuristic Logo */
-.footerLogoGroup {
-  display: flex;
+  grid-template-columns: auto 1fr auto;
   align-items: center;
-  gap: 12px;
-  text-decoration: none;
+  gap: var(--s-6);
 }
 
-.footerLogoGroup h3 {
-  font-size: 22px;
-  font-weight: 800;
-  color: #ffffff;
-  margin: 0;
-  letter-spacing: -0.5px;
+/* -------------------------------------------------------------------------
+   WORDMARK
+   ------------------------------------------------------------------------- */
+.wordmark {
+  display: inline-flex;
+  align-items: center;
+  gap: 11px;
+  color: var(--ink-strong);
 }
 
-.brandIconWrapper {
-  position: relative;
-  width: 38px;
-  height: 38px;
-  background: rgba(168, 85, 247, 0.1);
-  border: 1px solid rgba(168, 85, 247, 0.3);
-  border-radius: 10px;
+.wordmarkText {
+  font-size: var(--fs-brand);
+  line-height: 1;
+  letter-spacing: -0.045em;
+  white-space: nowrap;
+}
+
+/* Two weights in one word: the name reads as a single unit but the product
+   idea inside it stays visible. */
+.wordmarkText b {
+  font-weight: var(--fw-black);
+}
+
+.wordmarkText i {
+  font-style: normal;
+  font-weight: var(--fw-light);
+  color: var(--ink-muted);
+}
+
+/* The mark is one stroke in `currentColor`, so a tone is just a colour: there
+   are no separate fills left to override. */
+.wordmark.tone-dark,
+.brandMark.tone-dark {
+  color: var(--ink-invert);
+}
+
+/* -------------------------------------------------------------------------
+   DESKTOP LINKS
+   ------------------------------------------------------------------------- */
+.nav__links ul {
   display: flex;
   justify-content: center;
-  align-items: center;
+  gap: clamp(18px, 2.4vw, 40px);
 }
 
-.coreSignalIcon {
-  color: #c084fc;
-  z-index: 2;
-}
-
-.pulseRing {
-  position: absolute;
-  inset: -1px;
-  border: 1px solid #c084fc;
-  border-radius: 10px;
-  animation: logoPulse 2.5s cubic-bezier(0.25, 0, 0, 1) infinite;
-  opacity: 0;
-  pointer-events: none;
-}
-
-@keyframes logoPulse {
-  0% { transform: scale(1); opacity: 0.5; }
-  100% { transform: scale(1.4); opacity: 0; }
-}
-
-.brandDesc {
-  font-size: 14.5px;
-  color: #8e8e93;
-  line-height: 1.6;
-  margin: 0;
-}
-
-/* Contact Rows Hooks */
-.footerContactList {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.contactRow {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  color: #8e8e93;
-  text-decoration: none;
-  font-size: 14px;
-  transition: color 0.25s ease;
-  width: fit-content;
-}
-
-.contactRow:hover {
-  color: #38bdf8; /* Cyan Highlight */
-}
-
-.nonClickable {
-  cursor: default;
-}
-
-/* Premium Social Buttons System */
-.socialContainer {
-  display: flex;
-  gap: 10px;
-  margin-top: 8px;
-}
-
-.socialIconBtn {
-  width: 34px;
-  height: 34px;
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 8px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: #8e8e93;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  text-decoration: none;
-}
-
-.socialIconBtn:hover {
-  color: #ffffff;
-  background: rgba(168, 85, 247, 0.15);
-  border-color: rgba(168, 85, 247, 0.4);
-  transform: translateY(-2px);
-  box-shadow: 0 10px 20px rgba(168, 85, 247, 0.15);
-}
-
-/* --- Standard Structural Columns --- */
-.footerCol {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-}
-
-.colHeader {
+.nav__link {
   position: relative;
-  width: fit-content;
-}
-
-.colHeader h4 {
-  font-size: 14px;
-  font-weight: 700;
+  display: inline-block;
+  padding: 6px 0;
+  font-size: var(--fs-label);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-label);
   text-transform: uppercase;
-  letter-spacing: 1px;
-  color: #ffffff;
-  margin: 0;
+  color: var(--ink-muted);
+  transition: color var(--t-base);
 }
 
-.headerIndicator {
+/* Active and hover state is a rule drawn along the item's own baseline — no
+   capsule, no background fill. */
+.nav__link::after {
+  content: "";
   position: absolute;
-  bottom: -6px;
   left: 0;
-  width: 16px;
-  height: 2px;
-  background: #a855f7;
-  border-radius: 10px;
-}
-
-.linkWrapperStack {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-
-/* Premium Micro-animated Links */
-.animatedFooterLink {
-  color: #8e8e93;
-  text-decoration: none;
-  font-size: 14.5px;
-  width: fit-content;
-  position: relative;
-  transition: color 0.25s ease;
-}
-
-.animatedFooterLink::after {
-  content: '';
-  position: absolute;
-  bottom: -2px;
-  left: 0;
+  bottom: 0;
   width: 100%;
-  height: 1px;
-  background: linear-gradient(90deg, #38bdf8, #a855f7);
+  height: var(--hairline);
+  background: var(--accent);
   transform: scaleX(0);
   transform-origin: right;
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform var(--t-base);
 }
 
-.animatedFooterLink:hover {
-  color: #ffffff;
+.nav__link:hover {
+  color: var(--ink-strong);
 }
 
-.animatedFooterLink:hover::after {
+.nav__link:hover::after,
+.nav__link.isActive::after {
   transform: scaleX(1);
   transform-origin: left;
 }
 
-/* --- High-Performance Newsletter System --- */
-.footerNewsletter {
+.nav__link.isActive {
+  color: var(--ink-strong);
+}
+
+.nav__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--s-4);
+  justify-self: end;
+}
+
+/* -------------------------------------------------------------------------
+   MENU TOGGLE — two bars that cross into an X
+   ------------------------------------------------------------------------- */
+.nav__toggle {
+  display: none;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 0;
+  color: var(--ink-strong);
+}
+
+.nav__toggleBars {
+  display: grid;
+  gap: 5px;
+  width: 22px;
+}
+
+.nav__toggleBars i {
+  display: block;
+  height: 2px;
+  width: 100%;
+  background: currentColor;
+  transition: transform var(--t-base);
+}
+
+.nav.isOpen .nav__toggleBars i:first-child {
+  transform: translateY(3.5px) rotate(45deg);
+}
+
+.nav.isOpen .nav__toggleBars i:last-child {
+  transform: translateY(-3.5px) rotate(-45deg);
+}
+
+.nav__toggleLabel {
+  font-size: var(--fs-micro);
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+}
+
+/* -------------------------------------------------------------------------
+   MOBILE OVERLAY
+   ------------------------------------------------------------------------- */
+.menu {
+  position: fixed;
+  inset: var(--nav-h) 0 0;
+  z-index: var(--z-overlay);
+  background: var(--void);
+  overflow-y: auto;
+}
+
+/*
+   Sized to fit without scrolling on a short phone. At 375x667 the panel used
+   to overflow by about 100px, so opening the menu handed you a scrollbar over
+   five links. The padding, the gap and the row height were each roughly a
+   third of that.
+*/
+.menu__inner {
+  min-height: 100%;
+  max-width: var(--shell);
+  margin-inline: auto;
+  padding: var(--s-6) var(--gutter) var(--s-6);
   display: flex;
   flex-direction: column;
-  gap: 24px;
-}
-
-.footerNewsletter p {
-  font-size: 14px;
-  color: #8e8e93;
-  line-height: 1.5;
-  margin: 0;
-}
-
-.newsletterBoxContainer {
-  display: flex;
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  padding: 4px 6px;
-  border-radius: 10px;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.newsletterBoxContainer:focus-within {
-  border-color: rgba(56, 189, 248, 0.4);
-  box-shadow: 0 0 20px rgba(56, 189, 248, 0.08);
-}
-
-.newsletterBoxContainer input {
-  flex: 1;
-  background: transparent;
-  border: none;
-  outline: none;
-  color: #ffffff;
-  padding: 8px 10px;
-  font-size: 14px;
-  width: 100%;
-}
-
-.newsletterBoxContainer input::placeholder {
-  color: #48484a;
-}
-
-.newsletterSubmitBtn {
-  background: #ffffff;
-  border: none;
-  color: #070709;
-  width: 36px;
-  height: 36px;
-  border-radius: 8px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  transition: all 0.25s ease;
-}
-
-.newsletterSubmitBtn:hover {
-  background: #38bdf8;
-  color: #ffffff;
-  transform: scale(1.02);
-}
-
-/* --- Footer Bottom Metadata Sheet --- */
-.footerBottom {
-  max-width: 1200px;
-  width: 100%;
-  margin: 60px auto 0 auto;
-  padding-top: 24px;
-  border-top: 1px solid rgba(255, 255, 255, 0.03);
-  display: flex;
   justify-content: space-between;
+  gap: var(--s-6);
+}
+
+.menu__nav ul {
+  border-top: var(--hairline) solid var(--line);
+}
+
+/* The clip is what lets each row slide up from behind the rule above it. */
+.menuRowClip {
+  overflow: hidden;
+  border-bottom: var(--hairline) solid var(--line);
+}
+
+.menu__link {
+  display: grid;
+  grid-template-columns: 46px 1fr auto;
   align-items: center;
+  gap: var(--s-4);
+  /* Still a 56px+ target at the smallest step. */
+  padding: clamp(11px, 2.1vh, 20px) 0;
+  color: var(--ink-muted);
+  transition: color var(--t-base);
+}
+
+.menu__index {
+  font-size: var(--fs-micro);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-label);
+  color: var(--ink-faint);
+  font-variant-numeric: tabular-nums;
+}
+
+.menu__label {
+  font-size: clamp(27px, 7.2vw, 44px);
+  font-weight: var(--fw-black);
+  letter-spacing: var(--ls-h2);
+  line-height: 1;
+  text-transform: uppercase;
+  color: inherit;
+}
+
+.menu__link svg {
+  opacity: 0;
+  transform: translateX(-8px);
+  transition: opacity var(--t-base), transform var(--t-base);
+}
+
+.menu__link:hover,
+.menu__link.isActive {
+  color: var(--ink-strong);
+}
+
+.menu__link:hover svg,
+.menu__link.isActive svg {
+  opacity: 1;
+  transform: translateX(0);
+  color: var(--accent);
+}
+
+.menuAside {
+  display: grid;
+  gap: var(--s-3);
+  justify-items: start;
+}
+
+.menu__contact {
+  font-size: clamp(18px, 4.6vw, 24px);
+  font-weight: var(--fw-semibold);
+  letter-spacing: -0.02em;
+  color: var(--ink-strong);
+  border-bottom: var(--hairline) solid var(--line-accent);
+  padding-bottom: 4px;
+}
+
+/* =========================================================================
+   FOOTER
+
+   Three bands, each sized by its content. The previous version ran to 975px on
+   a desktop screen and most of that was empty: an oversized sign-off statement
+   repeating the home page's own headline, an assurance strip giving 432px each
+   to a two-line claim, and link columns stretched to match the tallest cell.
+   ========================================================================= */
+.footer {
   position: relative;
-  z-index: 2;
+  border-top: var(--hairline) solid var(--line);
+  background: var(--surface);
 }
 
-.copyrightText {
-  font-size: 13.5px;
-  color: #48484a;
-  margin: 0;
+.footer__inner {
+  max-width: var(--shell);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
 }
 
-.bottomPolicyLinks {
+/* --- Band 1: identity and signup, on one row --- */
+.footer__head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 360px);
+  gap: var(--s-7);
+  align-items: start;
+  padding-block: var(--s-7) var(--s-6);
+}
+
+.footer__brand {
+  display: grid;
+  gap: var(--s-4);
+  justify-items: start;
+}
+
+.footer__brand p {
+  max-width: 44ch;
+  font-size: var(--fs-small);
+  line-height: 1.65;
+}
+
+/* --- Band 2: link columns --- */
+.footer__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 0.8fr)) minmax(0, 1.1fr);
+  gap: var(--s-6) var(--s-7);
+  /* Top-aligned, so a four-link column stays four links tall instead of
+     stretching to match the contact column beside it. */
+  align-items: start;
+  padding-block: var(--s-6);
+  border-top: var(--hairline) solid var(--line);
+}
+
+.footer__colTitle {
+  margin-bottom: var(--s-4);
+  font-size: var(--fs-micro);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.footer__col ul {
+  display: grid;
+  gap: var(--s-2);
+}
+
+.footer__col a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--fs-small);
+  color: var(--ink-muted);
+  transition: color var(--t-fast);
+}
+
+/* The arrow appears on hover rather than sitting there permanently: four
+   columns of persistent arrows is noise. */
+.footer__col ul a svg {
+  opacity: 0;
+  transform: translate(-4px, 3px);
+  transition: opacity var(--t-fast), transform var(--t-fast);
+}
+
+.footer__col a:hover {
+  color: var(--accent);
+}
+
+.footer__col ul a:hover svg {
+  opacity: 1;
+  transform: translate(0, 0);
+}
+
+/* --- Contact column --- */
+.footer__contact {
+  display: grid;
+  gap: var(--s-2);
+  margin-bottom: var(--s-4);
+}
+
+.footer__contact a,
+.footer__contactStatic {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-3);
+  font-size: var(--fs-small);
+  color: var(--ink-muted);
+}
+
+.footer__contact svg {
+  flex-shrink: 0;
+  color: var(--ink-faint);
+  transition: color var(--t-fast);
+}
+
+.footer__contact a:hover,
+.footer__contact a:hover svg {
+  color: var(--accent);
+}
+
+/* --- Newsletter --- */
+.footer__signup {
+  display: grid;
+  gap: var(--s-3);
+  width: 100%;
+}
+
+.footer__signupLabel {
+  font-size: var(--fs-micro);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+/*
+   The border lives on the row, not on the input.
+
+   Previously the input carried its own border with `border-right: 0` and the
+   button carried another. On focus the input turned accent on three sides
+   while the button kept the old colour, so the control looked broken in half.
+   One border around the pair, lit by `:focus-within`, keeps it a single field.
+*/
+.footer__signupRow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  border: var(--hairline) solid var(--line-strong);
+  transition: border-color var(--t-fast), box-shadow var(--t-fast);
+}
+
+/*
+   Border only. The shared focus ring is a 2px offset outline on top of a
+   border, which around a 50px-tall field read as a thick double frame. The
+   field is already outlined, so lighting that outline is enough to say where
+   focus is.
+*/
+.footer__signupRow:focus-within {
+  border-color: var(--accent);
+}
+
+.footer__signupRow input {
+  min-width: 0;
+  padding: 13px var(--s-4);
+  background: transparent;
+  border: 0;
+  color: var(--ink);
+  font-size: var(--fs-small);
+}
+
+.footer__signupRow input::placeholder {
+  color: var(--ink-faint);
+}
+
+/* The row shows the focus state for the whole control, so the input itself
+   must not draw a second ring inside it. */
+.footer__signupRow input:focus,
+.footer__signupRow input:focus-visible {
+  outline: none;
+  box-shadow: none;
+}
+
+.footer__signupRow button {
+  display: grid;
+  place-items: center;
+  width: 50px;
+  border: 0;
+  border-left: var(--hairline) solid var(--line-strong);
+  color: var(--ink-strong);
+  transition: background var(--t-fast), color var(--t-fast);
+}
+
+.footer__signupRow button:focus-visible {
+  outline: none;
+  box-shadow: inset 0 0 0 2px var(--accent);
+}
+
+.footer__signupRow button:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--ink-invert);
+}
+
+/* Reserves its own line so a message appearing never shifts the row above. */
+.footer__status {
+  min-height: 16px;
+  font-size: var(--fs-micro);
+  font-weight: var(--fw-semibold);
+  line-height: 1.4;
+  color: var(--accent);
+}
+
+.footer__status[data-state="error"] {
+  color: var(--accent-warm);
+}
+
+/* --- Band 3: legal bar --- */
+.footer__bottom {
   display: flex;
-  gap: 20px;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-4);
+  padding-block: var(--s-4) var(--s-5);
+  border-top: var(--hairline) solid var(--line);
 }
 
-.subLink {
-  font-size: 13.5px;
-  color: #48484a;
-  text-decoration: none;
-  transition: color 0.2s ease;
+.footer__bottom p,
+.footer__legal li {
+  font-size: var(--fs-micro);
+  letter-spacing: 0.04em;
+  color: var(--ink-faint);
 }
 
-.subLink:hover {
-  color: #8e8e93;
+.footer__legal {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-5);
 }
 
-/* --- Responsive Media Queries --- */
-@media (max-width: 1100px) {
-  .footerGrid {
-    grid-template-columns: 1.5fr 1fr 1fr;
-    row-gap: 50px;
+.footer__legal a {
+  color: var(--ink-faint);
+  transition: color var(--t-fast);
+}
+
+.footer__legal a:hover {
+  color: var(--accent);
+}
+
+/* Placeholder legal entries: visibly not links, and labelled as pending. */
+.footer__legal .isPlaceholder {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  cursor: default;
+}
+
+.footer__legal .isPlaceholder em {
+  font-style: normal;
+  padding: 2px 6px;
+  border: var(--hairline) solid var(--line);
+  font-size: var(--fs-nano);
+  font-weight: var(--fw-bold);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+
+/* -------------------------------------------------------------------------
+   RESPONSIVE
+   ------------------------------------------------------------------------- */
+@media (max-width: 1080px) {
+  .nav__inner {
+    grid-template-columns: auto auto;
+    justify-content: space-between;
   }
-  .footerNewsletter {
-    grid-column: span 3;
-    max-width: 500px;
+
+  .nav__links,
+  .nav__cta {
+    display: none;
+  }
+
+  .nav__toggle {
+    display: inline-flex;
+  }
+
+  .footer__head {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--s-6);
+  }
+
+  .footer__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--s-6);
   }
 }
 
-@media (max-width: 768px) {
-  .footerGrid {
-    grid-template-columns: 1fr 1fr;
+
+@media (max-width: 560px) {
+  /* Two columns, not one. These are four-item lists of short labels; stacking
+     all four columns turned the footer into 1,600px of scrolling on a phone. */
+  .footer__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--s-5) var(--s-4);
   }
-  .footerBrandCol {
-    grid-column: span 2;
+
+  /* The contact column carries an address and a social row, so it takes the
+     full width underneath rather than being squeezed into half of one. */
+  .footer__grid > :last-child {
+    grid-column: 1 / -1;
   }
-  .footerNewsletter {
-    grid-column: span 2;
-  }
-  .footerBottom {
+
+  .footer__bottom {
     flex-direction: column;
-    gap: 16px;
-    text-align: center;
+    align-items: flex-start;
+  }
+
+  .footer__legal {
+    gap: var(--s-3) var(--s-4);
   }
 }
 
-@media (max-width: 480px) {
-  .advancedFooter {
-    padding: 60px 16px 24px 16px;
+/* -------------------------------------------------------------------------
+   HOVER STATES THE AUDIT FOUND MISSING
+
+   The wordmark and the menu toggle were the only two interactive elements in
+   the header with no feedback at all — both are hit constantly, and a logo
+   that does not respond reads as decoration rather than a link home.
+   ------------------------------------------------------------------------- */
+.wordmark {
+  transition: color var(--t-fast);
+}
+
+/* The mark does not move on hover. It used to drop 2px "toward its own output
+   node", which stopped meaning anything once the nodes were removed, and a logo
+   that shifts under the cursor reads as something coming loose rather than as
+   something responding. The wordmark's own colour change is the whole hover. */
+.wordmark:hover .wordmarkText i {
+  color: var(--accent);
+}
+
+.wordmarkText i {
+  transition: color var(--t-fast);
+}
+
+.nav__toggle {
+  transition: color var(--t-fast);
+}
+
+.nav__toggle:hover {
+  color: var(--accent);
+}
+
+.nav__toggle:hover .nav__toggleBars i {
+  background: var(--accent);
+}
+
+.nav__toggleBars i {
+  transition: transform var(--t-base), background var(--t-fast);
+}
+
+/* -------------------------------------------------------------------------
+   MOBILE — carry less
+   ------------------------------------------------------------------------- */
+@media (max-width: 720px) {
+  .footer__head {
+    padding-block: var(--s-6) var(--s-5);
   }
-  .footerGrid {
-    grid-template-columns: 1fr;
+
+  /* The strapline repeats what the page above has already said, at a width
+     where a visitor is not going to read both. */
+  .footer__brand p {
+    display: none;
   }
-  .footerBrandCol, .footerCol, .footerNewsletter {
-    grid-column: span 1;
+
+  .footer__grid {
+    padding-block: var(--s-5);
   }
-  .bottomPolicyLinks {
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 12px;
+
+  /* 40px still clears the tap-target floor and saves four pixels on each of
+     twelve rows. */
+  .footer__col ul a,
+  .footer__contact a,
+  .footer__contactStatic {
+    min-height: 40px;
   }
 }
 
-
-/* =========================================================
-   Targeted fix: Footer logo should stay static
-========================================================= */
-.brandIconWrapper,
-.brandIconWrapper:hover,
-.coreSignalIcon,
-.coreSignalIcon:hover {
-  animation: none !important;
-  transform: none !important;
+/* --- Pressed states --- */
+.nav__link:active,
+.menu__link:active,
+.footer__col a:active,
+.footer__contact a:active,
+.footer__legal a:active {
+  opacity: 0.65;
 }
 
-.pulseRing {
-  display: none !important;
-  animation: none !important;
-  opacity: 0 !important;
+.nav__toggle:active .nav__toggleBars i {
+  transform: scaleX(0.86);
 }
+
+/* --- Touch targets: footer link columns --- */
+@media (pointer: coarse) {
+  /* The most-tapped control on a phone was 38px tall. */
+  .nav__toggle {
+    min-height: 44px;
+    padding-block: 0;
+  }
+
+  /* The rows carry their own height, so the list gap goes to zero — otherwise
+     each column pays for both the target size and the spacing between them. */
+  .footer__col ul {
+    gap: 0;
+  }
+
+  .footer__col ul a {
+    min-height: 44px;
+    width: 100%;
+  }
+
+  .footer__contact a,
+  .footer__contactStatic {
+    min-height: 44px;
+  }
+
+  .footer__legal .subLink,
+  .footer__legal a {
+    padding-block: 8px;
+  }
+}
+
+/* -------------------------------------------------------------------------
+   THEME CONTROL
+
+   Three hairline cells in a row, sharing one border — the same rectangular
+   vocabulary as the billing switch on the pricing page, at a smaller scale.
+   The selected cell inverts rather than tinting, so which one is on is
+   unambiguous at a glance in either theme.
+   ------------------------------------------------------------------------- */
+.themeToggle {
+  display: inline-flex;
+  border: var(--hairline) solid var(--line-strong);
+}
+
+.themeToggle__option {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  color: var(--ink-muted);
+  background: transparent;
+  border-right: var(--hairline) solid var(--line-strong);
+  transition: color var(--t-fast), background var(--t-fast);
+}
+
+.themeToggle__option:last-child {
+  border-right: 0;
+}
+
+.themeToggle__option:hover {
+  color: var(--ink-strong);
+  background: var(--surface-subtle);
+}
+
+.themeToggle__option.isActive {
+  color: var(--ink-invert);
+  background: var(--ink-strong);
+}
+
+.themeToggle__option:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+  /* Above the neighbouring cells so the ring is not clipped by their borders. */
+  position: relative;
+  z-index: 1;
+}
+
+.themeToggle__option:active {
+  transform: translateY(1px);
+}
+
+/* In the overlay the control sits under its own label rather than inline. */
+.menuAside__theme {
+  display: grid;
+  gap: var(--s-3);
+  justify-items: start;
+}
+
+@media (max-width: 900px) {
+  /* The bar keeps the wordmark and the menu button at this width; the theme
+     control moves into the overlay, where there is room for it. */
+  .nav__theme {
+    display: none;
+  }
+}
+
+@media (pointer: coarse) {
+  .themeToggle__option {
+    width: 44px;
+    height: 44px;
+  }
+}
+
+/* -------------------------------------------------------------------------
+   CONTACT DOCK
+
+   Bottom-right, above everything except the mobile menu overlay. Square, hairline,
+   no radius — the same geometry as the rest of the site rather than the round
+   bubble every chat widget ships with.
+   ------------------------------------------------------------------------- */
+.dock {
+  position: fixed;
+  right: var(--gutter);
+  bottom: var(--gutter);
+  z-index: var(--z-nav);
+  display: grid;
+  justify-items: end;
+  gap: var(--s-3);
+}
+
+.dock__trigger {
+  display: grid;
+  place-items: center;
+  /* 44px exactly: the tap-target floor and no more. At 52 it read as the round
+     chat bubble every widget ships with, competing with the page instead of
+     waiting at the edge of it. */
+  width: 44px;
+  height: 44px;
+  color: var(--ink-invert);
+  background: var(--ink-strong);
+  border: var(--hairline) solid var(--ink-strong);
+  box-shadow: var(--shadow-lg);
+  transition: color var(--t-fast), background var(--t-fast), border-color var(--t-fast);
+}
+
+.dock__trigger:hover {
+  color: var(--ink-invert);
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.dock__trigger:active {
+  transform: translateY(1px);
+}
+
+.dock__panel {
+  width: min(300px, calc(100vw - var(--gutter) * 2));
+  padding: var(--s-5);
+  background: var(--surface-panel);
+  border: var(--hairline) solid var(--line-strong);
+  box-shadow: var(--shadow-lg);
+}
+
+.dock__title {
+  margin-bottom: var(--s-4);
+  font-size: var(--fs-micro);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.dock__list {
+  display: grid;
+  gap: var(--s-1);
+}
+
+.dock__list a {
+  display: grid;
+  grid-template-columns: 18px minmax(0, 1fr);
+  align-items: center;
+  gap: var(--s-3);
+  /* Clears the 44px tap floor on its own. */
+  padding: 10px var(--s-3);
+  margin-inline: calc(var(--s-3) * -1);
+  color: var(--ink-muted);
+  transition: color var(--t-fast), background var(--t-fast);
+}
+
+.dock__list a:hover {
+  color: var(--ink-strong);
+  background: var(--surface-subtle);
+}
+
+.dock__list a:hover svg {
+  color: var(--accent);
+}
+
+.dock__list svg {
+  transition: color var(--t-fast);
+}
+
+.dock__channel {
+  display: grid;
+  min-width: 0;
+}
+
+.dock__channel b {
+  font-size: var(--fs-small);
+  font-weight: var(--fw-semibold);
+  color: var(--ink);
+}
+
+.dock__channel small {
+  font-size: var(--fs-micro);
+  color: var(--ink-faint);
+  /* Addresses and numbers must not wrap into two lines in a 300px panel. */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dock__list a:hover .dock__channel b {
+  color: var(--ink-strong);
+}
+
+/* The mobile menu is a full-screen overlay; the dock must not float over it. */
+.nav.isOpen ~ .dock,
+body:has(.menu) .dock {
+  display: none;
+}
+

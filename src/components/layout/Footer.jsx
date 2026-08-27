@@ -1,131 +1,195 @@
-import { useEffect, useRef } from "react";
-import { ArrowRight, Mail, MapPin, Phone, Radio } from "lucide-react";
-import { FaFacebookF, FaLinkedinIn, FaTwitter, FaYoutube } from "react-icons/fa";
+import { useEffect, useRef, useState } from "react";
+import { ArrowUpRight, Check, Mail, MapPin, Phone, Send } from "lucide-react";
 import { Link } from "react-router-dom";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { footerLinks } from "../../data/siteData";
+import Wordmark from "../brand/Wordmark";
+import { contactDetails, footerLinks, footerPlaceholders } from "../../data/siteData";
 
 gsap.registerPlugin(ScrollTrigger);
 
+/**
+ * Footer.
+ *
+ * Rebuilt for density. The previous version ran to 975px on a desktop screen
+ * and most of that was air: a 186px sign-off statement repeating the home
+ * page's own headline word for word, a three-column assurance strip giving 432
+ * pixels each to a two-line claim, and link columns stretched to 490px to match
+ * the tallest cell beside them.
+ *
+ * Three bands now, each sized by its content:
+ *   1. identity and the newsletter, on one row
+ *   2. four link columns, top-aligned so short ones stay short
+ *   3. the legal bar
+ */
 export default function Footer() {
   const footerRef = useRef(null);
-  const gridRef   = useRef(null);
 
   useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return undefined;
+
     const ctx = gsap.context(() => {
       gsap.fromTo(
-        gridRef.current.children,
-        { opacity: 0, y: 50, filter: "blur(8px)" },
+        ".footer__brand, .footer__signup, .footer__col",
+        { autoAlpha: 0, y: 18 },
         {
-          opacity: 1, y: 0, filter: "blur(0px)",
-          duration: 0.8, stagger: 0.12, ease: "power3.out",
-          scrollTrigger: {
-            trigger: footerRef.current,
-            start: "top 85%",
-            toggleActions: "play none none none",
-          },
+          autoAlpha: 1,
+          y: 0,
+          duration: 0.6,
+          stagger: 0.05,
+          ease: "power3.out",
+          clearProps: "transform,opacity,visibility",
+          scrollTrigger: { trigger: footerRef.current, start: "top 95%", once: true },
         }
       );
-
-      gsap.to(".footerAdvancedGlow", {
-        x: "random(-40, 40)", y: "random(-30, 30)",
-        scale: "random(0.9, 1.1)",
-        duration: 6, repeat: -1, yoyo: true, ease: "sine.inOut",
-      });
     }, footerRef);
 
     return () => ctx.revert();
   }, []);
 
   return (
-    <footer className="advancedFooter" ref={footerRef}>
-      <div className="footerAdvancedGlow" />
-      <div className="footerMatrixGrid" />
-
-      <div className="footerGrid" ref={gridRef}>
-        {/* BRAND COLUMN */}
-        <div className="footerBrandCol">
-          <Link to="/" className="footerLogoGroup">
-            <div className="brandIconWrapper">
-              <Radio size={20} className="coreSignalIcon" />
-              <div className="pulseRing" />
-            </div>
-            <h3>VistechBot</h3>
-          </Link>
-
-          <p className="brandDesc">
-            Professional AI voice agent and chatbot platform for modern businesses.
-            Build smart support, automate workflows, and scale faster.
-          </p>
-
-          <div className="footerContactList">
-            <a href="mailto:support@vistechbot.com" className="contactRow">
-              <Mail size={14} /> <span>support@vistechbot.com</span>
-            </a>
-            <a href="tel:+1234567890" className="contactRow">
-              <Phone size={14} /> <span>+1 234 567 890</span>
-            </a>
-            <div className="contactRow nonClickable">
-              <MapPin size={14} /> <span>Global AI Solutions Inc.</span>
-            </div>
+    <footer className="footer" ref={footerRef}>
+      <div className="footer__inner">
+        {/* --- Identity + signup --- */}
+        <div className="footer__head">
+          <div className="footer__brand">
+            <Wordmark size={24} />
+            <p>
+              AI chat and voice agents that answer from your own documentation
+              and stay inside your rules.
+            </p>
+            <Link className="btn btn--ghost btn--sm" to="/contact">
+              Start free trial <ArrowUpRight size={14} aria-hidden="true" />
+            </Link>
           </div>
 
-          <div className="socialContainer">
-            {[
-              { href: "https://x.com",         icon: FaTwitter,   label: "Twitter",   size: 14 },
-              { href: "https://linkedin.com",   icon: FaLinkedinIn,label: "LinkedIn",  size: 14 },
-              { href: "https://facebook.com",   icon: FaFacebookF, label: "Facebook",  size: 14 },
-              { href: "https://youtube.com",    icon: FaYoutube,   label: "YouTube",   size: 15 },
-            ].map(({ href, icon: Icon, label, size }) => (
-              <a key={label} href={href} target="_blank" rel="noreferrer" aria-label={label} className="socialIconBtn">
-                <Icon size={size} />
+          <NewsletterForm />
+        </div>
+
+        {/* --- Link columns --- */}
+        <div className="footer__grid">
+          {Object.entries(footerLinks).map(([heading, links]) => (
+            <nav className="footer__col" key={heading} aria-label={heading}>
+              <h2 className="footer__colTitle">{heading}</h2>
+              <ul>
+                {links.map(([label, path]) => (
+                  <li key={label}>
+                    <Link to={path}>
+                      <span>{label}</span>
+                      <ArrowUpRight size={14} aria-hidden="true" />
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          ))}
+
+          <div className="footer__col">
+            <h2 className="footer__colTitle">Contact</h2>
+
+            <address className="footer__contact">
+              <a href={`mailto:${contactDetails.email}`}>
+                <Mail size={14} aria-hidden="true" />
+                <span>{contactDetails.email}</span>
               </a>
+              <a href={contactDetails.phoneHref}>
+                <Phone size={14} aria-hidden="true" />
+                <span>{contactDetails.phone}</span>
+              </a>
+              <span className="footer__contactStatic">
+                <MapPin size={14} aria-hidden="true" />
+                <span>{contactDetails.location}</span>
+              </span>
+            </address>
+          </div>
+        </div>
+
+        {/* --- Legal bar --- */}
+        <div className="footer__bottom">
+          <p>© {new Date().getFullYear()} VistechBot. All rights reserved.</p>
+
+          <ul className="footer__legal">
+            {/* Marked as placeholders rather than pointed at an unrelated page. */}
+            {footerPlaceholders.map((label) => (
+              <li key={label}>
+                <span className="isPlaceholder" aria-disabled="true">
+                  {label} <em>soon</em>
+                </span>
+              </li>
             ))}
-          </div>
-        </div>
-
-        {/* NAV LINK COLUMNS */}
-        {Object.entries(footerLinks).map(([heading, links]) => (
-          <div className="footerCol" key={heading}>
-            <div className="colHeader">
-              <h4>{heading}</h4>
-              <div className="headerIndicator" />
-            </div>
-            <div className="linkWrapperStack">
-              {links.map(([label, path]) => (
-                <Link to={path} key={label} className="animatedFooterLink">
-                  <span className="linkText">{label}</span>
-                </Link>
-              ))}
-            </div>
-          </div>
-        ))}
-
-        {/* NEWSLETTER */}
-        <div className="footerNewsletter">
-          <div className="colHeader">
-            <h4>Stay Updated</h4>
-            <div className="headerIndicator" />
-          </div>
-          <p>Get elite product updates, AI strategic advice, and automation concepts.</p>
-          <div className="newsletterBoxContainer">
-            <input type="email" placeholder="Enter business email" aria-label="Email address" />
-            <button aria-label="Subscribe" className="newsletterSubmitBtn">
-              <ArrowRight size={16} />
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <div className="footerBottom">
-        <p className="copyrightText">© 2026 VistechBot platform. Powered by AI Core.</p>
-        <div className="bottomPolicyLinks">
-          <Link to="/docs" className="subLink">Privacy Policy</Link>
-          <Link to="/docs" className="subLink">Terms of Service</Link>
-          <Link to="/contact" className="subLink">System Status</Link>
+            <li>
+              <Link to="/contact">Contact</Link>
+            </li>
+          </ul>
         </div>
       </div>
     </footer>
+  );
+}
+
+/**
+ * Newsletter capture.
+ *
+ * No mailing-list backend is wired up, so the form validates the address and
+ * then says plainly that it is not connected, rather than showing a success
+ * message for a submission that went nowhere.
+ */
+function NewsletterForm() {
+  const [email, setEmail] = useState("");
+  const [status, setStatus] = useState(null);
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email.trim())) {
+      setStatus({ state: "error", message: "Enter a valid email address." });
+      return;
+    }
+
+    setStatus({
+      state: "info",
+      message: "Signup is not connected yet. Email us and we will add you.",
+    });
+  };
+
+  return (
+    <form className="footer__signup" onSubmit={handleSubmit} noValidate>
+      <label className="footer__signupLabel" htmlFor="newsletter-email">
+        Product updates
+      </label>
+
+      <div className="footer__signupRow">
+        <input
+          id="newsletter-email"
+          name="email"
+          type="email"
+          autoComplete="email"
+          placeholder="Work email"
+          value={email}
+          onChange={(event) => {
+            setEmail(event.target.value);
+            if (status) setStatus(null);
+          }}
+          aria-describedby="newsletter-status"
+          aria-invalid={status?.state === "error" || undefined}
+        />
+        <button type="submit" aria-label="Subscribe to product updates">
+          {status?.state === "info" ? (
+            <Check size={16} aria-hidden="true" />
+          ) : (
+            <Send size={16} aria-hidden="true" />
+          )}
+        </button>
+      </div>
+
+      <span
+        className="footer__status"
+        id="newsletter-status"
+        role="status"
+        data-state={status?.state}
+      >
+        {status?.message}
+      </span>
+    </form>
   );
 }

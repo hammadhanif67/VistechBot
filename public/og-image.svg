@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <radialGradient id="glowA" cx="0.8" cy="0.1" r="0.7">
+      <stop offset="0%" stop-color="#2f6bff" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#2f6bff" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glowB" cx="0.05" cy="0.85" r="0.6">
+      <stop offset="0%" stop-color="#8b4dff" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#8b4dff" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="#05070f"/>
+  <rect width="1200" height="630" fill="url(#glowA)"/>
+  <rect width="1200" height="630" fill="url(#glowB)"/>
+
+  <!-- Neural lattice: many inputs converging on one output. -->
+  <g stroke="#2f6bff" stroke-opacity="0.3" stroke-width="1"><line x1="805" y1="132" x2="837" y2="226"/><line x1="805" y1="132" x2="883.5" y2="226"/><line x1="846.6666666666666" y1="132" x2="837" y2="226"/><line x1="846.6666666666666" y1="132" x2="883.5" y2="226"/><line x1="888.3333333333334" y1="132" x2="883.5" y2="226"/><line x1="888.3333333333334" y1="132" x2="930" y2="226"/><line x1="930" y1="132" x2="930" y2="226"/><line x1="930" y1="132" x2="883.5" y2="226"/><line x1="971.6666666666666" y1="132" x2="976.5" y2="226"/><line x1="971.6666666666666" y1="132" x2="930" y2="226"/><line x1="1013.3333333333333" y1="132" x2="1023" y2="226"/><line x1="1013.3333333333333" y1="132" x2="976.5" y2="226"/><line x1="1055" y1="132" x2="1023" y2="226"/><line x1="1055" y1="132" x2="976.5" y2="226"/><line x1="837" y1="226" x2="865" y2="320"/><line x1="837" y1="226" x2="908.3333333333334" y2="320"/><line x1="883.5" y1="226" x2="865" y2="320"/><line x1="883.5" y1="226" x2="908.3333333333334" y2="320"/><line x1="930" y1="226" x2="908.3333333333334" y2="320"/><line x1="930" y1="226" x2="951.6666666666666" y2="320"/><line x1="976.5" y1="226" x2="995" y2="320"/><line x1="976.5" y1="226" x2="951.6666666666666" y2="320"/><line x1="1023" y1="226" x2="995" y2="320"/><line x1="1023" y1="226" x2="951.6666666666666" y2="320"/><line x1="865" y1="320" x2="897" y2="414"/><line x1="865" y1="320" x2="963" y2="414"/><line x1="908.3333333333334" y1="320" x2="897" y2="414"/><line x1="908.3333333333334" y1="320" x2="963" y2="414"/><line x1="951.6666666666666" y1="320" x2="963" y2="414"/><line x1="951.6666666666666" y1="320" x2="897" y2="414"/><line x1="995" y1="320" x2="963" y2="414"/><line x1="995" y1="320" x2="897" y2="414"/><line x1="897" y1="414" x2="930" y2="500"/><line x1="963" y1="414" x2="930" y2="500"/></g>
+  <g><rect x="800.5" y="127.5" width="9" height="9" fill="#2f6bff" fill-opacity="0.50"/><rect x="842.1666666666666" y="127.5" width="9" height="9" fill="#2f6bff" fill-opacity="0.50"/><rect x="883.8333333333334" y="127.5" width="9" height="9" fill="#2f6bff" fill-opacity="0.50"/><rect x="925.5" y="127.5" width="9" height="9" fill="#2f6bff" fill-opacity="0.50"/><rect x="967.1666666666666" y="127.5" width="9" height="9" fill="#2f6bff" fill-opacity="0.50"/><rect x="1008.8333333333333" y="127.5" width="9" height="9" fill="#2f6bff" fill-opacity="0.50"/><rect x="1050.5" y="127.5" width="9" height="9" fill="#2f6bff" fill-opacity="0.50"/><rect x="831.5" y="220.5" width="11" height="11" fill="#2f6bff" fill-opacity="0.63"/><rect x="878" y="220.5" width="11" height="11" fill="#2f6bff" fill-opacity="0.63"/><rect x="924.5" y="220.5" width="11" height="11" fill="#2f6bff" fill-opacity="0.63"/><rect x="971" y="220.5" width="11" height="11" fill="#2f6bff" fill-opacity="0.63"/><rect x="1017.5" y="220.5" width="11" height="11" fill="#2f6bff" fill-opacity="0.63"/><rect x="858.5" y="313.5" width="13" height="13" fill="#2f6bff" fill-opacity="0.75"/><rect x="901.8333333333334" y="313.5" width="13" height="13" fill="#2f6bff" fill-opacity="0.75"/><rect x="945.1666666666666" y="313.5" width="13" height="13" fill="#2f6bff" fill-opacity="0.75"/><rect x="988.5" y="313.5" width="13" height="13" fill="#2f6bff" fill-opacity="0.75"/><rect x="889.5" y="406.5" width="15" height="15" fill="#2f6bff" fill-opacity="0.88"/><rect x="955.5" y="406.5" width="15" height="15" fill="#2f6bff" fill-opacity="0.88"/><rect x="921.5" y="491.5" width="17" height="17" fill="#19e0ff" fill-opacity="1.00"/></g>
+  <rect x="815" y="118" width="230" height="28" fill="none" stroke="#19e0ff" stroke-opacity="0.18"/>
+  <rect x="857" y="306" width="146" height="28" fill="none" stroke="#19e0ff" stroke-opacity="0.18"/>
+
+  <!-- Mark -->
+  <g transform="translate(72, 64) scale(1.5)">
+    <path d="M4 4 L16 27 L28 4" stroke="#ffffff" stroke-width="3" fill="none" stroke-linecap="butt" stroke-linejoin="miter"/>
+  </g>
+  <text x="140" y="95" font-family="Urbanist, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="34" font-weight="800" fill="#ffffff" letter-spacing="-1.4">Vistech<tspan font-weight="300" fill="#9aa4c4">Bot</tspan></text>
+
+  <!-- Statement -->
+  <text x="72" y="290" font-family="Urbanist, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="74" font-weight="800" fill="#ffffff" letter-spacing="-3.4">ANSWER EVERY</text>
+  <text x="72" y="366" font-family="Urbanist, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="74" font-weight="800" fill="#ffffff" letter-spacing="-3.4">CUSTOMER</text>
+  <text x="72" y="442" font-family="Urbanist, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="74" font-weight="300" fill="#19e0ff" letter-spacing="-3.4">INSTANTLY.</text>
+
+  <!-- Footer rule and metadata -->
+  <rect x="72" y="512" width="640" height="1" fill="#9aa4c4" fill-opacity="0.2"/>
+  <text x="72" y="552" font-family="Urbanist, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="17" font-weight="600" fill="#9aa4c4" letter-spacing="2.6">AI CHAT &#183; VOICE AGENTS &#183; AUTOMATION &#183; ANALYTICS</text>
+  <text x="72" y="582" font-family="Urbanist, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="17" font-weight="600" fill="#ffffff" letter-spacing="2.6">VISTECHBOT.COM</text>
+</svg>

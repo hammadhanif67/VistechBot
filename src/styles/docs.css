@@ -1,1284 +1,474 @@
-/* ========================= Docs Page - Exact Dark Purple Help Center ========================= */
-:root{
-  --docs-bg:#030816;
-  --docs-bg-2:#071126;
-  --docs-panel:rgba(12,22,46,.76);
-  --docs-panel-2:rgba(16,26,52,.88);
-  --docs-border:rgba(139,165,255,.18);
-  --docs-border-strong:rgba(145,92,255,.42);
-  --docs-text:#f7f8ff;
-  --docs-muted:#9da9c7;
-  --docs-blue:#2f73ff;
-  --docs-purple:#aa29ff;
-  --docs-cyan:#19d8ff;
-  --docs-green:#16d582;
-  --docs-orange:#ff6d1d;
-  --docs-pink:#d933ff;
-  --docs-radius:18px;
-  --docs-shadow:0 25px 80px rgba(0,0,0,.45);
+/* =========================================================================
+   DOCUMENTATION
+
+   Sticky sidebar beside one content column. Deliberately the quietest page on
+   the site: no scroll reveals, no floating decoration. Everything is in
+   service of reading.
+   ========================================================================= */
+
+.docsHead {
+  padding-block: clamp(96px, 15vh, 150px) var(--s-6);
+  border-bottom: var(--hairline) solid var(--line);
 }
 
-.docsPage{min-height:100vh;background:radial-gradient(circle at 12% 9%,rgba(80,31,255,.22),transparent 24%),radial-gradient(circle at 86% 11%,rgba(137,24,255,.18),transparent 25%),linear-gradient(180deg,#030714 0%,#061026 52%,#030916 100%);color:var(--docs-text);overflow:hidden;position:relative;font-family:var(--font);}
-.docsPage::before{content:"";position:absolute;inset:0;background-image:radial-gradient(circle,rgba(100,131,255,.55) 1px,transparent 1.5px);background-size:90px 90px;opacity:.18;pointer-events:none;}
-.docsShell{width:min(1160px,calc(100% - 44px));margin:0 auto 34px;position:relative;z-index:2;}
+/* -------------------------------------------------------------------------
+   BREADCRUMB
+   ------------------------------------------------------------------------- */
+.docsCrumb ol {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-3);
+  font-size: var(--fs-micro);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
 
-/* ========================= Hero ========================= */
-.docsHero{position:relative;z-index:2;min-height:calc(100vh - 70px);padding:86px 30px 34px;display:grid;grid-template-columns:minmax(180px,310px) minmax(360px,590px) minmax(180px,330px);align-items:center;gap:26px;border-bottom:1px solid rgba(255,255,255,.06);}
-.docsHeroGlow{position:absolute;inset:auto 8% 0;height:220px;background:radial-gradient(circle,rgba(57,93,255,.34),transparent 64%);filter:blur(28px);pointer-events:none;}
-.docsHeroCenter{text-align:center;position:relative;z-index:3;}
-.docsHeroBadge,.docsSectionEyebrow{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(124,156,255,.22);background:rgba(8,17,38,.75);color:#dfe7ff;border-radius:999px;padding:8px 14px;font-size:12px;font-weight:700;box-shadow:inset 0 0 18px rgba(55,96,255,.12);}
-.docsHeroTitle{margin:22px auto 14px;font-size:clamp(38px,5.2vw,64px);line-height:.98;letter-spacing:-2.4px;font-weight:900;max-width:720px;text-shadow:0 18px 55px rgba(0,0,0,.55);}
-.highlightText{display:block;background:linear-gradient(92deg,#36a3ff 5%,#8338ff 45%,#d829ff 92%);-webkit-background-clip:text;background-clip:text;color:transparent;}
-.docsHeroText{max-width:570px;margin:0 auto 26px;color:#d7ddf3;font-size:17px;line-height:1.65;}
-.docsHeroArt{position:relative;min-height:335px;display:grid;place-items:center;}
-.docsHeroArt img{width:min(100%,315px);filter:drop-shadow(0 26px 50px rgba(64,65,255,.35));}
-.docsHeroArtRight img{width:min(100%,340px);}
-.docsHeroArt::before{content:"";position:absolute;width:300px;height:230px;border:1px solid rgba(87,83,255,.32);border-radius:50%;transform:rotate(-17deg);box-shadow:0 0 55px rgba(92,49,255,.18);}
-.docsFloatIcon{position:absolute;width:48px;height:48px;border-radius:16px;display:grid;place-items:center;border:1px solid rgba(126,145,255,.25);background:linear-gradient(145deg,rgba(18,29,65,.88),rgba(12,16,38,.7));box-shadow:0 16px 38px rgba(35,63,255,.25);color:#7cb4ff;}
-.docsFloatIcon.book{top:50px;right:66px;color:#a953ff}.docsFloatIcon.code{right:36px;bottom:76px;color:#1acbff}.docsFloatIcon.chat{top:54px;right:64px;color:#c044ff}.docsFloatIcon.help{left:45px;bottom:92px;color:#26d0ff}
-.docsSearchWrap{position:relative;max-width:440px;margin:0 auto 20px;border:1px solid rgba(255,255,255,.12);border-radius:15px;background:rgba(6,13,29,.82);box-shadow:0 18px 55px rgba(0,0,0,.32);backdrop-filter:blur(16px);}
-.docsSearchBox{height:58px;display:flex;align-items:center;gap:12px;padding:0 14px;color:#8ea0c2;}
-.docsSearchBox input{flex:1;min-width:0;background:transparent;border:0;outline:0;color:#fff;font-size:14px;}
-.docsSearchBox input::placeholder{color:#7f8aa5}.docsKbdShortcut,.clearBtn{border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.07);color:#c6cde0;border-radius:8px;padding:5px 8px;font-size:11px}.clearBtn{cursor:pointer;display:grid;place-items:center;padding:7px}
-.docsSearchResults{position:absolute;left:0;right:0;top:calc(100% + 10px);z-index:20;padding:10px;border:1px solid rgba(124,156,255,.2);border-radius:16px;background:rgba(7,13,31,.97);box-shadow:0 26px 70px rgba(0,0,0,.55);}
-.searchResultItem{width:100%;display:flex;gap:12px;align-items:center;text-align:left;border:0;border-radius:12px;padding:10px;background:transparent;color:#fff;cursor:pointer}.searchResultItem.active,.searchResultItem:hover{background:rgba(60,89,255,.16)}.resultIcon{width:35px;height:35px;border-radius:11px;display:grid;place-items:center;background:linear-gradient(135deg,var(--docs-blue),var(--docs-purple))}.resultContent{flex:1}.resultContent b{display:block;font-size:13px}.resultContent small{display:block;color:#9aa7c7;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:310px}.noResultsBox{text-align:left;padding:14px;color:#dce4ff}.noResultsBox small{color:#8f9ab7}
-.docsHeroActions{display:flex;justify-content:center;gap:14px;flex-wrap:wrap}.docsPrimaryBtn,.docsOutlineBtn,.docsWhiteBtn,.docsCtaOutline{height:48px;padding:0 24px;border:0;border-radius:11px;display:inline-flex;align-items:center;justify-content:center;gap:9px;font-weight:800;cursor:pointer;transition:.25s ease;color:#fff;background:linear-gradient(135deg,#2277ff 0%,#8e2cff 55%,#d51eff 100%);box-shadow:0 14px 34px rgba(83,64,255,.34)}.docsOutlineBtn,.docsCtaOutline{border:1px solid rgba(255,255,255,.24);background:rgba(8,13,31,.58);box-shadow:none}.docsWhiteBtn{background:#fff;color:#3160ff}.docsPrimaryBtn:hover,.docsOutlineBtn:hover,.docsWhiteBtn:hover,.docsCtaOutline:hover{transform:translateY(-3px)}
+.docsCrumb li + li::before {
+  content: "/";
+  margin-right: var(--s-3);
+  color: var(--line-strong);
+}
 
-/* ========================= Shared Panels ========================= */
-.docsPanel,.docsFaqSection{position:relative;margin:20px 0;padding:25px;border:1px solid var(--docs-border);border-radius:var(--docs-radius);background:linear-gradient(180deg,rgba(13,24,50,.88),rgba(8,16,35,.74));box-shadow:var(--docs-shadow);overflow:hidden;}
-.docsPanel::before,.docsFaqSection::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 0%,rgba(85,64,255,.12),transparent 45%);pointer-events:none}.docsSectionHead{position:relative;z-index:2;margin-bottom:22px}.centerHead{text-align:center}.splitHead,.withArrows{display:flex;align-items:flex-end;justify-content:space-between;gap:20px}.docsSectionHead h2{margin:7px 0 5px;font-size:30px;letter-spacing:-.8px}.docsSectionHead p{margin:0;color:var(--docs-muted);line-height:1.55}.docsHeadLink{color:#67b4ff;text-decoration:none;font-weight:800;display:inline-flex;align-items:center;gap:7px}.isDimmed{opacity:.24;filter:grayscale(.55)}.isVisible{opacity:1;filter:none}
-.docsIcon{width:47px;height:47px;border-radius:13px;display:grid;place-items:center;color:#fff;margin-bottom:22px;box-shadow:0 0 30px rgba(54,116,255,.3)}.docsIcon.blue{background:linear-gradient(135deg,#216dff,#5a65ff)}.docsIcon.green{background:linear-gradient(135deg,#0fc878,#21e99a)}.docsIcon.pink,.docsIcon.purple{background:linear-gradient(135deg,#a63cff,#f02cff)}.docsIcon.orange{background:linear-gradient(135deg,#ff551f,#ff8c1a)}.docsIcon.cyan{background:linear-gradient(135deg,#12bfe8,#2ed5ff)}
-.docsQuickGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.docsQuickCard,.docsFeatureCard,.videoCard{position:relative;z-index:2;border:1px solid rgba(147,168,255,.17);background:linear-gradient(160deg,rgba(19,31,59,.8),rgba(11,18,39,.83));border-radius:15px;padding:22px;min-height:170px;transition:.3s ease;overflow:hidden}.docsQuickCard:hover,.docsFeatureCard:hover,.videoCard:hover{transform:translateY(-7px);border-color:rgba(128,78,255,.55);box-shadow:0 20px 60px rgba(58,52,255,.2)}.docsQuickCard h3,.docsFeatureCard h3,.videoCard h3{margin:0 0 10px;font-size:16px}.docsQuickCard p,.docsFeatureCard p,.videoCard p{margin:0;color:#a9b5d1;font-size:13px;line-height:1.55}.docsQuickCard button{position:absolute;right:18px;bottom:18px;width:38px;height:38px;border-radius:50%;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.08);color:#fff;font-size:0;display:grid;place-items:center;cursor:pointer}.docsFeatureGrid{display:grid;grid-template-columns:repeat(5,1fr);gap:20px}.docsFeatureCard{min-height:245px}.docsFeatureCard a{position:absolute;bottom:20px;left:22px;color:#67b4ff;text-decoration:none;font-size:13px;font-weight:800;display:inline-flex;gap:5px;align-items:center}
+.docsCrumb a:hover {
+  color: var(--accent);
+}
 
-/* ========================= FAQ ========================= */
-.docsFaqLayout{position:relative;z-index:2;display:grid;grid-template-columns:1fr 300px;gap:24px}.docsFaqList{border:1px solid rgba(255,255,255,.1);border-radius:15px;overflow:hidden;background:rgba(10,19,41,.55)}.faqRow{display:grid;grid-template-columns:122px 1fr;gap:8px;align-items:center;min-height:75px;padding:14px 14px;border-bottom:1px solid rgba(255,255,255,.08);transition:.25s ease}.faqRow:last-child{border-bottom:0}.faqRow.active{background:rgba(63,85,255,.09)}.faqTag{width:max-content;border-radius:8px;padding:7px 11px;font-size:11px;font-weight:800}.faqTag.blue{background:rgba(45,103,255,.18);color:#6fa7ff}.faqTag.pink{background:rgba(230,54,255,.18);color:#ee7fff}.faqTag.purple{background:rgba(127,77,255,.18);color:#a990ff}.faqTag.green{background:rgba(27,214,131,.18);color:#49efa5}.faqTag.orange{background:rgba(255,105,26,.18);color:#ff9b58}.faqTag.red{background:rgba(255,58,111,.18);color:#ff7da1}.faqContent{text-align:left;border:0;background:transparent;color:#fff;cursor:pointer}.faqContent h3{margin:0 0 5px;font-size:14px}.faqContent p{margin:0;color:#a8b4d2;font-size:12.5px;line-height:1.45}.docsHelpCard{border:1px solid rgba(151,55,255,.55);border-radius:16px;padding:42px 33px;background:radial-gradient(circle at 50% 8%,rgba(123,47,255,.24),transparent 35%),rgba(10,18,40,.82);text-align:center}.helpOrb{width:126px;height:126px;border-radius:50%;margin:0 auto 28px;display:grid;place-items:center;color:#a98bff;border:2px solid rgba(116,93,255,.7);box-shadow:0 0 45px rgba(101,64,255,.45),inset 0 0 32px rgba(62,99,255,.24)}.docsHelpCard p{color:#aab5d0;line-height:1.55}.helpFeatureList{margin:30px 0;text-align:left}.helpFeature{display:flex;gap:14px;align-items:center;border-top:1px solid rgba(255,255,255,.08);padding:18px 0}.helpFeature svg{color:#8f5cff}.helpFeature b{display:block;color:#e8edff;font-size:13px}.helpFeature small{color:#9aa6c5;line-height:1.5}
+.docsCrumb [aria-current] {
+  color: var(--ink);
+}
 
-/* ========================= Videos ========================= */
-.tutorialArrows{display:flex;gap:9px}.tutorialArrows button{width:38px;height:38px;border-radius:50%;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.05);color:#fff;cursor:pointer}.docsVideoGrid{display:grid;grid-template-columns:repeat(4,minmax(240px,1fr));gap:18px;overflow-x:auto;scrollbar-width:none}.docsVideoGrid::-webkit-scrollbar{display:none}.videoCard{padding:14px;min-height:294px}.videoThumb{height:145px;border-radius:12px;overflow:hidden;position:relative;border:1px solid rgba(255,255,255,.12);display:grid;place-items:center;background:linear-gradient(135deg,rgba(16,184,114,.25),rgba(5,15,38,.8))}.videoCard.blue .videoThumb{background:linear-gradient(135deg,rgba(34,102,255,.32),rgba(5,15,38,.8))}.videoCard.purple .videoThumb{background:linear-gradient(135deg,rgba(156,44,255,.34),rgba(5,15,38,.8))}.videoCard.orange .videoThumb{background:linear-gradient(135deg,rgba(255,88,23,.35),rgba(5,15,38,.8))}.videoMock{position:absolute;inset:14px;border-radius:10px;background:rgba(2,8,22,.65);border:1px solid rgba(255,255,255,.08)}.videoMock span{display:block;width:60%;height:8px;margin:12px;background:rgba(255,255,255,.11);border-radius:8px}.videoMock i{display:inline-block;width:38px;height:38px;border-radius:50%;margin:10px;background:rgba(255,255,255,.08)}.videoPlayBtn{position:relative;z-index:2;width:64px;height:64px;border-radius:50%;border:0;color:#fff;display:grid;place-items:center;cursor:pointer;background:linear-gradient(135deg,#1d78ff,#a62aff);box-shadow:0 16px 40px rgba(58,80,255,.42)}.videoCard.green .videoPlayBtn{background:linear-gradient(135deg,#08c877,#17ef9d)}.videoCard.orange .videoPlayBtn{background:linear-gradient(135deg,#ff5d1f,#ff8b1c)}.videoMeta{display:flex;align-items:center;gap:13px;margin-top:12px}.videoMeta b{font-size:11px;color:#fff;border-radius:7px;padding:5px 8px;background:rgba(38,108,255,.18)}.videoCard.green .videoMeta b{background:rgba(23,215,132,.18);color:#60f0ad}.videoCard.orange .videoMeta b{background:rgba(255,101,24,.18);color:#ffab66}.videoMeta small{display:flex;gap:4px;align-items:center;color:#8794b4}.videoMeta a{margin-left:auto;color:#6fb4ff;text-decoration:none;font-size:12px;font-weight:800;display:flex;gap:4px;align-items:center}
+.docsTitle {
+  margin-top: var(--s-5);
+  font-size: clamp(38px, 6vw, 72px);
+  font-weight: var(--fw-black);
+  letter-spacing: var(--ls-h1);
+  text-transform: uppercase;
+}
 
-/* ========================= CTA ========================= */
-.docsCta{position:relative;min-height:220px;margin:20px 0 32px;border-radius:16px;overflow:hidden;padding:36px 310px 34px 310px;text-align:center;background:linear-gradient(100deg,#1d78ff 0%,#6533ff 48%,#d51eea 100%);box-shadow:0 24px 90px rgba(72,55,255,.35)}.docsCtaAura{position:absolute;inset:0;background:radial-gradient(circle at 15% 10%,rgba(255,255,255,.24),transparent 25%),radial-gradient(circle at 82% 28%,rgba(255,255,255,.2),transparent 27%)}.docsCtaRobot,.docsCtaChat{position:absolute;z-index:2;bottom:0;max-height:210px;object-fit:contain}.docsCtaRobot{left:76px}.docsCtaChat{right:70px}.docsCtaContent{position:relative;z-index:3}.docsCta h2{font-size:40px;margin:8px 0 10px;letter-spacing:-1px}.docsCta p{margin:0 auto 20px;max-width:520px;color:#edf2ff;line-height:1.55}.docsCtaActions{display:flex;justify-content:center;gap:14px;flex-wrap:wrap}
+.docsIntro {
+  margin-top: var(--s-4);
+  max-width: 56ch;
+  font-size: var(--fs-lead);
+  line-height: 1.62;
+}
 
-/* ========================= Responsive ========================= */
-@media (max-width:1100px){.docsHero{grid-template-columns:1fr;min-height:auto;padding-top:90px}.docsHeroArt{position:absolute;opacity:.24;inset:95px auto auto 0;width:270px}.docsHeroArtRight{left:auto;right:0}.docsFeatureGrid{grid-template-columns:repeat(3,1fr)}.docsQuickGrid,.docsVideoGrid{grid-template-columns:repeat(2,1fr)}.docsFaqLayout{grid-template-columns:1fr}.docsCta{padding:34px 230px}.docsCtaRobot{left:20px}.docsCtaChat{right:20px}}
-@media (max-width:760px){.docsShell{width:min(100% - 24px,1160px)}.docsHero{padding:76px 16px 24px}.docsHeroTitle{font-size:43px}.docsHeroText{font-size:15px}.docsHeroArt{display:none}.docsPanel,.docsFaqSection{padding:18px}.splitHead,.withArrows{display:block}.docsQuickGrid,.docsFeatureGrid,.docsVideoGrid{grid-template-columns:1fr}.faqRow{grid-template-columns:1fr}.faqTag{grid-column:1/-1}.docsCta{padding:32px 18px 150px}.docsCtaRobot{left:15px;max-height:135px}.docsCtaChat{right:10px;max-height:120px}.docsCta h2{font-size:32px}.docsHeroActions{flex-direction:column}.docsPrimaryBtn,.docsOutlineBtn,.docsWhiteBtn,.docsCtaOutline{width:100%}}
-
-
-/* ========================= Visibility Safety Patch ========================= */
-.docsHeroActions{display:flex!important;opacity:1!important;visibility:visible!important;position:relative;z-index:10;margin-top:4px;}
-.docsHeroBtn,.docsPrimaryBtn,.docsOutlineBtn{opacity:1!important;visibility:visible!important;pointer-events:auto;}
-.docsQuickGrid,.docsFeatureGrid,.docsFaqLayout,.docsVideoGrid{opacity:1!important;visibility:visible!important;position:relative;z-index:5;}
-.docsQuickCard,.docsFeatureCard,.faqRow,.docsHelpCard,.videoCard{opacity:1;visibility:visible;transform:none;}
-.docsQuickCard.isDimmed,.docsFeatureCard.isDimmed,.faqRow.isDimmed,.videoCard.isDimmed{opacity:.32;filter:grayscale(.35);}
-.docsQuickCard.isVisible,.docsFeatureCard.isVisible,.faqRow.isVisible,.videoCard.isVisible{opacity:1;filter:none;}
-.docsQuickCard{cursor:pointer;}
-.docsQuickCard::after,.docsFeatureCard::after,.videoCard::after{content:"";position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.07),transparent 42%);opacity:.75;pointer-events:none;}
-.docsQuickCard > *,.docsFeatureCard > *,.videoCard > *{position:relative;z-index:2;}
-.docsPanel h2,.docsFaqSection h2,.docsPanel h3,.docsFaqSection h3{color:#fff;}
-.docsPanel p,.docsFaqSection p{color:#aeb9d4;}
-
-
-/* ========================= BUG FIXES ========================= */
-
-/* 1. docsHeroArtLeft / docsHeroArtRight - were missing, only docsHeroArt existed in CSS */
-.docsHeroArtLeft {
-  position: relative;
-  min-height: 335px;
+/* -------------------------------------------------------------------------
+   LAYOUT
+   ------------------------------------------------------------------------- */
+.docsLayout {
   display: grid;
-  place-items: center;
+  grid-template-columns: 232px minmax(0, 1fr);
+  gap: clamp(32px, 5vw, 80px);
+  align-items: start;
+  padding-block: var(--s-8) var(--s-10);
 }
-.docsHeroArtLeft img { width: min(100%, 315px); filter: drop-shadow(0 26px 50px rgba(64,65,255,.35)); }
 
-.docsHeroArtRight {
+/*
+   Grid items default to `min-width: auto`, which means they refuse to shrink
+   below their content's minimum. On mobile the sidebar becomes a horizontal
+   scroller, and its own content was therefore forcing the whole column wider
+   than the viewport — the page picked up a horizontal scrollbar on the docs
+   route and nowhere else.
+*/
+.docsLayout > * {
+  min-width: 0;
+}
+
+/* -------------------------------------------------------------------------
+   SIDEBAR
+   ------------------------------------------------------------------------- */
+.docsNav {
+  position: sticky;
+  top: calc(var(--nav-h) + var(--s-6));
+}
+
+.docsNav__title {
+  margin-bottom: var(--s-4);
+}
+
+.docsNav ul {
+  border-left: var(--hairline) solid var(--line);
+}
+
+.docsNav__link {
   position: relative;
-  min-height: 335px;
   display: grid;
-  place-items: center;
+  grid-template-columns: 18px 14px minmax(0, 1fr);
+  align-items: center;
+  gap: var(--s-3);
+  padding: 9px var(--s-4);
+  font-size: var(--fs-small);
+  font-weight: var(--fw-medium);
+  color: var(--ink-muted);
+  transition: color var(--t-fast);
 }
-.docsHeroArtRight img { width: min(100%, 340px); filter: drop-shadow(0 26px 50px rgba(170,41,255,.28)); }
 
-.docsHeroArtLeft::before,
-.docsHeroArtRight::before {
+/* The active marker replaces the container's own left rule for that item,
+   rather than adding a second line beside it. */
+.docsNav__link::before {
   content: "";
   position: absolute;
-  width: 300px;
-  height: 230px;
-  border: 1px solid rgba(87,83,255,.32);
-  border-radius: 50%;
-  transform: rotate(-17deg);
-  box-shadow: 0 0 55px rgba(92,49,255,.18);
+  left: -1px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--accent);
+  transform: scaleY(0);
+  transition: transform var(--t-base);
 }
 
-/* 2. CRITICAL VISIBILITY FIX - GSAP autoAlpha:0 override */
-/* Force all section content visible — GSAP fromTo will still animate from hidden,
-   but if ScrollTrigger doesn't fire (above fold, fast load, etc.) content stays visible */
-.docsPanel,
-.docsFaqSection,
-.docsCta {
-  opacity: 1 !important;
-  visibility: visible !important;
+.docsNav__link:hover {
+  color: var(--ink-strong);
 }
 
-.docsQuickCard,
-.docsFeatureCard,
-.faqRow,
-.docsHelpCard,
-.videoCard,
-.helpFeature,
-.docsSectionHead > * {
-  opacity: 1 !important;
-  visibility: visible !important;
-  transform: none !important;
+.docsNav__link.isActive {
+  color: var(--ink-strong);
+  font-weight: var(--fw-semibold);
 }
 
-/* isDimmed/isVisible override stays relative */
-.docsQuickCard.isDimmed,
-.docsFeatureCard.isDimmed,
-.faqRow.isDimmed,
-.videoCard.isDimmed {
-  opacity: 0.28 !important;
-  filter: grayscale(0.4);
-  transform: none !important;
+.docsNav__link.isActive::before {
+  transform: scaleY(1);
 }
 
-.docsQuickCard.isVisible,
-.docsFeatureCard.isVisible,
-.faqRow.isVisible,
-.videoCard.isVisible {
-  opacity: 1 !important;
-  filter: none;
+.docsNav__index {
+  font-size: var(--fs-nano);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-label);
+  color: var(--ink-faint);
+  font-variant-numeric: tabular-nums;
 }
 
-/* 3. Hero buttons always visible */
-.docsHeroActions,
-.docsHeroBtn,
-.docsPrimaryBtn,
-.docsOutlineBtn {
-  opacity: 1 !important;
-  visibility: visible !important;
+/* -------------------------------------------------------------------------
+   CONTENT
+   ------------------------------------------------------------------------- */
+.docsBody {
+  min-width: 0;
+  max-width: 84ch;
 }
 
-/* 4. faqRow mobile - tag was breaking grid layout */
-@media (max-width: 760px) {
-  .faqRow {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    align-items: flex-start;
-    padding: 14px;
+.docsSection {
+  padding-block: var(--s-8);
+  border-bottom: var(--hairline) solid var(--line);
+}
+
+/* Search moves focus here after jumping. The scroll and the heading already
+   say where you landed, so the ring would only be noise. */
+.docsSection:focus,
+.docsSection:focus-visible {
+  outline: none;
+  box-shadow: none;
+}
+
+.docsSection:first-child {
+  padding-top: 0;
+}
+
+.docsSection:last-child {
+  border-bottom: 0;
+}
+
+.docsSection h2 {
+  font-size: clamp(24px, 3vw, 36px);
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--ls-h2);
+  text-transform: uppercase;
+}
+
+.docsSection h3 {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  font-size: var(--fs-h3);
+  font-weight: var(--fw-semibold);
+  color: var(--ink-strong);
+}
+
+.docsSection h3 svg {
+  color: var(--accent);
+}
+
+.docsLead {
+  margin-top: var(--s-4);
+  max-width: 68ch;
+  font-size: var(--fs-lead);
+  line-height: 1.65;
+  color: var(--ink);
+}
+
+.docsSection > p {
+  margin-top: var(--s-4);
+  max-width: 68ch;
+  line-height: var(--lh-body);
+}
+
+.docsSection .metaList,
+.docsSection .notice {
+  margin-top: var(--s-6);
+}
+
+.docsLink {
+  color: var(--accent);
+  border-bottom: var(--hairline) solid var(--line-accent);
+}
+
+/* --- Quick start steps --- */
+.docsSteps {
+  margin-top: var(--s-6);
+  display: grid;
+  gap: var(--s-7);
+}
+
+/*
+   Same trap as the layout grid: a grid item defaults to `min-width: auto` and
+   will not shrink below its content's minimum. The minimum here is the longest
+   line in the code block, so the step refused to narrow and pushed the docs
+   page sideways on a phone. The `<pre>` scrolls on its own; the item just has
+   to let it.
+*/
+.docsSteps > li,
+.docsSteps .codeBlock {
+  min-width: 0;
+}
+
+.docsSteps__head {
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr);
+  gap: var(--s-4);
+  margin-bottom: var(--s-4);
+}
+
+.docsSteps__index {
+  font-size: var(--fs-micro);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-label);
+  color: var(--ink-faint);
+  font-variant-numeric: tabular-nums;
+  padding-top: 5px;
+}
+
+.docsSteps__head p {
+  margin-top: 6px;
+  max-width: 60ch;
+  font-size: var(--fs-small);
+  line-height: 1.65;
+}
+
+/* --- Capability cards --- */
+.docsCards {
+  margin-top: var(--s-6);
+  margin-bottom: var(--s-6);
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--s-3);
+}
+
+.docsCard {
+  height: 100%;
+  display: grid;
+  gap: var(--s-3);
+  align-content: start;
+  padding: var(--s-5);
+}
+
+.docsCard svg {
+  color: var(--accent);
+}
+
+.docsCard h3 {
+  font-size: var(--fs-body);
+}
+
+.docsCard p {
+  font-size: var(--fs-small);
+  line-height: 1.65;
+}
+
+/* --- Reference groups --- */
+.docsRefGroup {
+  margin-top: var(--s-7);
+}
+
+.docsRefGroup .metaRow dt code {
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--accent);
+}
+
+/* --- FAQ --- */
+.docsFaq {
+  margin-top: var(--s-6);
+  border-top: var(--hairline) solid var(--line);
+}
+
+.docsFaq__row {
+  display: grid;
+  /* Sized to the longest tag ("Integrations") rather than a round number —
+     116px clipped it by a few pixels. */
+  grid-template-columns: 136px minmax(0, 1fr);
+  gap: var(--s-4);
+  padding: var(--s-5) 0;
+  border-bottom: var(--hairline) solid var(--line);
+}
+
+.docsFaq__tag {
+  align-self: start;
+}
+
+.docsFaq__row dt {
+  font-size: var(--fs-body);
+  font-weight: var(--fw-semibold);
+  color: var(--ink-strong);
+}
+
+.docsFaq__row dd {
+  margin-top: 6px;
+  max-width: 64ch;
+  font-size: var(--fs-small);
+  line-height: 1.7;
+  color: var(--ink-muted);
+}
+
+/* -------------------------------------------------------------------------
+   RESPONSIVE
+   ------------------------------------------------------------------------- */
+@media (max-width: 1024px) {
+  .docsLayout {
+    grid-template-columns: 1fr;
+    gap: var(--s-6);
   }
-  .faqTag {
-    flex: 0 0 auto;
-    width: auto;
-  }
-  .faqContent {
-    flex: 1 1 100%;
-    order: 2;
-  }
-}
 
-/* 5. docsHeroArtLeft/Right responsive — hide on tablet, not just mobile */
-@media (max-width: 1100px) {
-  .docsHeroArtLeft,
-  .docsHeroArtRight {
+  /* Chip height plus the strip's own vertical padding. Declared on the root
+     because the sections that have to clear the strip are not inside it. */
+  :root {
+    --docs-strip-h: 70px;
+  }
+
+  /* The sidebar becomes a horizontal scroller pinned under the header — still
+     a table of contents, just one that does not eat a column. */
+  .docsNav {
+    position: sticky;
+    top: var(--nav-h);
+    z-index: 10;
+    margin-inline: calc(var(--gutter) * -1);
+    padding: var(--s-3) var(--gutter);
+    background: var(--scrim-strip);
+    backdrop-filter: blur(14px);
+    border-bottom: var(--hairline) solid var(--line);
+  }
+
+  .docsNav__title {
     display: none;
   }
-  .docsHero {
+
+  /* The strip sticks directly under the header, so an anchored section has two
+     bars to clear, not one. The global `[id]` rule budgets for the header
+     alone, which left a clicked heading sitting 38px underneath the strip. */
+  .docsSection {
+    scroll-margin-top: calc(var(--nav-h) + var(--docs-strip-h) + var(--s-4));
+  }
+
+  .docsNav ul {
+    display: flex;
+    gap: var(--s-2);
+    /* The strip is scrolled programmatically to follow the reading position;
+       snapping would fight that mid-animation. */
+    scroll-behavior: auto;
+    overflow-x: auto;
+    border-left: 0;
+    /* Scroll the strip, do not let it push the page. */
+    max-width: 100%;
+    scrollbar-width: none;
+  }
+
+  .docsNav ul::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* The three-column grid exists to line index, icon and label up down the
+     vertical sidebar. In a horizontal strip there is no column to align to,
+     and an `fr` track contributes nothing to a max-content measurement, so
+     the label cell resolved to 0px, every chip sized to an identical 82px,
+     and the text spilled out over its neighbour. A flex row sizes each chip
+     to its own label. */
+  .docsNav__link {
+    display: flex;
+    align-items: center;
+    gap: var(--s-2);
+    white-space: nowrap;
+    /* 10px clears the 44px tap-target floor; 8px left the chips at 41px. */
+    padding: 10px var(--s-3);
+    border: var(--hairline) solid var(--line);
+  }
+
+  /* The number earns its place in a vertical list. Repeated before every
+     label in a strip that already reads left to right, it is 30px of noise
+     per chip on a 375px screen. */
+  .docsNav__index {
+    display: none;
+  }
+
+  .docsNav__link::before {
+    inset: auto 0 -1px 0;
+    width: auto;
+    height: 2px;
+    transform: scaleX(0);
+  }
+
+  .docsNav__link.isActive::before {
+    transform: scaleX(1);
+  }
+}
+
+@media (max-width: 640px) {
+  .docsCards {
     grid-template-columns: 1fr;
-    justify-items: center;
+  }
+
+  .docsFaq__row {
+    grid-template-columns: 1fr;
+    gap: var(--s-3);
+  }
+
+  .docsSteps__head {
+    grid-template-columns: 1fr;
+    gap: var(--s-2);
   }
 }
 
-/* 6. Video purple card fix — class mismatch in CSS (was .videoCard.purple but data has color:"purple") */
-.videoCard.purple .videoThumb {
-  background: linear-gradient(135deg, rgba(156,44,255,.34), rgba(5,15,38,.8));
-}
-.videoCard.purple .videoPlayBtn {
-  background: linear-gradient(135deg, #9c2cff, #d41eff);
-}
-.videoCard.purple .videoMeta b {
-  background: rgba(156,44,255,.18);
-  color: #c97fff;
-}
-
-/* ========================= QUICK NAVIGATION - PREMIUM NEW FEATURES OVERRIDE ========================= */
-/* Paste ke end par yeh override is liye rakha gaya hai taake old grouped CSS ko safely override kare.
-   New features:
-   - premium neon shell
-   - compact non-bulky cards
-   - card color variables
-   - icon glow
-   - dots texture
-   - left action button with text
-   - better hover lift
-   - responsive 4 / 2 / 1 grid
-*/
-
-.docsQuickNavigation{
-  position:relative;
-  margin:22px 0;
-  padding:0;
-}
-
-.docsQuickNavigation.docsPanel{
-  padding:0;
-  border:0;
-  background:transparent;
-  box-shadow:none;
-  overflow:visible;
-}
-
-.docsQuickNavigation.docsPanel::before{
-  display:none;
-}
-
-.docsQuickShell{
-  position:relative;
-  overflow:hidden;
-  padding:42px 34px 48px;
-  border-radius:32px;
-  background:
-    radial-gradient(circle at 8% 5%,rgba(166,51,255,.26),transparent 24%),
-    radial-gradient(circle at 92% 92%,rgba(20,120,255,.24),transparent 27%),
-    linear-gradient(180deg,rgba(12,15,42,.95),rgba(4,6,20,.98));
-  border:1px solid rgba(132,115,255,.48);
-  box-shadow:
-    0 0 34px rgba(36,130,255,.22),
-    0 0 42px rgba(178,68,255,.16),
-    inset 0 0 0 1px rgba(255,255,255,.03);
-}
-
-.docsQuickShell::before,
-.docsQuickShell::after{
-  content:"";
-  position:absolute;
-  width:230px;
-  height:230px;
-  opacity:.42;
-  pointer-events:none;
-  background:
-    repeating-radial-gradient(
-      circle,
-      transparent 0 12px,
-      rgba(117,92,255,.22) 13px 14px
-    );
-}
-
-.docsQuickShell::before{
-  top:-95px;
-  left:-78px;
-}
-
-.docsQuickShell::after{
-  top:-95px;
-  right:-78px;
-}
-
-.docsQuickHead{
-  position:relative;
-  z-index:2;
-  text-align:center;
-  margin-bottom:36px;
-}
-
-.docsQuickBadge{
-  display:inline-flex;
-  align-items:center;
-  gap:12px;
-  height:42px;
-  padding:0 20px 0 12px;
-  border-radius:999px;
-  color:#f7f2ff;
-  font-size:12px;
-  font-weight:800;
-  letter-spacing:6px;
-  background:rgba(18,18,48,.82);
-  border:1px solid rgba(128,82,255,.5);
-  box-shadow:0 0 20px rgba(165,48,255,.22);
-}
-
-.docsQuickBadge svg{
-  width:36px;
-  height:36px;
-  padding:9px;
-  border-radius:50%;
-  color:#bd46ff;
-  background:rgba(167,53,255,.18);
-}
-
-.docsQuickHead h2{
-  margin:20px 0 10px;
-  font-size:clamp(38px,5.3vw,66px);
-  line-height:.96;
-  font-weight:900;
-  letter-spacing:-2.8px;
-  background:
-    linear-gradient(
-      90deg,
-      #fff 12%,
-      #f7f4ff 42%,
-      #7d7cff 82%
-    );
-  -webkit-background-clip:text;
-  background-clip:text;
-  color:transparent;
-}
-
-.docsQuickHead p{
-  margin:0;
-  color:#b8bdd7;
-  font-size:19px;
-  font-weight:500;
-}
-
-.docsQuickLine{
-  width:96px;
-  height:4px;
-  margin:18px auto 0;
-  border-radius:20px;
-  background:linear-gradient(90deg,#9d24ff,#24a4ff);
-  box-shadow:0 0 14px rgba(137,68,255,.8);
-}
-
-.docsQuickLine span{
-  display:block;
-  width:10px;
-  height:10px;
-  margin:-3px auto 0;
-  border-radius:50%;
-  background:#fff;
-  box-shadow:0 0 18px #a939ff;
-}
-
-.docsQuickGrid{
-  position:relative;
-  z-index:2;
-  display:grid;
-  grid-template-columns:repeat(4,minmax(0,1fr));
-  gap:20px;
-  opacity:1!important;
-  visibility:visible!important;
-}
-
-.docsQuickCard{
-  --card-main:#2f86ff;
-  --card-dark:#1647ff;
-  --card-border:rgba(53,143,255,.82);
-  --card-shadow:rgba(29,111,255,.36);
-  --card-soft:rgba(28,95,255,.18);
-
-  position:relative;
-  z-index:2;
-  overflow:hidden;
-  min-height:258px;
-  padding:26px;
-  border-radius:24px;
-  cursor:pointer;
-  border:1px solid var(--card-border);
-  background:rgba(8,11,34,.78);
-  box-shadow:
-    inset 0 0 32px var(--card-soft),
-    0 0 20px var(--card-shadow);
-  opacity:1!important;
-  visibility:visible!important;
-  transform:none;
-  transition:
-    transform .35s ease,
-    box-shadow .35s ease,
-    border-color .35s ease,
-    opacity .35s ease,
-    filter .35s ease;
-}
-
-.docsQuickCard:hover{
-  transform:translateY(-8px)!important;
-  border-color:var(--card-border);
-  box-shadow:
-    inset 0 0 40px var(--card-soft),
-    0 0 34px var(--card-shadow);
-}
-
-.docsQuickCard::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  z-index:0;
-  background:
-    linear-gradient(135deg,rgba(255,255,255,.08),transparent 42%);
-  opacity:.8;
-  pointer-events:none;
-}
-
-.docsQuickCard::after{
-  content:"";
-  position:absolute;
-  right:-72px;
-  bottom:-82px;
-  left:auto;
-  top:auto;
-  width:220px;
-  height:170px;
-  border-radius:50%;
-  border:1px solid var(--card-border);
-  background:transparent;
-  opacity:.48;
-  pointer-events:none;
-}
-
-.docsQuickCard > *{
-  position:relative;
-  z-index:2;
-}
-
-.docsQuickDots{
-  position:absolute;
-  top:30px;
-  right:28px;
-  width:54px;
-  height:54px;
-  opacity:.55;
-  background-image:
-    radial-gradient(var(--card-main) 1.5px,transparent 1.5px);
-  background-size:12px 12px;
-}
-
-.docsQuickCard .docsIcon{
-  width:66px;
-  height:66px;
-  margin:0;
-  border-radius:20px;
-  display:grid;
-  place-items:center;
-  color:#fff;
-  background:linear-gradient(135deg,var(--card-main),var(--card-dark));
-  box-shadow:0 0 24px var(--card-shadow);
-}
-
-.docsQuickContent{
-  margin-top:34px;
-}
-
-.docsQuickContent h3,
-.docsQuickCard h3{
-  margin:0 0 13px;
-  color:#fff;
-  font-size:22px;
-  line-height:1.1;
-  font-weight:900;
-}
-
-.docsQuickContent p,
-.docsQuickCard p{
-  max-width:175px;
-  margin:0;
-  color:#c7cce2;
-  font-size:16px;
-  line-height:1.58;
-  font-weight:500;
-}
-
-.docsQuickCard button{
-  position:absolute;
-  left:26px;
-  right:auto;
-  bottom:24px;
-  width:42px;
-  height:42px;
-  display:grid;
-  place-items:center;
-  border-radius:50%;
-  border:1px solid var(--card-border);
-  background:rgba(255,255,255,.08);
-  color:#fff;
-  font-size:0;
-  box-shadow:0 0 16px var(--card-shadow);
-  cursor:pointer;
-}
-
-.docsQuickCard button::after{
-  content:"Explore now";
-  position:absolute;
-  left:56px;
-  white-space:nowrap;
-  color:var(--card-main);
-  font-size:14px;
-  font-weight:800;
-}
-
-.docsQuickCard.isDimmed{
-  opacity:.32!important;
-  filter:grayscale(.45);
-  transform:none!important;
-}
-
-.docsQuickCard.isVisible{
-  opacity:1!important;
-  filter:none;
-}
-
-/* ========================= QUICK CARD COLORS ========================= */
-
-.docsQuickCard.blue{
-  --card-main:#2f86ff;
-  --card-dark:#1647ff;
-  --card-border:rgba(53,143,255,.82);
-  --card-shadow:rgba(29,111,255,.36);
-  --card-soft:rgba(28,95,255,.18);
-}
-
-.docsQuickCard.green{
-  --card-main:#00ff90;
-  --card-dark:#00784d;
-  --card-border:rgba(0,255,156,.75);
-  --card-shadow:rgba(0,255,156,.28);
-  --card-soft:rgba(0,255,156,.16);
-}
-
-.docsQuickCard.purple,
-.docsQuickCard.pink{
-  --card-main:#c43cff;
-  --card-dark:#6f1aff;
-  --card-border:rgba(197,70,255,.8);
-  --card-shadow:rgba(188,60,255,.36);
-  --card-soft:rgba(156,45,255,.2);
-}
-
-.docsQuickCard.orange{
-  --card-main:#ff8b24;
-  --card-dark:#ff4f1f;
-  --card-border:rgba(255,128,45,.75);
-  --card-shadow:rgba(255,115,38,.3);
-  --card-soft:rgba(255,112,33,.16);
-}
-
-.docsQuickCard.cyan{
-  --card-main:#19d8ff;
-  --card-dark:#2174ff;
-  --card-border:rgba(25,216,255,.75);
-  --card-shadow:rgba(25,216,255,.3);
-  --card-soft:rgba(25,216,255,.16);
-}
-
-/* ========================= QUICK NAV RESPONSIVE FIXES ========================= */
-
-@media (max-width:1100px){
-  .docsQuickGrid{
-    grid-template-columns:repeat(2,1fr)!important;
-  }
-
-  .docsQuickCard{
-    min-height:240px;
-  }
-}
-
-@media (max-width:760px){
-  .docsQuickShell{
-    padding:32px 18px;
-    border-radius:24px;
-  }
-
-  .docsQuickGrid{
-    grid-template-columns:1fr!important;
-  }
-
-  .docsQuickHead h2{
-    font-size:40px;
-    letter-spacing:-2px;
-  }
-
-  .docsQuickHead p{
-    font-size:16px;
-  }
-
-  .docsQuickCard{
-    min-height:225px;
-    padding:23px;
-  }
-}
-
-/* ========================= Quick Navigation Advanced V2 - Premium Motion Layer ========================= */
-/* Paste-friendly override: keeps your existing JSX/classes and makes Quick Navigation more advanced without bulky cards. */
-
-.docsQuickNavigation{
-  isolation:isolate;
-  perspective:1100px;
-}
-
-.docsQuickShell{
-  --quick-angle:135deg;
-  --quick-glow-one:rgba(173,67,255,.28);
-  --quick-glow-two:rgba(34,144,255,.24);
-  padding:44px 34px 48px;
-  border-radius:34px;
-  background:
-    linear-gradient(rgba(4,7,22,.94),rgba(4,7,22,.94)) padding-box,
-    linear-gradient(var(--quick-angle),rgba(80,149,255,.9),rgba(189,56,255,.82),rgba(26,216,255,.72)) border-box;
-  border:1px solid transparent;
-  box-shadow:
-    0 30px 90px rgba(0,0,0,.5),
-    0 0 42px rgba(72,84,255,.22),
-    inset 0 1px 0 rgba(255,255,255,.08);
-}
-
-.docsQuickShell::before{
-  width:360px;
-  height:360px;
-  top:-170px;
-  left:-145px;
-  opacity:.58;
-  background:
-    radial-gradient(circle,rgba(182,65,255,.24) 0 36%,transparent 37%),
-    repeating-radial-gradient(circle,transparent 0 13px,rgba(126,94,255,.24) 14px 15px);
-  animation:docsQuickOrbit 16s linear infinite;
-}
-
-.docsQuickShell::after{
-  width:340px;
-  height:340px;
-  top:auto;
-  right:-145px;
-  bottom:-170px;
-  opacity:.5;
-  background:
-    radial-gradient(circle,rgba(30,151,255,.2) 0 35%,transparent 36%),
-    repeating-radial-gradient(circle,transparent 0 13px,rgba(52,149,255,.22) 14px 15px);
-  animation:docsQuickOrbitReverse 18s linear infinite;
-}
-
-.docsQuickHead::before{
-  content:"";
-  position:absolute;
-  left:50%;
-  top:-12px;
-  width:min(520px,82vw);
-  height:150px;
-  transform:translateX(-50%);
-  background:radial-gradient(circle,rgba(119,72,255,.22),transparent 68%);
-  filter:blur(12px);
-  z-index:-1;
-  pointer-events:none;
-}
-
-.docsQuickBadge{
-  position:relative;
-  overflow:hidden;
-  height:43px;
-  letter-spacing:5.5px;
-  background:rgba(11,16,43,.82);
-  border-color:rgba(157,112,255,.5);
-  box-shadow:
-    0 0 24px rgba(168,62,255,.24),
-    inset 0 0 18px rgba(255,255,255,.04);
-}
-
-.docsQuickBadge::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  transform:translateX(-115%);
-  background:linear-gradient(90deg,transparent,rgba(255,255,255,.18),transparent);
-  animation:docsQuickShine 3.8s ease-in-out infinite;
-}
-
-.docsQuickHead h2{
-  text-shadow:0 18px 55px rgba(0,0,0,.5);
-}
-
-.docsQuickLine{
-  position:relative;
-  overflow:visible;
-}
-
-.docsQuickLine::before,
-.docsQuickLine::after{
-  content:"";
-  position:absolute;
-  top:50%;
-  width:7px;
-  height:7px;
-  border-radius:50%;
-  background:#fff;
-  box-shadow:0 0 14px rgba(113,134,255,.9);
-  transform:translateY(-50%);
-}
-
-.docsQuickLine::before{left:-14px;}
-.docsQuickLine::after{right:-14px;}
-
-.docsQuickGrid{
-  gap:18px;
-  align-items:stretch;
-}
-
-.docsQuickCard{
-  min-height:248px;
-  padding:24px;
-  border-radius:24px;
-  transform-style:preserve-3d;
-  background:
-    radial-gradient(circle at 18% 12%,var(--card-soft),transparent 35%),
-    radial-gradient(circle at 85% 82%,rgba(255,255,255,.055),transparent 36%),
-    linear-gradient(155deg,rgba(14,22,51,.92),rgba(5,9,28,.88));
-  border:1px solid color-mix(in srgb,var(--card-border) 72%,rgba(255,255,255,.12));
-  box-shadow:
-    inset 0 0 0 1px rgba(255,255,255,.035),
-    inset 0 0 32px var(--card-soft),
-    0 18px 48px rgba(0,0,0,.24),
-    0 0 22px var(--card-shadow);
-  will-change:transform,box-shadow;
-}
-
-.docsQuickCard::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:
-    linear-gradient(120deg,transparent 0 28%,rgba(255,255,255,.12) 44%,transparent 58%),
-    linear-gradient(180deg,rgba(255,255,255,.075),transparent 34%);
-  transform:translateX(-135%);
-  opacity:.85;
-  pointer-events:none;
-  z-index:1;
-}
-
-.docsQuickCard::after{
-  right:-76px;
-  bottom:-86px;
-  width:228px;
-  height:174px;
-  opacity:.44;
-  box-shadow:0 0 28px var(--card-shadow);
-}
-
-.docsQuickCard:hover{
-  transform:translateY(-9px) rotateX(2.5deg) rotateY(-2.5deg);
-  border-color:var(--card-main);
-  box-shadow:
-    inset 0 0 0 1px rgba(255,255,255,.06),
-    inset 0 0 42px var(--card-soft),
-    0 24px 70px rgba(0,0,0,.34),
-    0 0 38px var(--card-shadow);
-}
-
-.docsQuickCard:hover::before{
-  animation:docsQuickCardShine .85s ease forwards;
-}
-
-.docsQuickCard:active{
-  transform:translateY(-4px) scale(.99);
-}
-
-.docsQuickDots{
-  width:58px;
-  height:58px;
-  top:27px;
-  right:25px;
-  opacity:.62;
-  mask-image:radial-gradient(circle,#000 52%,transparent 73%);
-  animation:docsQuickDotsMove 7s linear infinite;
-}
-
-.docsQuickCard .docsIcon{
-  position:relative;
-  z-index:2;
-  width:62px;
-  height:62px;
-  border-radius:19px;
-  box-shadow:
-    0 12px 34px var(--card-shadow),
-    inset 0 1px 0 rgba(255,255,255,.22);
-  transition:transform .35s ease,box-shadow .35s ease;
-}
-
-.docsQuickCard .docsIcon::after{
-  content:"";
-  position:absolute;
-  inset:-7px;
-  border-radius:24px;
-  border:1px solid var(--card-border);
-  opacity:.28;
-  transform:scale(.92);
-  transition:.35s ease;
-}
-
-.docsQuickCard:hover .docsIcon{
-  transform:translateZ(26px) scale(1.06) rotate(-2deg);
-  box-shadow:
-    0 18px 42px var(--card-shadow),
-    inset 0 1px 0 rgba(255,255,255,.26);
-}
-
-.docsQuickCard:hover .docsIcon::after{
-  opacity:.72;
-  transform:scale(1.04);
-}
-
-.docsQuickContent{
-  position:relative;
-  z-index:2;
-  margin-top:30px;
-}
-
-.docsQuickContent h3{
-  font-size:21px;
-  letter-spacing:-.45px;
-}
-
-.docsQuickContent p{
-  max-width:178px;
-  font-size:15.5px;
-  color:#bfc7df;
-}
-
-.docsQuickCard button{
-  z-index:3;
-  left:24px;
-  bottom:22px;
-  width:42px;
-  height:42px;
-  background:
-    linear-gradient(180deg,rgba(255,255,255,.12),rgba(255,255,255,.055));
-  backdrop-filter:blur(12px);
-  transition:transform .32s ease,background .32s ease,box-shadow .32s ease;
-}
-
-.docsQuickCard button::after{
-  left:55px;
-  font-size:13.5px;
-  letter-spacing:.1px;
-}
-
-.docsQuickCard:hover button{
-  transform:translateX(3px);
-  background:linear-gradient(135deg,var(--card-main),var(--card-dark));
-  box-shadow:0 0 24px var(--card-shadow);
-}
-
-.docsQuickCard.isDimmed{
-  opacity:.22;
-  filter:grayscale(.7) saturate(.75);
-  transform:scale(.985);
-}
-
-.docsQuickCard.isVisible{
-  opacity:1;
-  filter:none;
-}
-
-.docsQuickCard.blue,
-.docsQuickCard:not(.green):not(.purple):not(.pink):not(.orange):not(.cyan){
-  --card-main:#3c91ff;
-  --card-dark:#234dff;
-  --card-border:rgba(64,147,255,.82);
-  --card-shadow:rgba(45,126,255,.38);
-  --card-soft:rgba(42,111,255,.18);
-}
-
-@keyframes docsQuickOrbit{
-  from{transform:rotate(0deg) scale(1);}
-  50%{transform:rotate(180deg) scale(1.05);}
-  to{transform:rotate(360deg) scale(1);}
-}
-
-@keyframes docsQuickOrbitReverse{
-  from{transform:rotate(360deg) scale(1);}
-  50%{transform:rotate(180deg) scale(1.04);}
-  to{transform:rotate(0deg) scale(1);}
-}
-
-@keyframes docsQuickShine{
-  0%,55%{transform:translateX(-115%);}
-  75%,100%{transform:translateX(115%);}
-}
-
-@keyframes docsQuickCardShine{
-  from{transform:translateX(-135%);}
-  to{transform:translateX(135%);}
-}
-
-@keyframes docsQuickDotsMove{
-  from{background-position:0 0;}
-  to{background-position:24px 24px;}
-}
-
-@media (prefers-reduced-motion:reduce){
-  .docsQuickShell::before,
-  .docsQuickShell::after,
-  .docsQuickBadge::after,
-  .docsQuickDots{
-    animation:none;
-  }
-
-  .docsQuickCard,
-  .docsQuickCard::before,
-  .docsQuickCard .docsIcon,
-  .docsQuickCard button{
-    transition:none;
-  }
-}
-
-@media (max-width:1100px){
-  .docsQuickShell{padding:38px 26px 42px;}
-  .docsQuickGrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;}
-  .docsQuickCard{min-height:232px;}
-}
-
-@media (max-width:760px){
-  .docsQuickShell{padding:32px 18px 34px;border-radius:26px;}
-  .docsQuickHead{margin-bottom:28px;}
-  .docsQuickBadge{height:40px;font-size:11px;letter-spacing:4.5px;}
-  .docsQuickBadge svg{width:34px;height:34px;}
-  .docsQuickHead h2{font-size:38px;line-height:1;letter-spacing:-2px;}
-  .docsQuickGrid{grid-template-columns:1fr;gap:16px;}
-  .docsQuickCard{min-height:218px;padding:22px;}
-  .docsQuickCard:hover{transform:translateY(-6px);}
-  .docsQuickContent{margin-top:26px;}
-}
-
-
-/* =========================================================
-   FINAL DOCS QUICK NAV — slower hover, softer shadow
-   ========================================================= */
-.docsQuickCard {
-  box-shadow:
-    inset 0 0 0 1px rgba(255,255,255,.03),
-    inset 0 0 22px var(--card-soft),
-    0 12px 32px rgba(0,0,0,.18),
-    0 0 12px color-mix(in srgb, var(--card-shadow) 55%, transparent) !important;
-  transition:
-    transform .58s cubic-bezier(.16,1,.3,1),
-    border-color .58s cubic-bezier(.16,1,.3,1),
-    box-shadow .58s cubic-bezier(.16,1,.3,1),
-    background .58s cubic-bezier(.16,1,.3,1) !important;
-}
-.docsQuickCard:hover {
-  transform: translateY(-4px) rotateX(1deg) rotateY(-1deg) !important;
-  box-shadow:
-    inset 0 0 0 1px rgba(255,255,255,.045),
-    inset 0 0 26px var(--card-soft),
-    0 14px 34px rgba(0,0,0,.2),
-    0 0 16px color-mix(in srgb, var(--card-shadow) 52%, transparent) !important;
-}
-.docsQuickCard:hover::before { animation: docsQuickCardShine 1.55s ease forwards !important; }
-.docsQuickCard .docsIcon,
-.docsQuickCard .docsIcon::after,
-.docsQuickCard button {
-  transition-duration: .58s !important;
-}
-.docsQuickCard:hover .docsIcon {
-  transform: translateZ(12px) scale(1.025) rotate(-1deg) !important;
-  box-shadow: 0 12px 28px color-mix(in srgb, var(--card-shadow) 60%, transparent), inset 0 1px 0 rgba(255,255,255,.2) !important;
-}
-.docsQuickCard:hover button {
-  transform: translateX(2px) !important;
-  box-shadow: 0 0 12px color-mix(in srgb, var(--card-shadow) 45%, transparent) !important;
-}
-
-/* ========================= TARGETED FIX: DOCS VIDEO TUTORIALS ========================= */
-.docsVideoHead{
-  align-items:center;
-  margin-bottom:20px;
-}
-
-.docsVideoTitleBlock{
-  max-width:680px;
-}
-
-.docsVideoTitleBlock h2{
-  margin-top:9px;
-  margin-bottom:7px;
-  line-height:1.08;
-}
-
-.tutorialArrows{
-  flex:0 0 auto;
-  align-self:center;
-}
-
-.tutorialArrows button{
-  display:inline-grid;
-  place-items:center;
-  transition:transform .32s ease, border-color .32s ease, background .32s ease, box-shadow .32s ease;
-  box-shadow:0 8px 22px rgba(0,0,0,.16);
-}
-
-.tutorialArrows button:hover{
-  transform:translateY(-2px);
-  border-color:rgba(117,151,255,.42);
-  background:rgba(255,255,255,.09);
-  box-shadow:0 12px 28px rgba(48,77,255,.16);
-}
-
-.docsVideoGrid{
-  display:flex !important;
-  gap:18px;
-  overflow-x:auto;
-  scroll-snap-type:x mandatory;
-  scroll-padding-left:2px;
-  padding:2px 2px 10px;
-  -webkit-overflow-scrolling:touch;
-}
-
-.docsVideoGrid .videoCard{
-  flex:0 0 clamp(245px, 27vw, 292px);
-  scroll-snap-align:start;
-}
-
-.videoCard{
-  transition:transform .42s cubic-bezier(.22,1,.36,1), border-color .42s ease, box-shadow .42s ease, background .42s ease !important;
-  box-shadow:0 12px 32px rgba(0,0,0,.22) !important;
-}
-
-.videoCard:hover{
-  transform:translateY(-4px) !important;
-  box-shadow:0 16px 38px rgba(40,58,140,.18) !important;
-}
-
-@media (max-width:760px){
-  .docsVideoHead{display:flex;align-items:flex-start;gap:14px;}
-  .tutorialArrows{margin-top:8px;}
-  .docsVideoGrid .videoCard{flex-basis:min(86vw, 310px);}
-}
+/* -------------------------------------------------------------------------
+   HOVER STATES THE AUDIT FOUND MISSING
 
-
-/* =========================================================
-   Targeted fix: Docs quick nav icons + video tutorial carousel
-========================================================= */
-.docsQuickCard .docsIcon,
-.docsIcon {
-  width: 40px !important;
-  height: 40px !important;
-  min-width: 40px !important;
-  border-radius: 12px !important;
-  margin-bottom: 16px !important;
-  box-shadow: 0 10px 22px rgba(54, 116, 255, 0.14) !important;
-}
-
-.docsQuickCard .docsIcon svg,
-.docsIcon svg {
-  width: 18px !important;
-  height: 18px !important;
-  stroke-width: 2.1 !important;
-}
-
-.docsVideoHead {
-  padding-top: 18px !important;
-  margin-bottom: 24px !important;
-  align-items: flex-start !important;
-}
-
-.docsVideoTitleBlock h2 {
-  margin-top: 12px !important;
-}
-
-.docsVideoGrid {
-  display: flex !important;
-  grid-template-columns: none !important;
-  gap: 18px !important;
-  overflow-x: auto !important;
-  overflow-y: visible !important;
-  scroll-snap-type: x mandatory !important;
-  scroll-behavior: smooth !important;
-  padding: 4px 2px 12px !important;
-  scrollbar-width: none !important;
-}
-
-.docsVideoGrid::-webkit-scrollbar { display: none !important; }
-
-.docsVideoGrid .videoCard {
-  flex: 0 0 calc((100% - 54px) / 4) !important;
-  min-width: 0 !important;
-  scroll-snap-align: start !important;
-}
-
-@media (max-width: 1100px) {
-  .docsVideoGrid .videoCard { flex-basis: calc((100% - 18px) / 2) !important; }
-}
-
-@media (max-width: 640px) {
-  .docsVideoHead { padding-top: 12px !important; }
-  .docsVideoGrid .videoCard { flex-basis: min(88vw, 320px) !important; }
-}
-
-
-/* =========================================================
-   FINAL TARGETED REFINEMENT: Docs video heading/card shadow
-========================================================= */
-.docsVideoHead {
-  padding-top: 30px !important;
-  margin-top: 10px !important;
-  margin-bottom: 26px !important;
-}
-
-.docsVideoTitleBlock h2 {
-  margin-top: 18px !important;
-  margin-bottom: 8px !important;
-}
-
-.docsVideoGrid {
-  align-items: stretch !important;
-  gap: 16px !important;
-  padding: 2px 1px 8px !important;
-}
-
-.docsVideoGrid .videoCard {
-  flex: 0 0 calc((100% - 48px) / 4) !important;
-  min-height: 300px !important;
-  padding: 14px !important;
-  box-shadow: none !important;
-}
-
-.videoCard,
-.videoCard:hover,
-.videoCard:focus-within {
-  box-shadow: none !important;
-}
-
-.videoCard:hover {
-  transform: translateY(-3px) !important;
-  border-color: rgba(128, 78, 255, 0.42) !important;
-}
-
-.videoCard:hover .videoThumb,
-.videoThumb:hover,
-.videoPlayBtn:hover,
-.videoCard:hover .videoPlayBtn {
-  box-shadow: none !important;
-}
-
-.videoPlayBtn {
-  box-shadow: none !important;
-}
-
-.videoCard h3 {
-  margin-top: 14px !important;
-  margin-bottom: 8px !important;
-  line-height: 1.25 !important;
-}
-
-.videoCard p {
-  min-height: 42px !important;
-}
-
-@media (max-width: 1100px) {
-  .docsVideoGrid .videoCard {
-    flex-basis: calc((100% - 16px) / 2) !important;
-  }
-}
-
-@media (max-width: 640px) {
-  .docsVideoHead {
-    padding-top: 22px !important;
-    margin-top: 6px !important;
-  }
-
-  .docsVideoGrid .videoCard {
-    flex-basis: min(88vw, 318px) !important;
-  }
-}
-
-/* =========================================================
-   TARGETED PATCH: Docs Video Hover Clipping + FAQ Hover State
-   ========================================================= */
-#docs-videos.docsPanel{
-  overflow:visible !important;
-}
-
-#docs-videos .docsVideoGrid{
-  overflow-x:auto !important;
-  overflow-y:visible !important;
-  padding:18px 2px 16px !important;
-  margin-top:-10px !important;
-}
-
-#docs-videos .videoCard{
-  transform-origin:center center !important;
-  will-change:transform;
-  backface-visibility:hidden;
+   Inline documentation links and the breadcrumb changed colour on hover but
+   had no transition declared, so the change snapped. Everything else on the
+   site eases; these were the exceptions.
+   ------------------------------------------------------------------------- */
+.docsLink {
+  transition: color var(--t-fast), border-color var(--t-fast);
 }
 
-#docs-videos .videoCard:hover,
-#docs-videos .videoCard:focus-within{
-  transform:translateY(-2px) scale(1.012) !important;
-  border-color:rgba(128,78,255,.52) !important;
-  background:linear-gradient(160deg,rgba(24,38,74,.92),rgba(12,20,44,.9)) !important;
+.docsLink:hover {
+  color: var(--ink-strong);
+  border-bottom-color: var(--accent);
 }
 
-#docs-videos .videoCard:hover .videoThumb,
-#docs-videos .videoCard:focus-within .videoThumb{
-  border-color:rgba(132,160,255,.32) !important;
-  transform:translateY(0) !important;
+.docsCrumb a {
+  transition: color var(--t-fast);
 }
 
-#docs-faq .faqRow{
-  position:relative;
-  isolation:isolate;
-  cursor:pointer;
-  transition:background .32s ease,border-color .32s ease,transform .32s ease;
+/* --- Sidebar icons --- */
+.docsNav__link svg {
+  flex-shrink: 0;
+  opacity: 0.55;
+  transition: opacity var(--t-fast), color var(--t-fast);
 }
-
-#docs-faq .faqRow::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  z-index:-1;
-  opacity:0;
-  background:
-    radial-gradient(circle at 12% 50%,rgba(47,115,255,.16),transparent 28%),
-    linear-gradient(90deg,rgba(255,255,255,.055),rgba(255,255,255,.015));
-  transition:opacity .32s ease;
-}
-
-#docs-faq .faqRow:hover,
-#docs-faq .faqRow:focus-within{
-  background:rgba(63,85,255,.12) !important;
-  transform:translateX(4px);
-}
-
-#docs-faq .faqRow:hover::before,
-#docs-faq .faqRow:focus-within::before,
-#docs-faq .faqRow.active::before{
-  opacity:1;
-}
-
-#docs-faq .faqContent{
-  width:100%;
-  border-radius:10px;
-  transition:color .32s ease;
-}
-
-#docs-faq .faqRow:hover .faqContent h3,
-#docs-faq .faqRow:focus-within .faqContent h3,
-#docs-faq .faqRow.active .faqContent h3{
-  color:#ffffff;
-}
-
-#docs-faq .faqRow:hover .faqTag,
-#docs-faq .faqRow:focus-within .faqTag{
-  filter:brightness(1.14);
-}
-
-#docs-faq .helpFeature{
-  border-radius:12px;
-  padding:16px 12px;
-  margin-inline:-12px;
-  transition:background .3s ease,transform .3s ease,border-color .3s ease;
-}
-
-#docs-faq .helpFeature:hover{
-  background:rgba(255,255,255,.055);
-  transform:translateX(4px);
-}
-
-@media (max-width:640px){
-  #docs-videos .docsVideoGrid{
-    padding-top:16px !important;
-    margin-top:-6px !important;
-  }
 
-  #docs-faq .faqRow:hover,
-  #docs-faq .faqRow:focus-within,
-  #docs-faq .helpFeature:hover{
-    transform:none;
-  }
+.docsNav__link:hover svg,
+.docsNav__link.isActive svg {
+  opacity: 1;
+  color: var(--accent);
 }
