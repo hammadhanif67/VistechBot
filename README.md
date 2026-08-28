@@ -90,6 +90,7 @@ react-icons went with the social links it drew brand marks for.
 /pricing                   Plans
 /help                      Help centre — setup, configuration, FAQ, support
 /about  /contact           Company, in the footer rather than the navbar
+/privacy /terms /cookies   Legal, in the footer bar
 ```
 
 Platform and Solutions answer different questions and the split is structural,
@@ -258,12 +259,24 @@ Settled:
 - **Social profiles** — removed. There are no accounts, so the links went
   nowhere and `sameAs` is deliberately absent from the Organization schema.
 
+- **Legal pages** — `/privacy`, `/terms` and `/cookies` exist and describe what
+  this site verifiably does: no analytics, no third-party scripts, no cookies at
+  all, one `localStorage` key for the colour theme. Every claim in them was
+  checked against the code rather than taken from a template.
+
 Still placeholder, flagged in code and disclosed in the UI:
 
 - **Testimonials** — `testimonialsAreSampleContent` in `src/data/siteData.js`
 - **Company narrative and team** — `aboutContentIsSample` in `src/data/aboutData.js`
-- **Legal pages** — `footerPlaceholders` renders these as marked placeholders
-  until real pages exist
+- **Legal entity details** — `legalEntity` in `src/data/legalData.js` has no company
+  name, jurisdiction, registered address or effective date. While
+  `needsReview` is true every legal page carries a visible draft notice saying
+  so. A lawyer should read the text before that flag is cleared.
+- **Social profiles** — `socialLinks` in `src/data/siteData.js` has the four
+  entries with `href: null`, so the footer row renders as dimmed placeholders
+  rather than links to accounts that do not exist. Fill an href in and that one
+  goes live; when they are all real, pass the list to `organizationNode` as
+  `sameAs`.
 
 And one that blocks deployment:
 
@@ -283,7 +296,14 @@ Every route ships as its own `index.html` under a matching directory, so a
 static host resolves `/pricing` and friends without any rewrite rule, and a
 refresh or a deep link from search works on its own.
 
-Unknown paths are the only thing needing host configuration:
+**Vercel** is configured in `vercel.json`. The setting that matters for SEO is
+`trailingSlash: false`: every route ships as `<route>/index.html`, so without it
+both `/platform` and `/platform/` resolve and the site serves the same page at
+two URLs while its canonical names only one. Vercel now redirects the slashed
+form to the canonical one. The asset and font headers are the standard
+immutable cache for hashed filenames.
+
+Unknown paths are the only other thing needing host configuration:
 
 - **Netlify, Cloudflare Pages** " + EM + " the emitted `_redirects` is picked up as is.
 - **GitHub Pages, Firebase, S3** " + EM + " serve `404.html`, which they do by default.

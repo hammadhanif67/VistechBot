@@ -4,7 +4,9 @@ import { Link } from "react-router-dom";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Wordmark from "../brand/Wordmark";
-import { contactDetails, footerLinks, footerPlaceholders } from "../../data/siteData";
+import { contactDetails, footerLinks, socialLinks } from "../../data/siteData";
+import SocialIcon from "../brand/SocialIcons";
+import { LEGAL_SEO } from "../../data/seoContent";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -101,6 +103,26 @@ export default function Footer() {
                 <span>{contactDetails.location}</span>
               </span>
             </address>
+
+            {/* One row. An entry with no href is not a link: it renders as a
+                disabled cell, because a brand icon that navigates nowhere is
+                worse than one that admits it is not ready. */}
+            <ul className="footer__social" data-row>
+              {socialLinks.map(({ id, label, href }) => (
+                <li key={id}>
+                  {href ? (
+                    <a href={href} target="_blank" rel="noreferrer noopener" aria-label={label}>
+                      <SocialIcon name={id} />
+                    </a>
+                  ) : (
+                    <span className="isPlaceholder" aria-disabled="true" title={`${label} — not live yet`}>
+                      <SocialIcon name={id} />
+                      <span className="visuallyHidden">{label}, not available yet</span>
+                    </span>
+                  )}
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
 
@@ -109,12 +131,12 @@ export default function Footer() {
           <p>© {new Date().getFullYear()} VistechBot. All rights reserved.</p>
 
           <ul className="footer__legal">
-            {/* Marked as placeholders rather than pointed at an unrelated page. */}
-            {footerPlaceholders.map((label) => (
-              <li key={label}>
-                <span className="isPlaceholder" aria-disabled="true">
-                  {label} <em>soon</em>
-                </span>
+            {/* Real pages now. The labels come from the same list the router and
+                the sitemap read, so the three can never disagree about what a
+                page is called. */}
+            {LEGAL_SEO.map(({ slug, name }) => (
+              <li key={slug}>
+                <Link to={`/${slug}`}>{name}</Link>
               </li>
             ))}
             <li>

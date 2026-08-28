@@ -389,3 +389,70 @@ h2.display {
     line-height: 1.65;
   }
 }
+
+/* -------------------------------------------------------------------------
+   LEGAL
+
+   One measure, set for reading. These pages are prose and nothing else, so
+   they get none of the section machinery the rest of the site uses.
+   ------------------------------------------------------------------------- */
+.legal {
+  max-width: 74ch;
+  padding-block: clamp(96px, 15vh, 150px) var(--s-10);
+}
+
+.legal__title {
+  margin-top: var(--s-5);
+  font-size: var(--fs-h2);
+  font-weight: var(--fw-black);
+  letter-spacing: var(--ls-h2);
+  text-transform: uppercase;
+  color: var(--ink-strong);
+}
+
+.legal__lead {
+  margin-top: var(--s-4);
+  font-size: var(--fs-lead);
+  line-height: 1.6;
+  color: var(--ink-muted);
+}
+
+.legal__meta {
+  margin-top: var(--s-4);
+  font-size: var(--fs-micro);
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.legal__notice {
+  margin-top: var(--s-6);
+}
+
+.legal__notice code {
+  font-size: var(--fs-code);
+  color: var(--accent);
+}
+
+.legal__body {
+  margin-top: var(--s-8);
+  display: grid;
+  gap: var(--s-7);
+}
+
+.legal__body h2 {
+  margin-bottom: var(--s-3);
+  font-size: var(--fs-h3);
+  font-weight: var(--fw-semibold);
+  letter-spacing: -0.02em;
+  color: var(--ink-strong);
+}
+
+.legal__body p + p {
+  margin-top: var(--s-4);
+}
+
+.legal__body p {
+  font-size: var(--fs-small);
+  line-height: 1.75;
+}

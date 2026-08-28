@@ -1,6 +1,6 @@
 /* Extension included: the Vite config loads this file in Node, where a
    bare specifier does not resolve. */
-import { SOLUTIONS_SEO } from "./seoContent.js";
+import { LEGAL_SEO, SOLUTIONS_SEO } from "./seoContent.js";
 
 /**
  * The site's route table.
@@ -31,7 +31,16 @@ const SOLUTION_ROUTES = SOLUTIONS_SEO.map(({ slug, name }) => ({
   priority: "0.7",
 }));
 
-export const ROUTES = [...CORE, ...SOLUTION_ROUTES];
+/* Indexed, but bottom of the pile: a privacy page should be findable and should
+   never outrank the product. */
+const LEGAL_ROUTES = LEGAL_SEO.map(({ slug, name }) => ({
+  path: `/${slug}`,
+  label: name,
+  changefreq: "yearly",
+  priority: "0.3",
+}));
+
+export const ROUTES = [...CORE, ...SOLUTION_ROUTES, ...LEGAL_ROUTES];
 
 /**
  * Routes that have moved, and where they went.

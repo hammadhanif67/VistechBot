@@ -157,6 +157,44 @@ export const routeSeo = {
    SOLUTIONS_SEO above so no title is written twice. */
 Object.assign(routeSeo, solutionRouteSeo);
 
+/**
+ * Legal routes.
+ *
+ * Indexable but low priority. They are short, factual and genuinely describe
+ * this site, so there is no reason to hide them — a privacy page that turns up
+ * in search is doing its job.
+ */
+export const LEGAL_SEO = [
+  {
+    slug: "privacy",
+    name: "Privacy Policy",
+    title: "Privacy Policy | VistechBot",
+    description:
+      "What this website collects, which is very little. No analytics, no tracking and no cookies; one local preference key, and whatever you choose to send through the contact form.",
+  },
+  {
+    slug: "terms",
+    name: "Terms of Use",
+    title: "Terms of Use | VistechBot",
+    description:
+      "The terms for using the VistechBot website: what the information here is and is not, how prices on the pricing page work, and what belongs to whom.",
+  },
+  {
+    slug: "cookies",
+    name: "Cookie Policy",
+    title: "Cookie Policy | VistechBot",
+    description:
+      "This site sets no cookies at all. It stores one colour-theme preference in local storage, which never leaves your device. That is the whole policy.",
+  },
+];
+
+Object.assign(
+  routeSeo,
+  Object.fromEntries(
+    LEGAL_SEO.map(({ slug, title, description }) => [`/${slug}`, { title, description }])
+  )
+);
+
 export const notFoundSeo = {
   title: "Page Not Found | VistechBot",
   description: "This page does not exist. The platform, pricing and documentation pages are all working.",

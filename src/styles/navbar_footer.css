@@ -346,7 +346,9 @@
   color: var(--ink-faint);
 }
 
-.footer__col ul {
+/* Link lists stack. The social row is a `ul` in the same column and must not
+   inherit this -- it did once before, and the icons ran vertically. */
+.footer__col ul:not([data-row]) {
   display: grid;
   gap: var(--s-2);
 }
@@ -362,7 +364,7 @@
 
 /* The arrow appears on hover rather than sitting there permanently: four
    columns of persistent arrows is noise. */
-.footer__col ul a svg {
+.footer__col ul:not([data-row]) a svg {
   opacity: 0;
   transform: translate(-4px, 3px);
   transition: opacity var(--t-fast), transform var(--t-fast);
@@ -372,7 +374,7 @@
   color: var(--accent);
 }
 
-.footer__col ul a:hover svg {
+.footer__col ul:not([data-row]) a:hover svg {
   opacity: 1;
   transform: translate(0, 0);
 }
@@ -695,7 +697,7 @@
 
   /* The rows carry their own height, so the list gap goes to zero — otherwise
      each column pays for both the target size and the spacing between them. */
-  .footer__col ul {
+  .footer__col ul:not([data-row]) {
     gap: 0;
   }
 
@@ -1130,5 +1132,53 @@ body:has(.menu) .dock {
 @media (max-width: 900px) {
   .navPanel__sheet {
     display: none;
+  }
+}
+
+/* -------------------------------------------------------------------------
+   SOCIAL ROW
+
+   One line, sharing a border like the theme control. Entries with no profile
+   behind them are dimmed rather than hidden: the row keeps its shape, and it
+   is obvious which are live.
+   ------------------------------------------------------------------------- */
+.footer__social {
+  display: flex;
+  gap: var(--s-2);
+  margin-top: var(--s-5);
+}
+
+.footer__social a,
+.footer__social .isPlaceholder {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border: var(--hairline) solid var(--line-strong);
+  color: var(--ink-muted);
+  transition: color var(--t-fast), background var(--t-fast), border-color var(--t-fast);
+}
+
+.footer__social a:hover {
+  color: var(--ink-invert);
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.footer__social a:active {
+  transform: translateY(1px);
+}
+
+.footer__social .isPlaceholder {
+  color: var(--ink-faint);
+  border-style: dashed;
+  cursor: default;
+}
+
+@media (pointer: coarse) {
+  .footer__social a,
+  .footer__social .isPlaceholder {
+    width: 44px;
+    height: 44px;
   }
 }

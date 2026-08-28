@@ -26,8 +26,8 @@ export const navItems = [
 
 // ─── Footer ───────────────────────────────────────────────────────
 // Every entry points at a page (or in-page section) that genuinely covers the
-// label. Items with no destination yet live in `footerPlaceholders` and render
-// as marked placeholders rather than links that quietly go somewhere else.
+// label. There are no placeholder entries left: the legal pages exist and the
+// footer links to them.
 /**
  * Footer columns.
  *
@@ -36,9 +36,8 @@ export const navItems = [
  * appears here as one link to the directory — listing all eight would make the
  * footer taller than most of the pages it links to.
  *
- * `Legal` holds no hrefs on purpose. Those pages do not exist, and
- * `footerPlaceholders` renders them as marked placeholders rather than links
- * to nowhere.
+ * The legal shelf is not here: privacy, terms and cookies come from
+ * `LEGAL_SEO`, which the router and the sitemap read too.
  */
 export const footerLinks = {
   Product: [
@@ -64,7 +63,25 @@ export const footerLinks = {
 // Legal pages have not been written yet. Listed so the footer keeps its shape,
 // rendered as disabled placeholders — a link that silently resolves to an
 // unrelated page is worse than an honest "soon".
-export const footerPlaceholders = ["Privacy Policy", "Terms of Service", "Cookie Settings"];
+
+/**
+ * Social profiles.
+ *
+ * The row exists so the footer has its shape and the styling is settled. The
+ * accounts do not exist yet, so `href` is null on every one and they render as
+ * marked placeholders rather than links to a 404 on someone else's site — the
+ * same treatment the legal links had before those pages were written.
+ *
+ * Fill an `href` in and that one becomes a live link, no other edit. When they
+ * are all real, pass the list to `organizationNode` as `sameAs` in
+ * `structuredData.js` so the schema says so too.
+ */
+export const socialLinks = [
+  { id: "linkedin", label: "VistechBot on LinkedIn", href: null },
+  { id: "x", label: "VistechBot on X", href: null },
+  { id: "youtube", label: "VistechBot on YouTube", href: null },
+  { id: "facebook", label: "VistechBot on Facebook", href: null },
+];
 
 export const contactDetails = {
   email: "support@vistechbot.com",

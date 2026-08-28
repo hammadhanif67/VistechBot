@@ -7,6 +7,7 @@ import RouteChangeHandler from "./components/routing/RouteChangeHandler";
 import RouteFallback from "./components/routing/RouteFallback";
 import Home from "./pages/Home";
 import { REDIRECTS } from "./data/routes";
+import { LEGAL_SEO } from "./data/seoContent";
 
 /**
  * Home ships in the entry bundle because it is the landing route and its LCP
@@ -20,6 +21,7 @@ const Pricing = lazy(() => import("./pages/Pricing"));
 const Help = lazy(() => import("./pages/Help"));
 const About = lazy(() => import("./pages/About"));
 const Contact = lazy(() => import("./pages/Contact"));
+const Legal = lazy(() => import("./pages/Legal"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 
 export default function App() {
@@ -54,6 +56,13 @@ export default function App() {
           <Route path="/help" element={<Help />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
+
+          {/* Privacy, terms and cookies, one template, three explicit paths.
+              React Router 7 has no regex in path patterns, and a bare `/:slug`
+              here would swallow every unmatched URL on the site. */}
+          {LEGAL_SEO.map(({ slug }) => (
+            <Route key={slug} path={`/${slug}`} element={<Legal slug={slug} />} />
+          ))}
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>
