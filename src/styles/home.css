@@ -919,7 +919,11 @@
 
 .useCases__toggle {
   display: grid;
-  grid-template-columns: 34px minmax(0, 1fr) 16px;
+  /* 23px, not 16, for the icon: the plus rotates 45deg into a cross, and a
+     16px square turned 45deg has a bounding box of 16 x sqrt(2) = 22.6px. In a
+     16px track the open row's cross hung 3.3px past the button and into the
+     page gutter. */
+  grid-template-columns: 34px minmax(0, 1fr) 23px;
   align-items: center;
   gap: var(--s-3);
   width: 100%;
@@ -936,7 +940,8 @@
 }
 
 .useCases__toggle svg {
-  justify-self: end;
+  /* Centred in the wider track so the rotation stays inside it. */
+  justify-self: center;
   color: var(--ink-faint);
   transition: transform var(--t-base), color var(--t-fast);
 }

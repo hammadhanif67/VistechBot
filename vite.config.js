@@ -4,6 +4,7 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import { ROUTES } from "./src/data/routes.js";
 import {
+  FALLBACK_SITE_URL,
   OG_IMAGE_PATH,
   SITE_NAME,
   TWITTER_HANDLE,
@@ -14,7 +15,25 @@ import {
   websiteNode,
 } from "./src/data/seoContent.js";
 
-const SITE_URL = (process.env.VITE_SITE_URL || "https://www.vistechbot.com").replace(/\/$/, "");
+const CONFIGURED_SITE_URL = process.env.VITE_SITE_URL;
+const SITE_URL = (CONFIGURED_SITE_URL || FALLBACK_SITE_URL).replace(/\/$/, "");
+
+/* Loud, once, at the top of the build. Every canonical, `og:url`, JSON-LD URL
+   and sitemap entry is written with this value, so a placeholder origin that
+   ships unnoticed points the whole site at a domain nobody owns. */
+if (!CONFIGURED_SITE_URL) {
+  console.warn(
+    `
+  [vistechbot] VITE_SITE_URL is not set.` +
+      `
+  Building with the placeholder origin ${SITE_URL}.` +
+      `
+  Canonicals, og:url, JSON-LD and sitemap.xml will all use it.` +
+      `
+  Set VITE_SITE_URL to the real production origin before deploying.
+`
+  );
+}
 
 /** Where the per-route `<head>` block is spliced into index.html. */
 const MARKER = "<!--seo-head-->";

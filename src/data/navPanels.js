@@ -13,7 +13,7 @@ import { capabilityGroups } from "./featuresData";
  * There is no Blog and no Guides entry: those pages do not exist, and a panel
  * advertising them would be four links to nowhere.
  */
-export const platformPanel = {
+const platformPanel = {
   eyebrow: "Platform",
   heading: "Product capabilities",
   groups: capabilityGroups.map((group) => ({
@@ -33,7 +33,7 @@ export const platformPanel = {
   action: { label: "Platform overview", to: "/platform" },
 };
 
-export const resourcesPanel = {
+const resourcesPanel = {
   eyebrow: "Resources",
   heading: "Learn the product",
   groups: [
@@ -75,4 +75,6 @@ export const resourcesPanel = {
   action: { label: "Open the help centre", to: "/help" },
 };
 
+/* One export: the navbar looks a panel up by the `panel` key on its nav
+   item, so the two definitions never need naming from outside. */
 export const navPanels = { platform: platformPanel, resources: resourcesPanel };

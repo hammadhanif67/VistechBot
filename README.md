@@ -104,7 +104,16 @@ use-case section reads the same array. Adding an industry there gives it a
 route, a card, a page, a crumb trail, a sitemap entry and a pre-rendered HTML
 file with no other edit.
 
-`/features` became `/platform` and redirects rather than 404ing.
+`/features` became `/platform` and redirects rather than 404ing. The redirect
+lives in `REDIRECTS` in `routes.js`, which the router maps over — the same file
+the sitemap is built from, so a moved route cannot be redirected in one and
+forgotten in the other.
+
+`VITE_SITE_URL` has one fallback, `FALLBACK_SITE_URL` in `seoContent.js`, read
+by both the runtime and the build. It is a placeholder, not a confirmed domain,
+and the build prints a warning whenever it is used: every canonical, `og:url`,
+JSON-LD URL and sitemap entry is written with that value, so a placeholder
+origin shipping unnoticed points the whole site at a domain nobody owns.
 
 ## Structure
 

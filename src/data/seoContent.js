@@ -11,6 +11,20 @@
  * still has one import and there is one copy of every string.
  */
 
+/**
+ * The origin used when `VITE_SITE_URL` is not set.
+ *
+ * It is a placeholder, not a confirmed production domain. It lived in two
+ * files — `seoData.js` reading `import.meta.env` and `vite.config.js` reading
+ * `process.env` — which meant the two could be changed apart and the canonicals
+ * would stop matching the sitemap. They read this instead.
+ *
+ * The build prints a warning whenever it falls back to this, because a
+ * placeholder origin that ships silently is the failure mode: every canonical,
+ * `og:url` and sitemap entry would point at a domain nobody owns.
+ */
+export const FALLBACK_SITE_URL = "https://www.vistechbot.com";
+
 export const SITE_NAME = "VistechBot";
 export const TWITTER_HANDLE = "@vistechbot";
 export const OG_IMAGE_PATH = "/og-image.jpg";

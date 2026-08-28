@@ -11,8 +11,10 @@
  * The origin is read from the environment so preview and production deploys
  * emit their own canonical URLs instead of hard-coding one domain.
  */
+import { FALLBACK_SITE_URL } from "./seoContent";
+
 export const SITE_URL = (
-  import.meta.env.VITE_SITE_URL || "https://www.vistechbot.com"
+  import.meta.env.VITE_SITE_URL || FALLBACK_SITE_URL
 ).replace(/\/$/, "");
 
 export {

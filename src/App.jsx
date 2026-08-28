@@ -6,6 +6,7 @@ import ContactDock from "./components/layout/ContactDock";
 import RouteChangeHandler from "./components/routing/RouteChangeHandler";
 import RouteFallback from "./components/routing/RouteFallback";
 import Home from "./pages/Home";
+import { REDIRECTS } from "./data/routes";
 
 /**
  * Home ships in the entry bundle because it is the landing route and its LCP
@@ -42,10 +43,13 @@ export default function App() {
               industry cannot become an indexable page. */}
           <Route path="/solutions/:slug" element={<Solution />} />
 
-          {/* `/features` moved to `/platform`. It was in a published sitemap,
-              and a 404 where a page used to be is the one migration mistake
-              that costs real traffic. `replace` keeps it out of history. */}
-          <Route path="/features" element={<Navigate to="/platform" replace />} />
+          {/* Moved routes, from the same table the sitemap is built from, so a
+              redirect cannot be added in one and forgotten in the other. A 404
+              where a page used to be is the one migration mistake that costs
+              real traffic. `replace` keeps the old path out of history. */}
+          {REDIRECTS.map(({ from, to }) => (
+            <Route key={from} path={from} element={<Navigate to={to} replace />} />
+          ))}
           <Route path="/pricing" element={<Pricing />} />
           <Route path="/help" element={<Help />} />
           <Route path="/about" element={<About />} />
