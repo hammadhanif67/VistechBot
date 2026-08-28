@@ -237,18 +237,42 @@ h2.display {
   border-top: var(--hairline) solid var(--line);
 }
 
+/*
+   A grid, not a flex row, and padded on both sides of the rule.
+
+   Two things were wrong here, and every other indexed list on the site already
+   avoids both.
+
+   The number sat in an auto-width flex item. `font-variant-numeric:
+   tabular-nums` is declared below and does nothing, because Urbanist ships no
+   tabular figures: "01" measures 13.5px, "02" 16.3px and "03" 15.7px, so the
+   three labels started 2.8px apart instead of on one line. A fixed track does
+   not care what the digits measure.
+
+   And `padding-left` was 0 on all three. The first column is meant to sit
+   flush with the page gutter, but the second and third then start hard against
+   the rule dividing them, while the first has open space to its left. Columns
+   separated by a rule need room on both sides of it.
+*/
 .pageHero__indexLink {
-  display: flex;
+  display: grid;
+  grid-template-columns: 18px minmax(0, 1fr) auto;
   align-items: baseline;
   gap: var(--s-3);
-  padding: var(--s-5) var(--s-4) var(--s-5) 0;
+  padding: var(--s-5);
   border-right: var(--hairline) solid var(--line);
   color: var(--ink-muted);
   transition: color var(--t-base);
 }
 
+/* The outer edges belong to the page, not to the cell. */
+.pageHero__indexLink:first-child {
+  padding-left: 0;
+}
+
 .pageHero__indexLink:last-child {
   border-right: 0;
+  padding-right: 0;
 }
 
 .pageHero__indexLink span {
@@ -267,7 +291,9 @@ h2.display {
 }
 
 .pageHero__indexLink svg {
-  margin-left: auto;
+  /* The third track already ends the row; `margin-left: auto` was the flex
+     equivalent and is redundant now. */
+  justify-self: end;
   opacity: 0;
   transform: translate(-6px, 4px);
   transition: opacity var(--t-base), transform var(--t-base);

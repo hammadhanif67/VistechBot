@@ -9,6 +9,15 @@
    Writing the faces here also puts `font-display` and the unicode range under
    this project's control instead of the package's.
 
+   NOTE: this font has no tabular figures. `font-variant-numeric: tabular-nums`
+   is declared in seventeen places and does nothing in any of them — measured,
+   "01" is 13.5px, "02" is 16.3px and "03" is 15.7px at the same size. The
+   declarations are harmless and left in place in case the face is ever swapped,
+   but nothing may rely on them for alignment. Anywhere an index number sits
+   before a label, give the number a fixed track. Every indexed list on the site
+   does; the platform hero's jump index did not, and its three labels sat 2.8px
+   apart because of it.
+
    Six weights, and every one is used:
      300  the light counterpoint inside display type
      400  body copy
