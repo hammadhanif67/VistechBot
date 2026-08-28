@@ -176,6 +176,15 @@ elevation shadow it would cast. `--ink-strong-hover` and `--accent-hover` are
 real tokens, so each theme picks its own direction — dark dims its white, light
 lifts its near-black.
 
+Scroll reveals are a desktop-only effect. Below 900px nothing is gated: the
+content is simply there. A reveal works when the viewport is tall enough that a
+section enters well before you read it; a phone stacks everything into one
+column where each section fills the screen, and the effect becomes a rule that
+most of the page stays invisible until you scroll onto it. That reads as the
+site being slow, not as design. Moving the trigger line does not help —
+`top 88%` and `top bottom-=80` are 17px apart on an 812px viewport. The gate is
+the problem, not where it sits.
+
 The capability rows tint rather than growing a hairline along their bottom
 border. On a row that tall the pointer is nowhere near the edge being lit, so
 the thing responding was not the thing being pointed at.
