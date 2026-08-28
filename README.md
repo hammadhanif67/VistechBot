@@ -176,6 +176,14 @@ elevation shadow it would cast. `--ink-strong-hover` and `--accent-hover` are
 real tokens, so each theme picks its own direction — dark dims its white, light
 lifts its near-black.
 
+The entrance sequence runs once per visit, not once per page. `data-anim-now`
+elements start at opacity 0 and fade in over 0.8s, and the home hero staggers
+its delays out to 0.56s on top. As an arrival that is the point; replayed on
+every client-side navigation it means clicking a link leaves the new page blank
+for over a second. `initPageMotion` records the path the entrance ran for, so a
+repeat mount under StrictMode still animates and only a real change of page
+skips.
+
 Scroll reveals are a desktop-only effect. Below 900px nothing is gated: the
 content is simply there. A reveal works when the viewport is tall enough that a
 section enters well before you read it; a phone stacks everything into one

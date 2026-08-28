@@ -38,7 +38,7 @@ export default function usePageMotion() {
       return undefined;
     }
 
-    const ctx = initPageMotion(root, { narrowScreen });
+    const ctx = initPageMotion(root, { narrowScreen, pathname });
 
     // Measure after the browser has laid the page out, not during the effect,
     // or trigger positions are computed against a half-built DOM.

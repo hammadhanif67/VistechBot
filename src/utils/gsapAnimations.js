@@ -24,6 +24,29 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 let pluginsReady = false;
 
+/*
+   The entrance runs once per visit, not once per page.
+
+   `data-anim-now` elements start at opacity 0 and fade in over 0.8s, and the
+   home hero staggers its delays out to 0.56s on top of that. As an arrival that
+   is the point. Replayed on every client-side navigation it is something else:
+   click a link, and for well over a second the new page is a blank sheet with
+   the header on it. That is the "white page" -- not a loading state, the
+   entrance animation playing again.
+
+   After the first view, immediate elements are set straight to their end state
+   and the page is simply there. Scroll-gated elements are unaffected; they were
+   never part of the arrival.
+
+   This records the path the entrance ran for rather than a boolean, because
+   StrictMode runs a layout effect twice -- mount, clean up, mount again. A
+   boolean would be set by the first run and would make the second skip, so the
+   entrance would never play in development and always play in production.
+   Comparing paths, the repeat mount matches and still animates; only an actual
+   change of page counts as a repeat view.
+*/
+let entranceRanFor = null;
+
 export function registerGsapPlugins() {
   if (!pluginsReady) {
     gsap.registerPlugin(ScrollTrigger);
@@ -60,16 +83,16 @@ const TO = {
  * responsive rules all take over cleanly with nothing left overriding them.
  *
  * @param {HTMLElement} root
- * @param {{narrowScreen?: boolean}} options  narrow screens skip the scroll
- *   gating entirely; the caller passes this so a resize across the breakpoint
- *   re-wires rather than keeping whatever was true when the page mounted.
+ * @param {{narrowScreen?: boolean, pathname?: string}} options
+ *   `narrowScreen` skips the scroll gating entirely; the caller passes it so a
+ *   resize across the breakpoint re-wires rather than keeping whatever was true
+ *   when the page mounted. `pathname` identifies the view, so the entrance runs
+ *   on arrival and not again on every navigation.
  * @returns {gsap.Context} revert this to undo everything it created
  */
-export function initPageMotion(root, { narrowScreen = false } = {}) {
-  // A background tab throttles requestAnimationFrame to a couple of frames a
-  // minute, which would leave an entrance tween parked on its `from` state —
-  // above-the-fold copy invisible until the tab is focused. If the document is
-  // hidden at init, the immediate elements skip straight to their end state.
+export function initPageMotion(root, { narrowScreen = false, pathname = "" } = {}) {
+  const repeatView = entranceRanFor !== null && entranceRanFor !== pathname;
+
   const documentHidden = typeof document !== "undefined" && document.hidden;
 
 
@@ -140,13 +163,19 @@ export function initPageMotion(root, { narrowScreen = false } = {}) {
         };
       }
 
-      if (immediate && documentHidden) {
+      /* A background tab throttles rAF to a couple of frames a minute, which
+         would park an entrance tween on its `from` state -- above-the-fold copy
+         invisible until the tab is focused. Same treatment as a repeat view:
+         skip to the end. */
+      if (immediate && (documentHidden || repeatView)) {
         gsap.set(targets, { clearProps: "transform,opacity,visibility" });
         return;
       }
 
       gsap.fromTo(targets, from, vars);
     });
+
+    entranceRanFor = pathname;
   }, root);
 }
 
