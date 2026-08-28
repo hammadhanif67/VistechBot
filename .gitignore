@@ -28,5 +28,3 @@ dist-ssr
 .env.*
 !.env.example
 
-# Agent workspace. Local tooling, not part of the project.
-.claude/
