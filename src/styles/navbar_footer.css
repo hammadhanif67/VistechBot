@@ -24,8 +24,16 @@
   backdrop-filter: blur(18px) saturate(140%);
 }
 
+/* With the menu open the bar becomes the same solid surface the panel is, so
+   the two read as one sheet.
+
+   It used to go transparent here, on the assumption that the overlay was
+   behind it. The overlay starts at `--nav-h`, not at 0, so nothing was behind
+   the bar except the page: 72px of whatever you had scrolled to, showing
+   through the top of an open menu. The blur goes too — there is nothing left
+   to blur, and it costs a compositing layer for no result. */
 .nav.isOpen {
-  background: transparent;
+  background: var(--void);
   border-bottom-color: transparent;
   backdrop-filter: none;
 }
