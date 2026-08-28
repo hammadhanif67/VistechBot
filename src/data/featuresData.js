@@ -24,6 +24,11 @@ import {
 /**
  * Platform capabilities, grouped by the job they do.
  *
+ * Every capability carries an `id`. It is the anchor on /platform and the
+ * handle `solutionsData.js` uses to name the ones an industry leans on, so a
+ * capability's wording lives here once and the solution pages point at it
+ * rather than restating it.
+ *
  * The flat list of six was hard to scan and gave no sense of the product's
  * shape. Three groups match how a buyer evaluates a support platform: talking
  * to customers, knowing the answers, running the operation.
@@ -34,7 +39,7 @@ import {
  */
 export const capabilityGroups = [
   {
-    id: "feature-conversations",
+    id: "platform-conversations",
     label: "Conversations",
     title: "Meet customers on the channel they already use",
     text: "Voice, web chat and social inboxes all run on one set of rules. The answer stays the same wherever the question came from.",
@@ -42,18 +47,21 @@ export const capabilityGroups = [
       {
         icon: Mic,
         tag: "New",
+        id: "cap-voice",
         title: "AI voice agents",
         text: "Answers callers, qualifies leads, books appointments. When a call needs a person it transfers with the transcript already attached.",
         meta: "100+ languages",
       },
       {
         icon: Bot,
+        id: "cap-chatbots",
         title: "Smart chatbots",
         text: "Web chat that reads what the customer meant, follows your business rules, and stays in your brand's voice.",
         meta: "Context-aware replies",
       },
       {
         icon: MessageSquare,
+        id: "cap-inbox",
         title: "Multi-channel inbox",
         text: "Website chat, WhatsApp, Messenger and email land in one queue. History follows the customer between them.",
         meta: "10+ channels",
@@ -61,25 +69,28 @@ export const capabilityGroups = [
     ],
   },
   {
-    id: "feature-knowledge",
+    id: "platform-knowledge",
     label: "Knowledge",
     title: "Answers that come from your own content",
     text: "The assistant works from your documentation. You control exactly what it is allowed to say.",
     items: [
       {
         icon: Database,
+        id: "cap-knowledge-base",
         title: "Knowledge base AI",
         text: "Point it at your FAQs, policies, product data and help articles. Replies come from your material, not from whatever the model absorbed elsewhere.",
         meta: "Unlimited sources",
       },
       {
         icon: Brain,
+        id: "cap-training",
         title: "Custom AI training",
         text: "Shape the workflows around your services, your lead stages, your escalation logic. Adjust them as the business changes.",
         meta: "Custom models",
       },
       {
         icon: Languages,
+        id: "cap-multilingual",
         title: "Multilingual support",
         text: "Detects the customer's language and answers in it, drawing on the same knowledge base. No separate translated article set to maintain.",
         meta: "Auto-detected",
@@ -87,27 +98,30 @@ export const capabilityGroups = [
     ],
   },
   {
-    id: "feature-operations",
+    id: "platform-operations",
     label: "Operations",
     title: "Wired into the systems your team already runs",
     text: "Records stay in sync. Performance is measurable. Access is something you set, not something you hope about.",
     items: [
       {
         icon: Plug,
-        id: "feature-integrations",
+        
+        id: "cap-integrations",
         title: "CRM and tool integrations",
         text: "Leads, tickets, contact records and conversation summaries sync with the tools your sales and support teams already have open.",
         meta: "50+ integrations",
       },
       {
         icon: BarChart3,
+        id: "cap-analytics",
         title: "Conversation analytics",
         text: "See what customers ask most and where the assistant hesitated. Then go fix the article that was missing.",
         meta: "Live dashboards",
       },
       {
         icon: ShieldCheck,
-        id: "feature-security",
+        
+        id: "cap-security",
         title: "Security and access control",
         text: "Role-based permissions, encrypted conversations, and per-workspace control over what the assistant can read and share.",
         meta: "Role-based access",

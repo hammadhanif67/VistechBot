@@ -1,0 +1,354 @@
+/* =========================================================================
+   SOLUTIONS
+
+   The directory and the eight industry pages. Same vocabulary as the rest of
+   the site — hairline, no radius, editorial type — applied to a card grid and
+   a repeating page template.
+   ========================================================================= */
+
+/* -------------------------------------------------------------------------
+   DIRECTORY
+   ------------------------------------------------------------------------- */
+.solutionsGrid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--hairline);
+  margin-top: var(--s-7);
+  /* The gap is a hairline and the background shows through it, so the grid
+     draws its own rules between cards without any card owning a border. */
+  background: var(--line);
+  border: var(--hairline) solid var(--line);
+}
+
+.solutionCard {
+  position: relative;
+  display: grid;
+  align-content: start;
+  gap: var(--s-3);
+  height: 100%;
+  padding: var(--s-6);
+  background: var(--surface-panel);
+  color: var(--ink-muted);
+  transition: background var(--t-base), color var(--t-base);
+}
+
+.solutionCard:hover {
+  background: var(--surface-raised);
+}
+
+/* The number is the quietest thing on the card until the card is pointed at,
+   which is when it becomes the marker for which of eight you are on. */
+.solutionCard__index {
+  font-size: var(--fs-nano);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-label);
+  color: var(--ink-faint);
+  font-variant-numeric: tabular-nums;
+  transition: color var(--t-base);
+}
+
+.solutionCard:hover .solutionCard__index {
+  color: var(--accent);
+}
+
+.solutionCard__icon {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border: var(--hairline) solid var(--line);
+  color: var(--accent);
+  transition: border-color var(--t-base), background var(--t-base), color var(--t-base);
+}
+
+.solutionCard:hover .solutionCard__icon {
+  color: var(--ink-invert);
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.solutionCard__name {
+  font-size: var(--fs-h3);
+  font-weight: var(--fw-bold);
+  letter-spacing: -0.02em;
+  color: var(--ink-strong);
+}
+
+.solutionCard__text {
+  font-size: var(--fs-small);
+  line-height: 1.6;
+}
+
+.solutionCard__action {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  margin-top: var(--s-2);
+  font-size: var(--fs-micro);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  transition: color var(--t-base), gap var(--t-fast);
+}
+
+.solutionCard:hover .solutionCard__action {
+  color: var(--accent);
+  gap: var(--s-3);
+}
+
+.solutionCard__action svg {
+  transition: transform var(--t-base);
+}
+
+.solutionCard:hover .solutionCard__action svg {
+  transform: translate(3px, -3px);
+}
+
+/* -------------------------------------------------------------------------
+   INDUSTRY PAGE
+   ------------------------------------------------------------------------- */
+.solutionCrumb {
+  margin-bottom: var(--s-5);
+}
+
+.solutionCrumb ol {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-2);
+  font-size: var(--fs-micro);
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.solutionCrumb li + li::before {
+  content: "/";
+  margin-right: var(--s-2);
+  color: var(--line-strong);
+}
+
+.solutionCrumb a {
+  color: var(--ink-muted);
+  transition: color var(--t-fast);
+}
+
+.solutionCrumb a:hover {
+  color: var(--accent);
+}
+
+.solutionCrumb [aria-current="page"] {
+  color: var(--ink-strong);
+}
+
+/* --- Problem / answer --- */
+.solutionCase__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--hairline);
+  margin-top: var(--s-7);
+  background: var(--line);
+  border: var(--hairline) solid var(--line);
+}
+
+.solutionCase__col {
+  padding: var(--s-6);
+  background: var(--surface-panel);
+}
+
+/* The answer column carries the accent edge, so which of the two is the
+   product's side of the argument is legible before either is read. */
+.solutionCase__col--answer {
+  box-shadow: inset 2px 0 0 var(--accent);
+}
+
+.solutionCase__col h3 {
+  margin-bottom: var(--s-3);
+  font-size: var(--fs-micro);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.solutionCase__col--answer h3 {
+  color: var(--accent);
+}
+
+.solutionCase__col p {
+  font-size: var(--fs-small);
+  line-height: 1.72;
+}
+
+.solutionCase__note {
+  margin-top: var(--s-5);
+  max-width: 78ch;
+}
+
+/* --- Capabilities this leans on --- */
+.solutionCaps__list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--s-4);
+  margin-top: var(--s-7);
+}
+
+.solutionCaps__item {
+  display: grid;
+  align-content: start;
+  gap: var(--s-3);
+  height: 100%;
+  color: var(--ink-muted);
+}
+
+.solutionCaps__item svg {
+  color: var(--accent);
+}
+
+.solutionCaps__item h3 {
+  font-size: var(--fs-h3);
+  font-weight: var(--fw-semibold);
+  letter-spacing: -0.02em;
+  color: var(--ink-strong);
+}
+
+.solutionCaps__item p {
+  font-size: var(--fs-small);
+  line-height: 1.65;
+}
+
+.solutionCaps__go {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  margin-top: var(--s-2);
+  font-size: var(--fs-micro);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  transition: color var(--t-fast), gap var(--t-fast);
+}
+
+.solutionCaps__item:hover .solutionCaps__go {
+  color: var(--accent);
+  gap: var(--s-3);
+}
+
+/* --- How it works --- */
+.solutionFlow__steps {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--s-5);
+  margin-top: var(--s-7);
+}
+
+.solutionFlow__steps > li {
+  display: grid;
+  gap: var(--s-3);
+  padding-top: var(--s-4);
+  border-top: var(--hairline) solid var(--line);
+}
+
+.solutionFlow__index {
+  font-size: var(--fs-label);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-label);
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+
+.solutionFlow__steps p {
+  font-size: var(--fs-small);
+  line-height: 1.65;
+}
+
+/* --- What changes --- */
+.solutionGains__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(0, 0.65fr);
+  gap: var(--s-7);
+  margin-top: var(--s-7);
+  align-items: start;
+}
+
+.solutionGains__list {
+  display: grid;
+  gap: 0;
+}
+
+.solutionGains__list > li {
+  padding: var(--s-5) 0;
+  border-bottom: var(--hairline) solid var(--line);
+}
+
+.solutionGains__list > li:first-child {
+  padding-top: 0;
+}
+
+.solutionGains__list h3 {
+  margin-bottom: var(--s-2);
+  font-size: var(--fs-h3);
+  font-weight: var(--fw-semibold);
+  letter-spacing: -0.02em;
+  color: var(--ink-strong);
+}
+
+.solutionGains__list p {
+  font-size: var(--fs-small);
+  line-height: 1.65;
+}
+
+.solutionGains__jobs ul {
+  display: grid;
+  gap: var(--s-3);
+  margin-top: var(--s-4);
+}
+
+.solutionGains__jobs li {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  font-size: var(--fs-small);
+  color: var(--ink);
+}
+
+.solutionGains__jobs svg {
+  flex-shrink: 0;
+  color: var(--accent);
+}
+
+/* -------------------------------------------------------------------------
+   RESPONSIVE
+   ------------------------------------------------------------------------- */
+@media (max-width: 1080px) {
+  .solutionsGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .solutionCaps__list,
+  .solutionFlow__steps {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .solutionGains__grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--s-6);
+  }
+}
+
+@media (max-width: 720px) {
+  .solutionsGrid,
+  .solutionCase__grid,
+  .solutionCaps__list,
+  .solutionFlow__steps {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* Stacked, the answer column's left edge reads as a stray rule beside the
+     column above it. It moves to the top, where it still marks the column. */
+  .solutionCase__col--answer {
+    box-shadow: inset 0 2px 0 var(--accent);
+  }
+}

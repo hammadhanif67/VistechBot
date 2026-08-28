@@ -37,11 +37,13 @@ The light theme is not an inversion:
 
 - The page is `#eef1f7`, not white. White leaves a raised surface nothing to be
   raised against, so every card ends up needing a heavy border to exist.
-- The accent is a deep sky blue, `#075985`. `#19e0ff` measures 1.4:1 on this
-  page and is not text; `#0b7086` kept the cyan hue and cleared contrast but was
-  tiring to read against pale paper, and `--accent` appears 59 times. What was
-  tiring there was cyan's luminance rather than its saturation, so this drops
-  the lightness and moves off cyan into blue: 6.7:1 on the page against 5.1.
+- The accent is the brand blue, `#325DEB`, with `#753EED` as its hover and the
+  far end of the CTA gradient. Both clear AA where they are used: 4.8:1 and
+  5.1:1 on the page, 5.4:1 and 5.7:1 under white. They are accents and not a
+  text colour — paragraphs stay on `--ink`, a neutral slate.
+- The primary button is the one element carrying a gradient, and only here:
+  `--cta-fill` is a flat colour in the dark theme, where blue into purple
+  against near-black is a smudge.
 - The inks are a neutral slate at hue 216. They sat at 227 — the violet-blue
   band — which gave the whole light theme a faint purple cast, most visible in
   the muted greys where there is least colour to hide it.
@@ -75,6 +77,34 @@ dark.
 Five runtime dependencies, nothing else. three.js, framer-motion, lottie-react,
 @radix-ui/react-icons and react-icons were all removed once nothing used them;
 react-icons went with the social links it drew brand marks for.
+
+## Information architecture
+
+```txt
+/                          Home
+/platform                  What the product does — nine capabilities, three groups
+/solutions                 Directory of the eight industries
+  /solutions/<slug>        One page each: ecommerce, saas-technology, healthcare,
+                           finance, education, travel-hospitality, real-estate,
+                           logistics
+/pricing                   Plans
+/help                      Help centre — setup, configuration, FAQ, support
+/about  /contact           Company, in the footer rather than the navbar
+```
+
+Platform and Solutions answer different questions and the split is structural,
+not editorial. `featuresData.js` owns capabilities; `solutionsData.js` owns
+industries and can only *reference* a capability by id, never restate one. A
+solution page's "what carries it" section is three links into /platform.
+
+Nothing describes an industry twice. `SOLUTIONS_SEO` in `seoContent.js` holds
+slug, name, title and description; `routes.js` derives the eight routes from it,
+`solutionsData.js` merges the page copy and icon on top, and the home page's
+use-case section reads the same array. Adding an industry there gives it a
+route, a card, a page, a crumb trail, a sitemap entry and a pre-rendered HTML
+file with no other edit.
+
+`/features` became `/platform` and redirects rather than 404ing.
 
 ## Structure
 

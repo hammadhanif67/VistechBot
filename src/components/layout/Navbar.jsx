@@ -1,11 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, ChevronDown } from "lucide-react";
 import { gsap } from "gsap";
 import Wordmark from "../brand/Wordmark";
 import ThemeToggle from "./ThemeToggle";
 import Eyebrow from "../common/Eyebrow";
+import NavPanel from "../navigation/NavPanel";
 import { navItems } from "../../data/siteData";
+import { navPanels } from "../../data/navPanels";
 
 const MENU_ID = "site-menu";
 
@@ -27,6 +29,11 @@ const MENU_ID = "site-menu";
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  /* Which desktop panel is open, and which mobile section is expanded. One at a
+     time in both cases: two open panels overlap, and two open sections push the
+     overlay past the height of a phone. */
+  const [openPanel, setOpenPanel] = useState(null);
+  const [openSection, setOpenSection] = useState(null);
   const { pathname } = useLocation();
   const toggleRef = useRef(null);
   const panelRef = useRef(null);
@@ -38,6 +45,8 @@ export default function Navbar() {
   if (menuPath !== pathname) {
     setMenuPath(pathname);
     if (open) setOpen(false);
+    if (openPanel) setOpenPanel(null);
+    if (openSection) setOpenSection(null);
   }
 
   useEffect(() => {
@@ -92,16 +101,25 @@ export default function Navbar() {
 
         <nav className="nav__links" aria-label="Main">
           <ul>
-            {navItems.map(({ label, path }) => (
+            {navItems.map(({ label, path, panel }) => (
               <li key={path}>
-                <NavLink
-                  to={path}
-                  end={path === "/"}
-                  className={({ isActive }) => (isActive ? "nav__link isActive" : "nav__link")}
-                  aria-current={pathname === path ? "page" : undefined}
-                >
-                  {label}
-                </NavLink>
+                {panel ? (
+                  <NavPanel
+                    label={label}
+                    panel={navPanels[panel]}
+                    isOpen={openPanel === panel}
+                    onOpen={() => setOpenPanel(panel)}
+                    onClose={() => setOpenPanel((current) => (current === panel ? null : current))}
+                  />
+                ) : (
+                  <NavLink
+                    to={path}
+                    className={({ isActive }) => (isActive ? "nav__link isActive" : "nav__link")}
+                    aria-current={pathname.startsWith(path) ? "page" : undefined}
+                  >
+                    {label}
+                  </NavLink>
+                )}
               </li>
             ))}
           </ul>
@@ -139,22 +157,66 @@ export default function Navbar() {
           <div className="menu__inner">
             <nav className="menu__nav" aria-label="Site">
               <ul>
-                {navItems.map(({ label, path }, index) => (
-                  <li key={path} className="menuRowClip">
-                    <NavLink
-                      to={path}
-                      end={path === "/"}
-                      className={({ isActive }) =>
-                        isActive ? "menuRow menu__link isActive" : "menuRow menu__link"
-                      }
-                      aria-current={pathname === path ? "page" : undefined}
-                    >
-                      <span className="menu__index">{String(index + 1).padStart(2, "0")}</span>
-                      <span className="menu__label">{label}</span>
-                      <ArrowUpRight size={20} aria-hidden="true" />
-                    </NavLink>
-                  </li>
-                ))}
+                {navItems.map(({ label, path, panel }, index) => {
+                  const expanded = openSection === panel;
+
+                  return (
+                    <li key={path} className="menuRowClip">
+                      {/* The desktop panels become sections that open in place.
+                          A floating mega-panel on a phone is a menu with no
+                          room to float in. */}
+                      {panel ? (
+                        <>
+                          <button
+                            type="button"
+                            className={`menuRow menu__link menu__link--toggle${expanded ? " isOpen" : ""}`}
+                            aria-expanded={expanded}
+                            aria-controls={`menu-section-${panel}`}
+                            onClick={() => setOpenSection(expanded ? null : panel)}
+                          >
+                            <span className="menu__index">{String(index + 1).padStart(2, "0")}</span>
+                            <span className="menu__label">{label}</span>
+                            <ChevronDown size={20} aria-hidden="true" />
+                          </button>
+
+                          {expanded && (
+                            <div className="menu__section" id={`menu-section-${panel}`}>
+                              <ul>
+                                {navPanels[panel].groups.flatMap((group) => group.items).map(
+                                  ({ id, icon: Icon, title, to }) => (
+                                    <li key={id}>
+                                      <Link to={to}>
+                                        <Icon size={16} aria-hidden="true" />
+                                        {title}
+                                      </Link>
+                                    </li>
+                                  )
+                                )}
+                              </ul>
+
+                              <Link className="menu__sectionAction" to={navPanels[panel].action.to}>
+                                {navPanels[panel].action.label}
+                                <ArrowUpRight size={14} aria-hidden="true" />
+                              </Link>
+                            </div>
+                          )}
+                        </>
+                      ) : (
+                        <NavLink
+                          to={path}
+                          className={({ isActive }) =>
+                            isActive ? "menuRow menu__link isActive" : "menuRow menu__link"
+                          }
+                          aria-current={pathname.startsWith(path) ? "page" : undefined}
+                        >
+                          <span className="menu__index">{String(index + 1).padStart(2, "0")}</span>
+                          <span className="menu__label">{label}</span>
+                          <ArrowUpRight size={20} aria-hidden="true" />
+                        </NavLink>
+                      )}
+                    </li>
+                  );
+                })}
               </ul>
             </nav>
 

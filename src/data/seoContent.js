@@ -16,6 +16,82 @@ export const TWITTER_HANDLE = "@vistechbot";
 export const OG_IMAGE_PATH = "/og-image.jpg";
 
 /**
+ * Solutions, for the build.
+ *
+ * Slug, name and metadata only — no icons and no page copy, because this file
+ * has to stay importable by `vite.config.js` and by `routes.js`, neither of
+ * which can pull in a React icon library. `solutionsData.js` reads these and
+ * adds the icon and the page content on top, so a title is written once and
+ * reaches the router, the sitemap, the static HTML and the page from here.
+ */
+export const SOLUTIONS_SEO = [
+  {
+    slug: "ecommerce",
+    name: "E-commerce",
+    title: "AI Customer Support for E-commerce | VistechBot",
+    description:
+      "Answer order status, returns and sizing questions the moment they are asked, on every channel. VistechBot handles the repeat traffic a retail queue is mostly made of.",
+  },
+  {
+    slug: "saas-technology",
+    name: "SaaS & Technology",
+    title: "AI Customer Support for SaaS & Technology | VistechBot",
+    description:
+      "Answer setup, error and billing questions from your own documentation, in the product. VistechBot escalates with the full conversation attached when a human is needed.",
+  },
+  {
+    slug: "healthcare",
+    name: "Healthcare",
+    title: "AI Patient Support & Scheduling | VistechBot",
+    description:
+      "Handle appointments, pre-visit questions and intake with an assistant that answers only from what you allow it to read, and stops where clinical judgement begins.",
+  },
+  {
+    slug: "finance",
+    name: "Finance",
+    title: "AI Support for Financial Services | VistechBot",
+    description:
+      "Answer application status, account and transaction questions from your own systems, with an explicit handoff wherever the conversation turns into advice.",
+  },
+  {
+    slug: "education",
+    name: "Education",
+    title: "AI Student & Admissions Support | VistechBot",
+    description:
+      "Answer admissions, deadline and course questions around the clock, in the applicant's own language, through the intake peaks a fixed help desk cannot staff for.",
+  },
+  {
+    slug: "travel-hospitality",
+    name: "Travel & Hospitality",
+    title: "AI Guest & Traveller Support | VistechBot",
+    description:
+      "Handle bookings, changes and disruption in the traveller's own language, at the hour it happens. VistechBot covers the night no rota covers well.",
+  },
+  {
+    slug: "real-estate",
+    name: "Real Estate",
+    title: "AI Lead Response & Viewing Scheduling | VistechBot",
+    description:
+      "Respond to listing enquiries the moment they arrive, qualify them against your own criteria and book viewings into a real calendar, at any hour.",
+  },
+  {
+    slug: "logistics",
+    name: "Logistics",
+    title: "AI Shipment & Delivery Support | VistechBot",
+    description:
+      "Answer tracking, delivery window and exception questions from live shipment data, on chat and voice, without routing every caller through a menu.",
+  },
+];
+
+/** `/solutions/<slug>` metadata, folded into `routeSeo` below. */
+const solutionRouteSeo = Object.fromEntries(
+  SOLUTIONS_SEO.map(({ slug, title, description }) => [
+    `/solutions/${slug}`,
+    { title, description },
+  ])
+);
+
+/**
  * Titles stay under ~60 characters and descriptions under ~155 so search
  * engines show them whole. Each one is written for a person scanning results,
  * not padded with keywords.
@@ -31,10 +107,15 @@ export const routeSeo = {
     description:
       "AI chat and voice agents that answer customers in seconds, at any hour. VistechBot handles the repetitive half of your support queue and routes the rest to your team.",
   },
-  "/features": {
-    title: "AI Chat, Voice Agents & Automation | VistechBot",
+  "/platform": {
+    title: "Platform: AI Chat, Voice & Automation | VistechBot",
     description:
       "Nine capabilities across chat, voice, knowledge and operations. Voice agents, smart chatbots, knowledge base AI, analytics and CRM integrations, all on one platform.",
+  },
+  "/solutions": {
+    title: "Solutions by Industry | VistechBot",
+    description:
+      "Eight industries, and what the support queue is actually made of in each. See how VistechBot is pointed at retail, software, healthcare, finance, education, travel, property and logistics.",
   },
   "/pricing": {
     title: "Pricing from $49/month | VistechBot",
@@ -57,6 +138,10 @@ export const routeSeo = {
       "Book a demo, ask about an integration, or get implementation help. Tell us what your support queue looks like and we will say honestly whether we can help.",
   },
 };
+
+/* The eight solution routes carry their own metadata, generated from
+   SOLUTIONS_SEO above so no title is written twice. */
+Object.assign(routeSeo, solutionRouteSeo);
 
 export const notFoundSeo = {
   title: "Page Not Found | VistechBot",

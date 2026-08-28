@@ -24,7 +24,7 @@ import { advancedCapabilities } from "../data/featuresData";
  * at the bottom is on the home page only now — repeating it made the two pages
  * feel interchangeable.
  */
-export default function Features() {
+export default function Platform() {
   usePageMotion();
 
   return (
@@ -43,7 +43,7 @@ export default function Features() {
           }),
           breadcrumbSchema([
             { name: "Home", path: "/" },
-            { name: "Platform", path: "/features" },
+            { name: "Platform", path: "/platform" },
           ]),
         ]}
       />

@@ -1,5 +1,5 @@
 import { Suspense, lazy } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import Navbar from "./components/layout/Navbar";
 import Footer from "./components/layout/Footer";
 import ContactDock from "./components/layout/ContactDock";
@@ -12,7 +12,9 @@ import Home from "./pages/Home";
  * should not wait on a second request. Every other page is split out, so a
  * first-time visitor downloads the marketing homepage and nothing else.
  */
-const Features = lazy(() => import("./pages/Features"));
+const Platform = lazy(() => import("./pages/Platform"));
+const Solutions = lazy(() => import("./pages/Solutions"));
+const Solution = lazy(() => import("./pages/Solution"));
 const Pricing = lazy(() => import("./pages/Pricing"));
 const Help = lazy(() => import("./pages/Help"));
 const About = lazy(() => import("./pages/About"));
@@ -33,7 +35,17 @@ export default function App() {
       <Suspense fallback={<RouteFallback />}>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/features" element={<Features />} />
+          <Route path="/platform" element={<Platform />} />
+          <Route path="/solutions" element={<Solutions />} />
+          {/* One route for eight industries. The component reads the slug and
+              renders the 404 for anything not in `solutionsData`, so a mistyped
+              industry cannot become an indexable page. */}
+          <Route path="/solutions/:slug" element={<Solution />} />
+
+          {/* `/features` moved to `/platform`. It was in a published sitemap,
+              and a 404 where a page used to be is the one migration mistake
+              that costs real traffic. `replace` keeps it out of history. */}
+          <Route path="/features" element={<Navigate to="/platform" replace />} />
           <Route path="/pricing" element={<Pricing />} />
           <Route path="/help" element={<Help />} />
           <Route path="/about" element={<About />} />

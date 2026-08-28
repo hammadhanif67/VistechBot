@@ -54,7 +54,7 @@ function Overview() {
 
       {/* The capability list this page used to carry lived on /features too.
           One link is worth more than a second copy of it. */}
-      <Link className="linkArrow" to="/features">
+      <Link className="linkArrow" to="/platform">
         What the platform can do <ArrowUpRight size={14} aria-hidden="true" />
       </Link>
 

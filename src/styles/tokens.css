@@ -99,6 +99,12 @@
      against `--ink-invert`. */
   --accent: #19e0ff;
   --accent-hover: #5ee7ff;
+  /* The primary button's surface. A token because the two themes fill it
+     differently: dark uses its own strongest ink, light uses the brand
+     gradient. Every other button variant is the same in both. */
+  --cta-fill: var(--ink-strong);
+  --cta-fill-hover: var(--ink-strong-hover);
+  --cta-ink: var(--ink-invert);
   --accent-deep: #2f6bff;
   --accent-violet: #8b4dff;
   --accent-warm: #ff6a3d;
@@ -224,27 +230,32 @@
   --ink-faint: #55637a;
   --ink-invert: #f7f9fc;
 
-  /* A deep sky blue. Two earlier attempts bracket it: #19e0ff, the dark theme's
-     cyan, measures 1.4:1 on this page and is not text; #0b7086 kept that hue
-     and cleared contrast but a saturated cyan against pale paper is tiring to
-     read, and `--accent` appears 59 times.
+  /* The brand pair. Blue carries links and accents, purple is the hover and the
+     far end of the CTA gradient.
 
-     What was tiring there was cyan's luminance, not its saturation. Dropping
-     the lightness and moving off cyan into blue fixes it: this is the deepest
-     and highest-contrast of the sky blues (6.7:1 on the page against 5.1), and
-     depth is what keeps a saturated colour comfortable. */
-  --accent: #075985;
-  --accent-hover: #064861;
+     Both clear AA where they are used: #325DEB reads 4.8:1 on the page and
+     5.4:1 on a card, #753EED 5.1:1 and 5.7:1, and white on either is 5.4:1 and
+     5.7:1. They are accents and not a text colour — body copy stays on
+     `--ink`, which is a neutral slate. A page where the paragraphs are blue is
+     a page nobody finishes. */
+  --accent: #325deb;
+  --accent-hover: #753eed;
   --accent-deep: #1d4ed8;
-  --accent-violet: #453f7a;
+  --accent-violet: #753eed;
   --accent-warm: #b4441a;
-  --accent-wash: rgba(7, 89, 133, 0.05);
-  --accent-wash-soft: rgba(7, 89, 133, 0.035);
-  --accent-fade: rgba(7, 89, 133, 0.16);
+  --accent-wash: rgba(50, 93, 235, 0.05);
+  --accent-wash-soft: rgba(50, 93, 235, 0.035);
+  --accent-fade: rgba(117, 62, 237, 0.18);
+
+  /* Blue into purple, left to right. The one gradient on the site, on the one
+     element that is asking for a click. */
+  --cta-fill: linear-gradient(90deg, #325deb, #753eed);
+  --cta-fill-hover: linear-gradient(90deg, #2a4fd0, #6432d6);
+  --cta-ink: #ffffff;
 
   --line: rgba(24, 34, 49, 0.12);
   --line-strong: rgba(24, 34, 49, 0.22);
-  --line-accent: rgba(7, 89, 133, 0.38);
+  --line-accent: rgba(50, 93, 235, 0.38);
 
   --scrim-nav: rgba(245, 247, 251, 0.82);
   --scrim-strip: rgba(245, 247, 251, 0.94);
@@ -252,9 +263,9 @@
   /* Far weaker than the dark theme's, and desaturated with it. The same wash
      that reads as depth against near-black reads as a stain against off-white,
      and a saturated one reads as a colour cast over the whole page. */
-  --atmo-blue: rgba(47, 107, 255, 0.05);
-  --atmo-violet: rgba(69, 63, 122, 0.03);
-  --atmo-cyan: rgba(7, 89, 133, 0.04);
+  --atmo-blue: rgba(50, 93, 235, 0.05);
+  --atmo-violet: rgba(117, 62, 237, 0.035);
+  --atmo-cyan: rgba(50, 93, 235, 0.035);
   --grain-opacity: 0.016;
 
   --shadow-sm: 0 1px 2px rgba(16, 24, 48, 0.05);

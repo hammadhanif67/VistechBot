@@ -62,7 +62,7 @@ export default function Hero() {
             <Link className="btn btn--primary" to="/contact">
               Start free trial <ArrowUpRight size={16} aria-hidden="true" />
             </Link>
-            <Link className="btn btn--ghost" to="/features">
+            <Link className="btn btn--ghost" to="/platform">
               See the platform
             </Link>
           </div>

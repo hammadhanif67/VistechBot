@@ -39,6 +39,8 @@
 }
 
 .nav__inner {
+  /* The containing block for the navigation panels. */
+  position: relative;
   width: 100%;
   max-width: var(--shell);
   margin-inline: auto;
@@ -904,3 +906,229 @@ body:has(.menu) .dock {
   display: none;
 }
 
+/* -------------------------------------------------------------------------
+   NAVIGATION PANELS
+
+   A sheet that drops from the bar, not a browser dropdown: full-width inside
+   the shell, hairline, no radius, and laid out as columns of real entries with
+   an icon, a name and a line of description each.
+
+   The bar is `position: sticky`, so the sheet is positioned against the bar
+   itself and inherits its stacking context. Nothing here escapes into a portal.
+   ------------------------------------------------------------------------- */
+/* Deliberately not positioned. The sheet is anchored to the bar, not to the
+   trigger: a 920px three-column sheet centred on a trigger sitting left of
+   centre hangs off the edge of the viewport (measured: 9px past it at 1425px).
+   Centred in the bar it fits at every width, which is why every mega-menu is
+   built this way. */
+.navPanel {
+  position: static;
+}
+
+.navPanel__trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: none;
+}
+
+.navPanel__trigger svg {
+  transition: transform var(--t-fast);
+}
+
+.navPanel.isOpen .navPanel__trigger svg {
+  transform: rotate(180deg);
+}
+
+.navPanel.isOpen .navPanel__trigger {
+  color: var(--ink-strong);
+}
+
+.navPanel__sheet {
+  position: absolute;
+  top: calc(100% + 1px);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: var(--z-overlay);
+  width: max-content;
+  max-width: min(920px, calc(100vw - var(--gutter) * 2));
+  padding: var(--s-6);
+  background: var(--surface-panel);
+  border: var(--hairline) solid var(--line-strong);
+  box-shadow: var(--shadow-lg);
+}
+
+.navPanel__head {
+  padding-bottom: var(--s-4);
+  margin-bottom: var(--s-5);
+  border-bottom: var(--hairline) solid var(--line);
+}
+
+.navPanel__eyebrow {
+  font-size: var(--fs-nano);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.navPanel__heading {
+  margin-top: 3px;
+  font-size: var(--fs-small);
+  color: var(--ink-muted);
+}
+
+.navPanel__body {
+  display: grid;
+  gap: var(--s-6);
+}
+
+/* Three capability groups sit side by side; a single group stays one column
+   rather than stretching one list across the full sheet. */
+.navPanel__body[data-groups="3"] {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.navPanel__groupLabel {
+  margin-bottom: var(--s-3);
+  font-size: var(--fs-nano);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.navPanel__group ul {
+  display: grid;
+  gap: 2px;
+}
+
+.navPanel__group a {
+  display: grid;
+  grid-template-columns: 18px minmax(0, 1fr);
+  gap: var(--s-3);
+  padding: 10px var(--s-3);
+  margin-inline: calc(var(--s-3) * -1);
+  color: var(--ink-muted);
+  transition: color var(--t-fast), background var(--t-fast);
+}
+
+.navPanel__group a:hover {
+  background: var(--accent-wash);
+}
+
+.navPanel__group a svg {
+  margin-top: 2px;
+  color: var(--ink-faint);
+  transition: color var(--t-fast);
+}
+
+.navPanel__group a:hover svg {
+  color: var(--accent);
+}
+
+.navPanel__group b {
+  display: block;
+  font-size: var(--fs-small);
+  font-weight: var(--fw-semibold);
+  color: var(--ink);
+  transition: color var(--t-fast);
+}
+
+.navPanel__group a:hover b {
+  color: var(--accent);
+}
+
+.navPanel__group small {
+  display: block;
+  margin-top: 2px;
+  font-size: var(--fs-micro);
+  line-height: 1.5;
+  color: var(--ink-faint);
+}
+
+.navPanel__action {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  margin-top: var(--s-5);
+  padding-top: var(--s-4);
+  border-top: var(--hairline) solid var(--line);
+  width: 100%;
+  font-size: var(--fs-label);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  color: var(--accent);
+  transition: gap var(--t-fast);
+}
+
+.navPanel__action:hover {
+  gap: var(--s-3);
+}
+
+/* -------------------------------------------------------------------------
+   MOBILE: the panels become sections that open in place
+   ------------------------------------------------------------------------- */
+.menu__link--toggle {
+  width: 100%;
+  text-align: left;
+  background: none;
+}
+
+.menu__link--toggle svg {
+  transition: transform var(--t-base);
+}
+
+.menu__link--toggle.isOpen svg {
+  transform: rotate(180deg);
+}
+
+.menu__section {
+  padding: 0 0 var(--s-4) 52px;
+}
+
+.menu__section ul {
+  display: grid;
+  gap: 0;
+}
+
+.menu__section a {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  /* 11px clears the 44px tap floor at this type size. */
+  padding: 11px 0;
+  font-size: var(--fs-small);
+  color: var(--ink-muted);
+  transition: color var(--t-fast);
+}
+
+.menu__section a:hover,
+.menu__section a:focus-visible {
+  color: var(--accent);
+}
+
+.menu__section a svg {
+  color: var(--ink-faint);
+}
+
+.menu__sectionAction {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  margin-top: var(--s-2);
+  font-size: var(--fs-micro);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-label);
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+/* The sheet has nowhere to float on a small screen, and the bar has no room
+   for the links that open it. */
+@media (max-width: 900px) {
+  .navPanel__sheet {
+    display: none;
+  }
+}

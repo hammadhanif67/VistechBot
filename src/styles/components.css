@@ -69,15 +69,19 @@
   transform: translateY(-1px);
   box-shadow: var(--shadow);
 }
+/* The one element on the site that carries the brand gradient, and only in the
+   light theme: `--cta-fill` is a flat colour in the dark one, where a gradient
+   against near-black would be a smudge. `border-color` cannot take a gradient,
+   so it is transparent and the fill draws the edge. */
 .btn--primary {
-  background: var(--ink-strong);
-  color: var(--ink-invert);
-  border-color: var(--ink-strong);
+  background: var(--cta-fill);
+  color: var(--cta-ink);
+  border-color: transparent;
 }
 
 .btn--primary:hover {
-  background: var(--ink-strong-hover);
-  border-color: var(--ink-strong-hover);
+  background: var(--cta-fill-hover);
+  border-color: transparent;
 }
 
 .btn--ghost {

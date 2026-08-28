@@ -18,6 +18,7 @@ import "./styles/components.css";
 import "./styles/navbar_footer.css";
 import "./styles/home.css";
 import "./styles/features.css";
+import "./styles/solutions.css";
 import "./styles/pricing.css";
 import "./styles/docs.css";
 import "./styles/about.css";

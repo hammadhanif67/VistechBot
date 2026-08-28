@@ -5,7 +5,7 @@ import { notFoundSeo } from "../data/seoData";
 import Eyebrow from "../components/common/Eyebrow";
 
 const SUGGESTIONS = [
-  ["Platform", "/features", "Capabilities, integrations and security"],
+  ["Platform", "/platform", "Capabilities, integrations and security"],
   ["Pricing", "/pricing", "Plans, trials and what each tier includes"],
   ["Help centre", "/help", "Setup, configuration reference and FAQs"],
   ["Contact", "/contact", "Talk to the team or book a demo"],

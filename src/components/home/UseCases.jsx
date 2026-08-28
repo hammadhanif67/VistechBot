@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { Plus } from "lucide-react";
+import { Link } from "react-router-dom";
+import { ArrowUpRight, Plus } from "lucide-react";
 import SectionHead from "../common/SectionHead";
 import useMediaQuery from "../../hooks/useMediaQuery";
-import { useCases } from "../../data/siteData";
+import { solutions } from "../../data/solutionsData";
 
 /** Below this the two-column pattern has nowhere to put its second column. */
 const NARROW = "(max-width: 900px)";
@@ -14,6 +15,11 @@ const NARROW = "(max-width: 900px)";
  * the right. Hovering or focusing a row swaps the panel. It replaced eight
  * near-identical cards that said little more than the industry name, and it
  * lets each entry carry the four concrete jobs the assistant does there.
+ *
+ * The eight have pages of their own under /solutions now, so this is the
+ * teaser rather than the destination: it reads the same `solutionsData` the
+ * directory does — there is no second copy of an industry's line — and every
+ * entry ends in a link to the page that can make the full argument.
  *
  * On a phone that pattern falls apart, and it did. With no hover, the only way
  * through it was: tap a row, scroll down to the panel, read, scroll back up,
@@ -42,6 +48,11 @@ export default function UseCases() {
             </>
           }
           lead="The vocabulary, the escalation rules and the systems it connects to change. The way it works does not."
+          action={
+            <Link className="linkArrow" to="/solutions">
+              All eight industries <ArrowUpRight size={14} aria-hidden="true" />
+            </Link>
+          }
         />
 
         {isNarrow ? (
@@ -56,17 +67,17 @@ export default function UseCases() {
 
 /** The wide layout: an index that drives a panel beside it. */
 function Tabs({ active, setActive }) {
-  const current = useCases[active];
+  const current = solutions[active];
   const Icon = current.icon;
 
   const handleKeyDown = (event) => {
     if (event.key === "ArrowDown" || event.key === "ArrowRight") {
       event.preventDefault();
-      setActive((index) => (index + 1) % useCases.length);
+      setActive((index) => (index + 1) % solutions.length);
     }
     if (event.key === "ArrowUp" || event.key === "ArrowLeft") {
       event.preventDefault();
-      setActive((index) => (index - 1 + useCases.length) % useCases.length);
+      setActive((index) => (index - 1 + solutions.length) % solutions.length);
     }
   };
 
@@ -80,7 +91,7 @@ function Tabs({ active, setActive }) {
         onKeyDown={handleKeyDown}
         data-anim="stack"
       >
-        {useCases.map((item, index) => (
+        {solutions.map((item, index) => (
           <li key={item.name}>
             <button
               type="button"
@@ -115,13 +126,17 @@ function Tabs({ active, setActive }) {
         <div className="useCases__panelInner" key={current.name}>
           <Icon size={28} className="useCases__panelIcon" aria-hidden="true" />
           <h3>{current.name}</h3>
-          <p className="useCases__lead">{current.lead}</p>
+          <p className="useCases__lead">{current.short}</p>
 
           <ul className="useCases__points">
-            {current.points.map((point) => (
+            {current.jobs.map((point) => (
               <li key={point}>{point}</li>
             ))}
           </ul>
+
+          <Link className="linkArrow" to={`/solutions/${current.slug}`}>
+            {current.name} in full <ArrowUpRight size={14} aria-hidden="true" />
+          </Link>
         </div>
       </div>
     </div>
@@ -138,7 +153,7 @@ function Tabs({ active, setActive }) {
 function Accordion({ active, setActive }) {
   return (
     <ul className="useCases__accordion" data-anim="stack">
-      {useCases.map((item, index) => {
+      {solutions.map((item, index) => {
         const Icon = item.icon;
         const open = active === index;
 
@@ -163,12 +178,16 @@ function Accordion({ active, setActive }) {
             {open && (
               <div className="useCases__detail" id={`usecase-detail-${index}`}>
                 <Icon size={22} className="useCases__panelIcon" aria-hidden="true" />
-                <p className="useCases__lead">{item.lead}</p>
+                <p className="useCases__lead">{item.short}</p>
                 <ul className="useCases__points">
-                  {item.points.map((point) => (
+                  {item.jobs.map((point) => (
                     <li key={point}>{point}</li>
                   ))}
                 </ul>
+
+                <Link className="linkArrow" to={`/solutions/${item.slug}`}>
+                  {item.name} in full <ArrowUpRight size={14} aria-hidden="true" />
+                </Link>
               </div>
             )}
           </li>

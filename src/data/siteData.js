@@ -1,14 +1,3 @@
-import {
-  Boxes,
-  Braces,
-  Building2,
-  GraduationCap,
-  HeartPulse,
-  Landmark,
-  Plane,
-  ShoppingBag,
-} from "lucide-react";
-
 /**
  * Site-wide content.
  *
@@ -16,31 +5,52 @@ import {
  * beside every label, which competed with the uppercase micro-type and pushed
  * the row wider than it needed to be.
  */
+/**
+ * Primary navigation.
+ *
+ * Four items and one action. "Home" has gone: the wordmark to its left already
+ * goes there, and a nav whose first item duplicates the logo spends a slot
+ * saying nothing. About and Contact have moved to the footer, which is where
+ * company information belongs once the product has this much to say.
+ *
+ * `panel` marks the two that open a floating panel rather than navigating on
+ * click. Solutions deliberately has none: it is a destination with eight pages
+ * behind it, and a dropdown would make the directory look like the whole thing.
+ */
 export const navItems = [
-  { label: "Home", path: "/" },
-  { label: "Platform", path: "/features" },
+  { label: "Platform", path: "/platform", panel: "platform" },
+  { label: "Solutions", path: "/solutions" },
+  { label: "Resources", path: "/help", panel: "resources" },
   { label: "Pricing", path: "/pricing" },
-  { label: "Help", path: "/help" },
-  { label: "Company", path: "/about" },
 ];
 
 // ─── Footer ───────────────────────────────────────────────────────
 // Every entry points at a page (or in-page section) that genuinely covers the
 // label. Items with no destination yet live in `footerPlaceholders` and render
 // as marked placeholders rather than links that quietly go somewhere else.
+/**
+ * Footer columns.
+ *
+ * Four now, mirroring the architecture rather than the old navbar: what the
+ * product is, where to learn it, who builds it, and the legal shelf. Solutions
+ * appears here as one link to the directory — listing all eight would make the
+ * footer taller than most of the pages it links to.
+ *
+ * `Legal` holds no hrefs on purpose. Those pages do not exist, and
+ * `footerPlaceholders` renders them as marked placeholders rather than links
+ * to nowhere.
+ */
 export const footerLinks = {
-  Platform: [
-    ["Capabilities", "/features"],
-    ["Integrations", "/features#feature-integrations"],
-    ["Security", "/features#feature-security"],
+  Product: [
+    ["Platform", "/platform"],
+    ["Solutions", "/solutions"],
+    ["Integrations", "/platform#cap-integrations"],
     ["Pricing", "/pricing"],
   ],
   Resources: [
     ["Help centre", "/help"],
     ["Getting started", "/help#help-start"],
     ["FAQ", "/help#help-faq"],
-    /* This pointed at `#docs-help`, an anchor no section had; the id is
-       `help-support`. It scrolled nowhere. */
     ["Support", "/help#help-support"],
   ],
   Company: [
@@ -88,62 +98,6 @@ export const platformMetrics = [
   { value: "100+", label: "Languages", note: "Detected and answered automatically" },
   { value: "<1s", label: "First response", note: "From question to first reply" },
   { value: "6", label: "Channels", note: "Chat, WhatsApp, Messenger, email, voice, API" },
-];
-
-/**
- * Use cases. Each entry pairs an industry with the specific job the assistant
- * does there — the generic version ("AI for e-commerce") told a reader nothing
- * they could not have guessed.
- */
-export const useCases = [
-  {
-    icon: ShoppingBag,
-    name: "E-commerce",
-    lead: "Order status, returns and product questions, at checkout volume.",
-    points: ["Order tracking", "Returns and exchanges", "Stock and sizing", "Cart recovery"],
-  },
-  {
-    icon: Braces,
-    name: "SaaS & Technology",
-    lead: "Onboarding, troubleshooting and billing questions, with no queue to sit in.",
-    points: ["Guided onboarding", "Error triage", "Billing questions", "Escalation with context"],
-  },
-  {
-    icon: HeartPulse,
-    name: "Healthcare",
-    lead: "Appointment handling and patient questions, kept inside strict access limits.",
-    points: ["Appointment booking", "Pre-visit questions", "Intake triage", "Private by design"],
-  },
-  {
-    icon: Landmark,
-    name: "Finance",
-    lead: "Account and application support that hands over before it oversteps.",
-    points: ["Application status", "Account questions", "Transaction history", "Licensed-agent handoff"],
-  },
-  {
-    icon: GraduationCap,
-    name: "Education",
-    lead: "Admissions and student support through the peaks that break a help desk.",
-    points: ["Admissions guidance", "Deadline reminders", "Course information", "Student help desk"],
-  },
-  {
-    icon: Plane,
-    name: "Travel & Hospitality",
-    lead: "Bookings, changes, and the disruption calls that arrive at 3am.",
-    points: ["Booking changes", "Disruption updates", "Local recommendations", "Multilingual by default"],
-  },
-  {
-    icon: Building2,
-    name: "Real Estate",
-    lead: "Listing enquiries and viewing coordination, with nothing dropped.",
-    points: ["Listing enquiries", "Lead qualification", "Viewing scheduling", "Follow-up sequences"],
-  },
-  {
-    icon: Boxes,
-    name: "Logistics",
-    lead: "Shipment questions answered from live data, not a phone tree.",
-    points: ["Shipment tracking", "Delivery windows", "Exception handling", "Carrier escalation"],
-  },
 ];
 
 // ─── Testimonials ─────────────────────────────────────────────────

@@ -49,7 +49,7 @@ export default function IntelligenceStatement() {
             customer opened with. What is left reaches a human sooner, and it
             arrives with the whole conversation attached.
           </p>
-          <Link className="linkArrow" to="/features" data-anim="rise" data-anim-delay="5">
+          <Link className="linkArrow" to="/platform" data-anim="rise" data-anim-delay="5">
             See how it works <ArrowUpRight size={14} aria-hidden="true" />
           </Link>
         </div>

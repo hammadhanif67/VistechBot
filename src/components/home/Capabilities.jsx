@@ -30,7 +30,7 @@ export default function Capabilities() {
           }
           lead="Chat and voice, grounded in your own documentation, wired into the tools your team already has open."
           action={
-            <Link className="linkArrow" to="/features">
+            <Link className="linkArrow" to="/platform">
               All capabilities <ArrowUpRight size={14} aria-hidden="true" />
             </Link>
           }
