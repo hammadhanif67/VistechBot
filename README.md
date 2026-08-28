@@ -180,6 +180,15 @@ The capability rows tint rather than growing a hairline along their bottom
 border. On a row that tall the pointer is nowhere near the edge being lit, so
 the thing responding was not the thing being pointed at.
 
+## Loading
+
+Every page is imported directly rather than through `lazy()`. The split it
+replaced was buying very little and charging a lot: all nine route chunks came
+to 24 kB gzipped against 148 kB of React, GSAP and the router that load before
+anything paints, and in exchange every navigation showed a Suspense fallback
+— an empty screen where the page had been. Now the previous page stays until
+the next one is ready, and there is no loading state anywhere in the app.
+
 ## Getting started
 
 ```bash

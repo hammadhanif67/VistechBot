@@ -258,3 +258,17 @@
     justify-self: start;
   }
 }
+
+/* The hover rule sits 12px outside the row, which on a desktop reads as the
+   list stepping aside for it. On a phone the content column is already at the
+   page gutter, so those 12px put a bright bar in the margin where nothing else
+   on the page goes. It moves onto the row's own edge instead. */
+@media (max-width: 720px) {
+  .channels__item::before {
+    left: 0;
+  }
+
+  .channels__item:hover {
+    padding-left: var(--s-2);
+  }
+}

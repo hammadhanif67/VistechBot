@@ -571,7 +571,12 @@
 .codeBlock pre {
   margin: 0;
   padding: var(--s-5);
+  /* Both axes, explicitly. Setting `overflow-x` alone computes the other axis
+     from `visible` to `auto`, so these blocks were drawing a vertical
+     scrollbar track next to code that fits vertically. Long lines scroll
+     sideways; nothing scrolls down. */
   overflow-x: auto;
+  overflow-y: hidden;
   font-family: var(--font-mono);
   font-size: var(--fs-code);
   line-height: 1.75;

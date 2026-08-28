@@ -1,28 +1,34 @@
-import { Suspense, lazy } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import Navbar from "./components/layout/Navbar";
 import Footer from "./components/layout/Footer";
 import ContactDock from "./components/layout/ContactDock";
 import RouteChangeHandler from "./components/routing/RouteChangeHandler";
-import RouteFallback from "./components/routing/RouteFallback";
 import Home from "./pages/Home";
 import { REDIRECTS } from "./data/routes";
 import { LEGAL_SEO } from "./data/seoContent";
 
 /**
- * Home ships in the entry bundle because it is the landing route and its LCP
- * should not wait on a second request. Every other page is split out, so a
- * first-time visitor downloads the marketing homepage and nothing else.
+ * Every page is imported directly.
+ *
+ * They used to be `lazy()`, on the reasoning that a first-time visitor should
+ * download the landing page and nothing else. The numbers do not support it:
+ * all nine route chunks together are 24 kB gzipped, against 148 kB of React,
+ * GSAP and the router that load before anything paints. The split saved a
+ * sixth of the first load and charged a Suspense fallback -- an empty screen
+ * where the page had been -- on every single navigation afterwards.
+ *
+ * For an eight-page marketing site people click through, that is the wrong
+ * trade. Navigation is now instant and there is no loading state to see.
  */
-const Platform = lazy(() => import("./pages/Platform"));
-const Solutions = lazy(() => import("./pages/Solutions"));
-const Solution = lazy(() => import("./pages/Solution"));
-const Pricing = lazy(() => import("./pages/Pricing"));
-const Help = lazy(() => import("./pages/Help"));
-const About = lazy(() => import("./pages/About"));
-const Contact = lazy(() => import("./pages/Contact"));
-const Legal = lazy(() => import("./pages/Legal"));
-const NotFound = lazy(() => import("./pages/NotFound"));
+import Platform from "./pages/Platform";
+import Solutions from "./pages/Solutions";
+import Solution from "./pages/Solution";
+import Pricing from "./pages/Pricing";
+import Help from "./pages/Help";
+import About from "./pages/About";
+import Contact from "./pages/Contact";
+import Legal from "./pages/Legal";
+import NotFound from "./pages/NotFound";
 
 export default function App() {
   return (
@@ -35,37 +41,35 @@ export default function App() {
       <RouteChangeHandler />
       <Navbar />
 
-      <Suspense fallback={<RouteFallback />}>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/platform" element={<Platform />} />
-          <Route path="/solutions" element={<Solutions />} />
-          {/* One route for eight industries. The component reads the slug and
-              renders the 404 for anything not in `solutionsData`, so a mistyped
-              industry cannot become an indexable page. */}
-          <Route path="/solutions/:slug" element={<Solution />} />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/platform" element={<Platform />} />
+        <Route path="/solutions" element={<Solutions />} />
+        {/* One route for eight industries. The component reads the slug and
+            renders the 404 for anything not in `solutionsData`, so a mistyped
+            industry cannot become an indexable page. */}
+        <Route path="/solutions/:slug" element={<Solution />} />
 
-          {/* Moved routes, from the same table the sitemap is built from, so a
-              redirect cannot be added in one and forgotten in the other. A 404
-              where a page used to be is the one migration mistake that costs
-              real traffic. `replace` keeps the old path out of history. */}
-          {REDIRECTS.map(({ from, to }) => (
-            <Route key={from} path={from} element={<Navigate to={to} replace />} />
-          ))}
-          <Route path="/pricing" element={<Pricing />} />
-          <Route path="/help" element={<Help />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/contact" element={<Contact />} />
+        {/* Moved routes, from the same table the sitemap is built from, so a
+            redirect cannot be added in one and forgotten in the other. A 404
+            where a page used to be is the one migration mistake that costs
+            real traffic. `replace` keeps the old path out of history. */}
+        {REDIRECTS.map(({ from, to }) => (
+          <Route key={from} path={from} element={<Navigate to={to} replace />} />
+        ))}
+        <Route path="/pricing" element={<Pricing />} />
+        <Route path="/help" element={<Help />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
 
-          {/* Privacy, terms and cookies, one template, three explicit paths.
-              React Router 7 has no regex in path patterns, and a bare `/:slug`
-              here would swallow every unmatched URL on the site. */}
-          {LEGAL_SEO.map(({ slug }) => (
-            <Route key={slug} path={`/${slug}`} element={<Legal slug={slug} />} />
-          ))}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </Suspense>
+        {/* Privacy, terms and cookies, one template, three explicit paths.
+            React Router 7 has no regex in path patterns, and a bare `/:slug`
+            here would swallow every unmatched URL on the site. */}
+        {LEGAL_SEO.map(({ slug }) => (
+          <Route key={slug} path={`/${slug}`} element={<Legal slug={slug} />} />
+        ))}
+        <Route path="*" element={<NotFound />} />
+      </Routes>
 
       <Footer />
 

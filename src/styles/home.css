@@ -953,8 +953,32 @@
   color: var(--accent);
 }
 
+/* The row animates from 0fr to 1fr. A height transition needs a number to
+   animate between and `auto` is not one; a grid row is, and it measures the
+   content itself so nothing has to be guessed or hard-coded. */
+.useCases__detailWrap {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows var(--t-base);
+}
+
+.useCases__accordion > li.isOpen .useCases__detailWrap {
+  grid-template-rows: 1fr;
+}
+
 .useCases__detail {
+  /* Required: without it the content keeps its full height and spills out of
+     the zero-height row. */
+  overflow: hidden;
+  visibility: hidden;
   padding: 0 0 var(--s-5) calc(34px + var(--s-3));
+  transition: visibility var(--t-base);
+}
+
+/* Closed panels are hidden rather than just flat, so their links leave the tab
+   order instead of sitting invisibly in it. */
+.useCases__accordion > li.isOpen .useCases__detail {
+  visibility: visible;
 }
 
 .useCases__detail .useCases__panelIcon {

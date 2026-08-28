@@ -158,7 +158,12 @@ function Accordion({ active, setActive }) {
         const open = active === index;
 
         return (
-          <li key={item.name}>
+          /* The detail stays mounted whether it is open or not. A conditional
+             render has nothing to animate from, which is why these used to
+             appear instantly; the wrapper animates its own row from 0fr to 1fr
+             instead. `visibility` follows, so a closed panel's links are out of
+             the tab order rather than merely zero pixels tall. */
+          <li key={item.name} className={open ? "isOpen" : undefined}>
             <h3>
               <button
                 type="button"
@@ -175,7 +180,7 @@ function Accordion({ active, setActive }) {
               </button>
             </h3>
 
-            {open && (
+            <div className="useCases__detailWrap">
               <div className="useCases__detail" id={`usecase-detail-${index}`}>
                 <Icon size={22} className="useCases__panelIcon" aria-hidden="true" />
                 <p className="useCases__lead">{item.short}</p>
@@ -189,7 +194,7 @@ function Accordion({ active, setActive }) {
                   {item.name} in full <ArrowUpRight size={14} aria-hidden="true" />
                 </Link>
               </div>
-            )}
+            </div>
           </li>
         );
       })}

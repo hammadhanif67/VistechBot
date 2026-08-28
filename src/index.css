@@ -250,3 +250,54 @@ address {
     transition-duration: 0.001ms !important;
   }
 }
+
+/* -------------------------------------------------------------------------
+   SCROLLBARS
+
+   The browser default is a light grey trough that belongs to neither theme —
+   on the dark palette it is a bright stripe down the edge of a near-black
+   page. These follow the theme instead.
+
+   `scrollbar-color` is the standard property and is what Firefox and current
+   Chrome use. The `::-webkit-` rules cover the WebKit browsers that do not
+   support it yet; both are driven by the same two tokens, so a theme swap
+   moves them together.
+   ------------------------------------------------------------------------- */
+:root {
+  --scrollbar-thumb: var(--line-strong);
+  --scrollbar-thumb-hover: var(--ink-faint);
+}
+
+html {
+  scrollbar-color: var(--scrollbar-thumb) transparent;
+  scrollbar-width: thin;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  /* A border of the page colour insets the thumb without needing a radius,
+     which this design does not allow anywhere. */
+  border: 3px solid var(--void);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover);
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/* Inside a code block the ground is the code surface, not the page. */
+.codeBlock ::-webkit-scrollbar-thumb {
+  border-color: var(--surface-code);
+}
