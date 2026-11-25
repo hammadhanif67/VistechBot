@@ -1,5 +1,9 @@
 # VistechBot
 
+🔗 **Live:** https://vistechbotaipk.vercel.app
+
+![VistechBot: screenshot of the live site](.github/assets/preview.jpg)
+
 Marketing site for VistechBot, an AI customer support platform. React 19 + Vite,
 GSAP motion, and per-route SEO baked into static HTML at build time.
 
